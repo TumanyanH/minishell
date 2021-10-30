@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: htumanya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/24 20:40:33 by htumanya          #+#    #+#             */
-/*   Updated: 2021/10/24 21:20:50 by htumanya         ###   ########.fr       */
+/*   Created: 2021/10/24 20:30:26 by htumanya          #+#    #+#             */
+/*   Updated: 2021/10/24 21:22:12 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "../includes/minishell.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <termcap.h>
-# include <unistd.h>
+int	main(void)
+{
+	char	*cmd;
 
-#endif
+	write(1, "\033[2J", 4);
+	write(1, "\033[H", 3);
+	while (1)
+	{
+		cmd = readline("minishell> ");
+		analyse_cmd(cmd);
+	}
+	return (0);
+}

@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: htumanya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/24 20:30:26 by htumanya          #+#    #+#             */
-/*   Updated: 2021/10/24 21:22:12 by htumanya         ###   ########.fr       */
+/*   Created: 2021/10/24 20:40:33 by htumanya          #+#    #+#             */
+/*   Updated: 2021/10/24 21:20:50 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
-// void	ft_clear_screen(void)
-// {
-// 	char buf[1024];
-//     char *str;
+# include "./libft/libft.h"
+# include <stdio.h>
+# include <stdlib.h>
+# include <termcap.h>
+# include <unistd.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
-//     tgetent(buf, getenv("TERM"));
-//     str = tgetstr("cl", NULL);
-//     fputs(str, stdout);
-// }
+void	analyse_cmd(char *cmd);
 
-int	main(void)
-{
-	write(1, "\033[2J", 4);
-	write(1, "\033[H", 3);
-	printf("Hello World!\n");
-	return (0);
-}
+#endif
