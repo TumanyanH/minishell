@@ -2,6 +2,9 @@
 
 void	analyse_cmd(char *cmd)
 {
-	check_exit();
-	
+	if (cmd)
+	{
+		add_history(cmd);
+		check_exit(cmd);
+	}
 }

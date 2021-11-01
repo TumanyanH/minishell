@@ -30,9 +30,9 @@ fclean : $(MAKE) clean
 re : fclean all
 
 
-GM = message
+M = message
 push : 
 	$(MAKE) fclean
 	git add .
-	git commit -m "$(GM)"
+	git commit -m "$(M)"
 	git push 
