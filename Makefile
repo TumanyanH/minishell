@@ -34,5 +34,5 @@ GM = message
 push : 
 	$(MAKE) fclean
 	git add .
-	git commit -m $(GM)
+	git commit -m "$(GM)"
 	git push 
