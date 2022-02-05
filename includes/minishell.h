@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htumanya <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ster-min <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 20:40:33 by htumanya          #+#    #+#             */
-/*   Updated: 2021/11/01 15:12:14 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/02/05 21:43:49 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,17 @@
 # include <readline/history.h>
 # include <signal.h>
 
-void	analyse_cmd(char *cmd);
-void	successful_exit();
+struct	s_val
+{
+	char	*path;
+}	g_val;
+
+void	analyse_cmd(char *cmd, char **argv);
+void	successful_exit(int a);
 void	check_exit(char *cmd);
-void	exit_keypass();
+int		find_env(char **envp);
+void	find_path(char **path, char **envp);
+void	exit_keypass(void);
+void	initial(char **envp);
 
 #endif
