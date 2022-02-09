@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ster-min <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 20:40:33 by htumanya          #+#    #+#             */
-/*   Updated: 2022/02/05 21:43:49 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/02/06 16:55:13 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 struct	s_val
 {
 	char	*path;
+	char	**envp;
 }	g_val;
 
 void	analyse_cmd(char *cmd, char **argv);
@@ -34,5 +35,8 @@ int		find_env(char **envp);
 void	find_path(char **path, char **envp);
 void	exit_keypass(void);
 void	initial(char **envp);
+int		exec_echo( char *cmd );
+void	free_2d(char ***arr);
+char	*find_cmd_path(char *cmd);
 
 #endif

@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   analyse.c                                          :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/05 21:09:07 by ster-min          #+#    #+#             */
-/*   Updated: 2022/02/06 16:36:10 by htumanya         ###   ########.fr       */
+/*   Created: 2022/02/06 15:05:37 by htumanya          #+#    #+#             */
+/*   Updated: 2022/02/07 17:46:22 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	analyse_cmd(char *cmd, char **argv)
+int	exec_echo( char *cmd )
 {
-	if (cmd && ft_strlen(cmd) > 0)
-	{
-		add_history(cmd);
-		check_exit(cmd);
-		if (ft_strncmp(cmd, "whereis", 7) == 0)
-			exec_echo(cmd);
-	}
+	char	*f_path;
+	char	**cmd_details;
+
+	f_path = ft_strjoin(g_val.path, "/echo");
+	cmd_details = ft_split(cmd, ' ');
+	execve(g_val.path, cmd_details, g_val.envp);
+	execve(g_val.path, cmd_details, g_val.envp);
+	free(f_path);
+	free_2d(&cmd_details);
+	return (1);
 }
