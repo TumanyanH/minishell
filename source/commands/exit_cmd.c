@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ster-min <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 21:09:27 by ster-min          #+#    #+#             */
-/*   Updated: 2022/02/10 05:05:06 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/02/10 19:52:43 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	successful_exit(int a)
 {
 	a = 0;
 	clear_history();
+	clear_memory();
+	printf("exit\n");
 	exit(0);
 }
 

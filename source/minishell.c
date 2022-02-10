@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 20:30:26 by htumanya          #+#    #+#             */
-/*   Updated: 2022/02/06 15:35:52 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/02/10 19:50:03 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	main(int ac, char **av, char **envp)
 	{
 
 		cmd = readline("minishell> ");
+		if (cmd == NULL)
+			successful_exit(0);
 		analyse_cmd(cmd, argv);
 	}
 	return (0);

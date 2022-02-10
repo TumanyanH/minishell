@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ster-min <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 05:35:44 by ster-min          #+#    #+#             */
-/*   Updated: 2022/02/10 05:36:10 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/02/10 19:29:35 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,12 @@
 
 void	check_env(char *cmd)
 {
+	int	i;
 
+	i = 0;
+	while (g_val.envp[i])
+	{
+		printf("%s\n", g_val.envp[i]);
+		++i;
+	}
 }

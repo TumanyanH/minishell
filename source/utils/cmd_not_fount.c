@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd_cmd.c                                           :+:      :+:    :+:   */
+/*   cmd_not_fount.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/10 05:33:31 by ster-min          #+#    #+#             */
-/*   Updated: 2022/02/10 19:49:29 by htumanya         ###   ########.fr       */
+/*   Created: 2022/02/10 20:52:58 by htumanya          #+#    #+#             */
+/*   Updated: 2022/02/10 20:52:59 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	check_cd(char *cmd)
+void	cmd_not_found(char *cmdname)
 {
-    
+	printf("minishell: %s: command not found\n", cmdname);
 }
