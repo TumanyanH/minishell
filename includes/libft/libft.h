@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htumanya <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ster-min <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 19:48:58 by htumanya          #+#    #+#             */
-/*   Updated: 2021/10/24 20:14:35 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/02/10 05:10:16 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+#include <stdio.h>
 
 char				**ft_split(char const *s, char c);
 char				*ft_strjoin(char const *s1, char const *s2);
@@ -28,6 +29,7 @@ int					ft_isascii(int c);
 int					ft_isalnum(int c);
 int					ft_isdigit(int c);
 int					ft_isalpha(int c);
+int					is_space(char c);
 int					ft_atoi(const char *str);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 char				*ft_strnstr(const char *haystack, const char *needle,

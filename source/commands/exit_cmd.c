@@ -6,7 +6,7 @@
 /*   By: ster-min <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 21:09:27 by ster-min          #+#    #+#             */
-/*   Updated: 2022/02/05 21:43:38 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/02/10 05:05:06 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,30 @@ void	successful_exit(int a)
 
 void	check_exit(char *cmd)
 {
-	if (ft_strlen(cmd) > 0 && ft_strncmp(cmd, "exit", ft_strlen(cmd)) == 0)
+	int	ret;
+
+	if (*cmd == '\0')
 		exit(0);
+	else if (is_space(*cmd))
+	{
+		ret = ft_atoi(cmd);
+		if (ret == -1)
+		{
+			printf("minishell: exit: %s: command not found\n", cmd);
+			exit(127);
+		}
+		else if (ret == -2)
+		{
+			printf("minishell: exit: too many arguments\n");
+			exit(1);
+		}
+		else if (ret >= 0 && ret <= 255)
+			exit(ret);
+		else if (ret > 255)
+			exit (ret % 256);
+	}
+	printf("minishell: exit%s: command not found\n", cmd);
+	exit(127);
 }
 
 void	exit_keypass(void)

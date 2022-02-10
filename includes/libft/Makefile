@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: htumanya <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: ster-min <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/01 20:20:25 by htumanya          #+#    #+#              #
-#    Updated: 2021/10/24 20:39:35 by htumanya         ###   ########.fr        #
+#    Updated: 2022/02/10 04:18:49 by ster-min         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,6 @@ $(NAME) : ${OBJS}
 
 bonus : ${BONUS_OBJS}
 	${AR} libft.a ${BONUS_OBJS}
-
 
 all : ${NAME}
 
