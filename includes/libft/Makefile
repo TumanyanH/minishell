@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ster-min <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/01 20:20:25 by htumanya          #+#    #+#              #
-#    Updated: 2022/02/10 04:18:49 by ster-min         ###   ########.fr        #
+#    Updated: 2022/02/12 16:41:47 by htumanya         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,6 @@ clean :
 fclean : clean
 	${RM} ${NAME}
 
-re : fclean all
+re : fclean all bonus
 
 .PHONY: all clean fclean bonus re .c.o

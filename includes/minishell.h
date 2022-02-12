@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 20:40:33 by htumanya          #+#    #+#             */
-/*   Updated: 2022/02/10 20:53:10 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/02/12 21:12:57 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ struct	s_val
 {
 	char	*path;
 	char	**envp;
+	t_list	*env;
 }	g_val;
 
 void	analyse_cmd(char *cmd, char **argv);
@@ -41,8 +42,10 @@ int		find_env(char **envp, char *envname);
 void	find_path(char **path, char **envp);
 void	exit_keypass(void);
 void	initial(char **envp);
-void	free_2d(char ***arr);
+void	free_2d(char **arr);
 char	*find_cmd_path(char *cmd);
 void	cmd_not_found(char *cmdname);
+void	clear_memory( void );
+t_list	*fill_env_list(char **envp);
 
 #endif

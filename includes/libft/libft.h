@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ster-min <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 19:48:58 by htumanya          #+#    #+#             */
-/*   Updated: 2022/02/10 05:10:16 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/02/12 21:22:48 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <stdlib.h>
 # include <unistd.h>
-#include <stdio.h>
+# include <stdio.h>
 
 char				**ft_split(char const *s, char c);
 char				*ft_strjoin(char const *s1, char const *s2);
@@ -54,12 +54,17 @@ void				ft_putendl_fd(char *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char				*ft_strtrim(char const *s1, char const *set);
+typedef struct s_env_item
+{
+	char	*envname;
+	char	*envval;
+}	t_env_item;
 typedef struct s_list
 {
-	void			*content;
+	t_env_item		*content;
 	struct s_list	*next;
 }					t_list;
-t_list				*ft_lstnew(void *content);
+t_list				*ft_lstnew(t_env_item *content);
 void				ft_lstadd_front(t_list **lst, t_list *new);
 int					ft_lstsize(t_list *lst);
 t_list				*ft_lstlast(t_list *lst);

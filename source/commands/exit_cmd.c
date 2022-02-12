@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 21:09:27 by ster-min          #+#    #+#             */
-/*   Updated: 2022/02/10 19:52:43 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/02/12 19:26:49 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,18 @@ void	check_exit(char *cmd)
 		ret = ft_atoi(cmd);
 		if (ret == -1)
 		{
-			printf("minishell: exit: %s: command not found\n", cmd);
+			printf("minishell: exit: %s: numeric argument required\n", cmd);
 			exit(127);
 		}
 		else if (ret == -2)
-		{
 			printf("minishell: exit: too many arguments\n");
-			exit(1);
-		}
 		else if (ret >= 0 && ret <= 255)
 			exit(ret);
 		else if (ret > 255)
 			exit (ret % 256);
 	}
-	printf("minishell: exit%s: command not found\n", cmd);
-	exit(127);
+	else
+		printf("minishell: exit%s: command not found\n", cmd);
 }
 
 void	exit_keypass(void)

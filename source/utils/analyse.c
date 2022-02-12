@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 21:09:07 by ster-min          #+#    #+#             */
-/*   Updated: 2022/02/10 20:50:54 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/02/12 21:13:28 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	checking_commands(char *cmd)
 		check_env(cmd + 3);
 	else if (cmd && ft_strncmp(cmd, "exit", 4) == 0)
 		check_exit(cmd + 4);
-
 }
 
 void	analyse_cmd(char *cmd, char **argv)
