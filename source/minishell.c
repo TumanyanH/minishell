@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ster-min <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 20:30:26 by htumanya          #+#    #+#             */
-/*   Updated: 2022/02/12 20:53:13 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/02/13 16:46:51 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,7 @@
 void	initial(char **envp)
 {
 	exit_keypass();
-	find_path(&g_val.path, envp);
-	g_val.envp = envp;
 	g_val.env = fill_env_list(envp);
-	t_env_item	*temp;
-	// while (g_val.env->next)
-	// {
-	temp = g_val.env->content;
-	printf("%c - %c\n", *temp->envname, *temp->envval);
-// }
 }
 
 int	main(int ac, char **av, char **envp)

@@ -11,15 +11,16 @@ RM = rm -rf
 FILES = ${shell find "./source/" -name "*.c"}
 OBJS = ${FILES:.c=.o}
 
+
 $(NAME) : $(OBJS)
 	@$(CC) $(FLAGS) $(LFT_FLAGS) $(OBJS) -o $(NAME)
 	@echo "Built MINISHELL"
 
+all : $(LFT_NAME) $(NAME)
+
 $(LFT_NAME) :
 	@cd $(LFT_PATH) && $(MAKE) re
 	@echo "Built LIBFT"
-
-all : $(LFT_NAME) $(NAME)
 
 clean : 
 	${RM} $(OBJS)
