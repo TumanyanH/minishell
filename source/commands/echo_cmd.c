@@ -6,7 +6,7 @@
 /*   By: ster-min <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 15:05:37 by htumanya          #+#    #+#             */
-/*   Updated: 2022/02/13 21:32:34 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/02/14 17:37:43 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	option(char *cmd)
 	return (0);
 }
 
+// -n ov readline y cbxuma :D
 void	check_echo(char *cmd)
 {
 	int	k;
@@ -57,7 +58,6 @@ void	check_echo(char *cmd)
 	{
 		while (is_space(*cmd))
 			cmd++;
-// -n ov readline y cbxuma :D
 		k = option(cmd);
 		if (k)
 			cmd += 3;
