@@ -3,33 +3,94 @@
 /*                                                        :::      ::::::::   */
 /*   analyse.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ster-min <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 21:09:07 by ster-min          #+#    #+#             */
-/*   Updated: 2022/02/12 21:13:28 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/02/17 21:07:22 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+int	check_dub_quote(char *str)
+{
+	int	i;
+
+	i = 1;
+	if ((str[0] == 39 || str[0] == 34)
+		&& (str[ft_strlen(str) - 1] == 39 || str[ft_strlen(str) - 1] == 34)
+		&& (str[ft_strlen(str)] == 39 || str[ft_strlen(str)] == 34))
+	{
+		while (i < ft_strlen(str) - 1)
+		{
+			if (str[i] == 39 || str[i] == 34)
+				return (0);
+			++i;
+		}
+		return (1);
+	}
+	return (0);
+}
+
+char	*general_check(char *cmd)
+{
+	int		i;
+	int		count;
+	int		index;
+	char	*res;
+
+	res = (char *)malloc(sizeof(char) * ft_strlen(cmd));
+	i = 0;
+	index = 0;
+	count = 0;
+	while (!is_space(cmd[i]) && cmd[i])
+	{
+		if (cmd[i] != 39 && cmd[i] != 34)
+		{
+			res[index] = ft_tolower(cmd[i]);
+			++index;
+		}
+		else
+			++count;
+		++i;
+		if (count % 2 == 1)
+		{
+			while (is_space(cmd[i]) && cmd[i])
+			{
+				res[index] = ft_tolower(cmd[i]);
+				++index;
+				++i;
+			}
+		}
+	}
+	return (res);
+}
+
 void	checking_commands(char *cmd)
 {
+	char	*command;
+
 	while (is_space(*cmd))
 		cmd++;
-	if (cmd && ft_strncmp(cmd, "echo", 4) == 0)
-		check_echo(cmd + 4);
-	else if (cmd && ft_strncmp(cmd, "cd", 2) == 0)
-		check_cd(cmd + 2);
-	else if (cmd && ft_strncmp(cmd, "pwd", 3) == 0)
-		check_pwd(cmd + 3);
-	else if (cmd && ft_strncmp(cmd, "export", 6) == 0)
-		check_export(cmd + 6);
-	else if (cmd && ft_strncmp(cmd, "unset", 5) == 0)
-		check_unset(cmd + 5);
-	else if (cmd && ft_strncmp(cmd, "env", 3) == 0)
-		check_env(cmd + 3);
-	else if (cmd && ft_strncmp(cmd, "exit", 4) == 0)
-		check_exit(cmd + 4);
+	command = general_check(cmd);
+	while (!is_space(*cmd) && *cmd)
+		cmd++;
+	if (cmd && ft_strncmp(command, "echo", 4) == 0)
+		check_echo(cmd);
+	else if (cmd && ft_strncmp(command, "cd", 2) == 0)
+		check_cd(cmd);
+	else if (cmd && ft_strncmp(command, "pwd", 3) == 0)
+		check_pwd(cmd);
+	else if (cmd && ft_strncmp(command, "export", 6) == 0)
+		check_export(cmd);
+	else if (cmd && ft_strncmp(command, "unset", 5) == 0)
+		check_unset(cmd);
+	else if (cmd && ft_strncmp(command, "env", 3) == 0)
+		check_env(cmd);
+	else if (cmd && ft_strncmp(command, "exit", 4) == 0)
+		check_exit(cmd);
+	else
+		printf("minishell: %s: command not found\n", command);
 }
 
 void	analyse_cmd(char *cmd, char **argv)

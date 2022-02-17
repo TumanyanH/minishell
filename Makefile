@@ -2,10 +2,11 @@ NAME = minishell
 
 LFT_NAME = libft
 LFT_PATH = ./includes/libft
+INCS = -Iincludes -I$(LFT_PATH)
 LFT_FLAGS = -L$(LFT_PATH) -lft
 
 CC = gcc
-FLAGS = -Wall -Wextra -Werror -lreadline
+FLAGS = -Wall -Wextra -Werror $(INCS) -lreadline
 RM = rm -rf
 
 FILES = ${shell find "./source/" -name "*.c"}

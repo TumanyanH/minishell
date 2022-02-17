@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ster-min <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 19:48:23 by htumanya          #+#    #+#             */
-/*   Updated: 2022/02/12 21:22:54 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/02/16 21:40:09 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@ t_list	*ft_lstnew(t_env_item *content)
 		return (NULL);
 	obj->content = content;
 	obj->next = NULL;
+	obj->prev = NULL;
 	return (obj);
 }

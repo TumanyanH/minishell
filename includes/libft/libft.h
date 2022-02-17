@@ -6,7 +6,7 @@
 /*   By: ster-min <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 19:48:58 by htumanya          #+#    #+#             */
-/*   Updated: 2022/02/13 17:13:51 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/02/17 17:13:21 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char				*ft_substr(char const *s, unsigned int start, size_t len);
 char				*ft_strdup(const char *s1);
 void				*ft_calloc(size_t count, size_t size);
 int					ft_toupper(int c);
-int					ft_tolower(int c);
+char				ft_tolower(char c);
 int					ft_isprint(int c);
 int					ft_isascii(int c);
 int					ft_isalnum(int c);
@@ -62,6 +62,7 @@ typedef struct s_list
 {
 	t_env_item		*content;
 	struct s_list	*next;
+	struct s_list	*prev;
 }					t_list;
 t_list				*ft_lstnew(t_env_item *content);
 void				ft_lstadd_front(t_list **lst, t_list *new);

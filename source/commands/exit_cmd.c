@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ster-min <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 21:09:27 by ster-min          #+#    #+#             */
-/*   Updated: 2022/02/12 19:26:49 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/02/17 21:36:58 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,12 @@ void	check_exit(char *cmd)
 			printf("minishell: exit: too many arguments\n");
 		else if (ret >= 0 && ret <= 255)
 			exit(ret);
+		else if (ret < 0)
+		{
+			while (ret < 0)
+				ret += 256;
+			exit (ret);
+		}
 		else if (ret > 255)
 			exit (ret % 256);
 	}
