@@ -6,7 +6,7 @@
 /*   By: ster-min <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 19:53:28 by htumanya          #+#    #+#             */
-/*   Updated: 2022/02/16 21:45:41 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/02/20 20:07:42 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 	if (*lst)
 	{
 		temp = ft_lstlast(*lst);
-		temp->next = new;
 		new->prev = temp;
+		temp->next = new;
 	}
 	else
 		*lst = new;

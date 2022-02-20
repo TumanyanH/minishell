@@ -6,15 +6,16 @@
 /*   By: ster-min <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 05:33:31 by ster-min          #+#    #+#             */
-/*   Updated: 2022/02/20 08:17:33 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/02/20 19:16:40 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	env_changer(char *env, char *new_val)
+int	env_change(char *new_val, char *env)
 {
 	int		i;
+	char	buff[PATH_MAX + 1];
 
 	i = 0;
 	while (ft_strncmp(g_val.env->content->envname, env, ft_strlen(env)) != 0)
@@ -22,8 +23,11 @@ int	env_changer(char *env, char *new_val)
 		++i;
 		g_val.env = g_val.env->next;
 	}
-	// free(g_val.env->content->envval);
-	g_val.env->content->envval = new_val;
+	g_val.env->content->envval = malloc(sizeof(char) * ft_strlen(new_val) + 1);
+	if (env[0] == 'P')
+		g_val.env->content->envval = getcwd(buff, PATH_MAX + 1); // env ic hetoya tpum
+	else
+		g_val.env->content->envval = new_val;
 	while (i > 0)
 	{
 		g_val.env = g_val.env->prev;
@@ -72,7 +76,8 @@ void	check_cd(char *cmd)
 		a = chdir(next_dir);
 		if (a == 0)
 		{
-			env_changer("PWD", next_dir);
+			env_change("lalal", "PWD");
+			env_change(prev_dir, "OLDPWD");
 		}
 		else
 			printf("minishell: cd: %s: No such file or directory\n", cmd);
