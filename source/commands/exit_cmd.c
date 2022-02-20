@@ -6,7 +6,7 @@
 /*   By: ster-min <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 21:09:27 by ster-min          #+#    #+#             */
-/*   Updated: 2022/02/17 21:36:58 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/02/20 05:19:04 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,37 +21,6 @@ void	successful_exit(int a)
 	exit(0);
 }
 
-void	check_exit(char *cmd)
-{
-	int	ret;
-
-	if (*cmd == '\0')
-		exit(0);
-	else if (is_space(*cmd))
-	{
-		ret = ft_atoi(cmd);
-		if (ret == -1)
-		{
-			printf("minishell: exit: %s: numeric argument required\n", cmd);
-			exit(127);
-		}
-		else if (ret == -2)
-			printf("minishell: exit: too many arguments\n");
-		else if (ret >= 0 && ret <= 255)
-			exit(ret);
-		else if (ret < 0)
-		{
-			while (ret < 0)
-				ret += 256;
-			exit (ret);
-		}
-		else if (ret > 255)
-			exit (ret % 256);
-	}
-	else
-		printf("minishell: exit%s: command not found\n", cmd);
-}
-
 void	exit_keypass(void)
 {
 	struct sigaction	sa;
@@ -60,4 +29,63 @@ void	exit_keypass(void)
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
 	sigaction(SIGINT, &sa, NULL);
+}
+
+char	*atoi_helper(char *str, int *quote)
+{
+	int		i;
+	int		index;
+	char	*ret;
+
+	i = 0;
+	index = 0;
+	*quote = 0;
+	ret = malloc(sizeof(char) * ft_strlen(str));
+	while (is_space(str[i]))
+		++i;
+	if (str[i] != 39 && str[i] != 34)
+		*quote += 1;
+	while (str[i])
+	{
+		if (str[i] != 39 && str[i] != 34)
+		{
+			ret[index] = str[i];
+			++index;
+		}
+		++i;
+	}
+	while (is_space(str[i]))
+		--i;
+	if (str[i] != 39 && str[i] != 34)
+		*quote += 1;
+	return (ret);
+}
+
+void	check_exit(char *cmd)
+{
+	int	ret;
+	int	checker;
+	int	quote;
+
+	if (*cmd == '\0')
+		exit(0);
+	else if (is_space(*cmd))
+	{
+		ret = ft_atoi(atoi_helper(cmd, &quote), &checker, quote);
+		if (checker == 0)
+		{
+			if (ret >= 0 && ret <= 255)
+				exit(ret);
+			else if (ret < 0)
+			{
+				while (ret < 0)
+					ret += 256;
+				exit (ret);
+			}
+			else if (ret > 255)
+				exit (ret % 256);
+		}
+	}
+	else
+		printf("minishell: exit%s: command not found\n", cmd);
 }

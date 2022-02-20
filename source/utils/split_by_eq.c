@@ -6,7 +6,7 @@
 /*   By: ster-min <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 17:17:11 by ster-min          #+#    #+#             */
-/*   Updated: 2022/02/13 18:10:38 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/02/20 03:44:00 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	**ft_split_by_eq(char const *s)
 	i = 0;
 	splited = (char **)malloc(2 * sizeof(char *));
 	splited[0] = (char *)malloc(eq + 1 * sizeof(char));
-	splited[1] = (char *)malloc(ft_strlen(s + eq + 1)
+	splited[1] = (char *)malloc(ft_strlen(s + eq + 1) + 1
 			* sizeof(char));
 	while (s[i] != '\0')
 	{

@@ -6,7 +6,7 @@
 /*   By: ster-min <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 21:09:07 by ster-min          #+#    #+#             */
-/*   Updated: 2022/02/18 18:26:38 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/02/20 07:46:48 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ char	*general_check(char *cmd)
 			}
 		}
 	}
+	res[index] = '\0';
 	return (res);
 }
 
@@ -75,19 +76,19 @@ void	checking_commands(char *cmd)
 	command = general_check(cmd);
 	while (!is_space(*cmd) && *cmd)
 		cmd++;
-	if (cmd && ft_strncmp(command, "echo", ft_strlen(command)) == 0)
+	if (cmd && ft_strncmp(command, "echo\0", 5) == 0)
 		check_echo(cmd);
-	else if (cmd && ft_strncmp(command, "cd", ft_strlen(command)) == 0)
+	else if (cmd && ft_strncmp(command, "cd\0", 3) == 0)
 		check_cd(cmd);
-	else if (cmd && ft_strncmp(command, "pwd", ft_strlen(command)) == 0)
+	else if (cmd && ft_strncmp(command, "pwd\0", 4) == 0)
 		check_pwd(cmd);
-	else if (cmd && ft_strncmp(command, "export", ft_strlen(command)) == 0)
+	else if (cmd && ft_strncmp(command, "export\0", 7) == 0)
 		check_export(cmd);
-	else if (cmd && ft_strncmp(command, "unset", ft_strlen(command)) == 0)
+	else if (cmd && ft_strncmp(command, "unset\0", 6) == 0)
 		check_unset(cmd);
-	else if (cmd && ft_strncmp(command, "env", ft_strlen(command)) == 0)
+	else if (cmd && ft_strncmp(command, "env\0", 4) == 0)
 		check_env(cmd);
-	else if (cmd && ft_strncmp(command, "exit", ft_strlen(command)) == 0)
+	else if (cmd && ft_strncmp(command, "exit\0", 5) == 0)
 		check_exit(cmd);
 	else
 		printf("minishell: %s: command not found\n", command);

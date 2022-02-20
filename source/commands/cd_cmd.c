@@ -6,7 +6,7 @@
 /*   By: ster-min <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 05:33:31 by ster-min          #+#    #+#             */
-/*   Updated: 2022/02/16 21:46:14 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/02/20 08:17:33 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,44 @@
 
 int	env_changer(char *env, char *new_val)
 {
-	t_list	*item;
+	int		i;
 
-	item = g_val.env;
-	while (ft_strncmp(item->content->envname, env,
-			ft_strlen(item->content->envname)) == 0)
+	i = 0;
+	while (ft_strncmp(g_val.env->content->envname, env, ft_strlen(env)) != 0)
 	{
-		item = item->next;
+		++i;
+		g_val.env = g_val.env->next;
 	}
-	item->content->envval = new_val;
+	// free(g_val.env->content->envval);
+	g_val.env->content->envval = new_val;
+	while (i > 0)
+	{
+		g_val.env = g_val.env->prev;
+		--i;
+	}
 	return (0);
+}
+
+char	*cmd_corrector(char *cmd)
+{
+	char	*res;
+	int		i;
+	int		index;
+
+	i = 0;
+	index = 0;
+	res = (char *)malloc(ft_strlen(cmd) * sizeof(char));
+	while (is_space(cmd[i]))
+		++i;
+	if (cmd[i] == '.' && cmd[i + 1] == '/')
+		i += 2;
+	while (cmd[i] && !is_space(cmd[i]))
+	{
+		res[index] = cmd[i];
+		++index;
+		++i;
+	}
+	return (res);
 }
 
 void	check_cd(char *cmd)
@@ -37,17 +65,16 @@ void	check_cd(char *cmd)
 		printf("minishell: cd%s: command not found\n", cmd);
 	else
 	{
-		while (is_space(*cmd))
-			cmd++;
-		if (*cmd == '\0')
-			chdir("/Users/ster-min/Desktop");
+		cmd = cmd_corrector(cmd);
 		prev_dir = getcwd(cwd, PATH_MAX + 1);
-		next_dir = ft_strjoin(cwd, cmd);
+		next_dir = ft_strjoin(cwd, "/");
+		next_dir = ft_strjoin(next_dir, cmd);
 		a = chdir(next_dir);
 		if (a == 0)
 		{
-			// env_changer();
+			env_changer("PWD", next_dir);
 		}
-		printf("\ns=%s\n%d\n", next_dir, a);
+		else
+			printf("minishell: cd: %s: No such file or directory\n", cmd);
 	}
 }
