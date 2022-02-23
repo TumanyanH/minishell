@@ -6,7 +6,7 @@
 /*   By: ster-min <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 05:34:09 by ster-min          #+#    #+#             */
-/*   Updated: 2022/02/20 20:27:56 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/02/23 20:19:49 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	check_export(char *cmd)
 		printf("minishell: export%s: command not found\n", cmd);
 	else
 	{
+		arg_split("asd \" 123\"");
 		while (is_space(cmd[i]))
 			++i;
 		if (cmd[i] == '\0')

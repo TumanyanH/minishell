@@ -6,7 +6,7 @@
 /*   By: ster-min <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 20:40:33 by htumanya          #+#    #+#             */
-/*   Updated: 2022/02/20 03:07:25 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/02/23 14:30:50 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void		free_2d(char **arr);
 char		*find_cmd_path(char *cmd);
 void		cmd_not_found(char *cmdname);
 void		clear_memory( void );
+char		**arg_split(char *str);
 char		**ft_split_by_eq(char const *s);
 t_list		*fill_env_list(char **envp);
 t_env_item	*find_env(t_list *env, char *envname);
