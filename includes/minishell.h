@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ster-min <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 20:40:33 by htumanya          #+#    #+#             */
-/*   Updated: 2022/02/23 14:30:50 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/02/24 21:48:31 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void		cmd_not_found(char *cmdname);
 void		clear_memory( void );
 char		**arg_split(char *str);
 char		**ft_split_by_eq(char const *s);
+void		export_error(char *cmd);
 t_list		*fill_env_list(char **envp);
 t_env_item	*find_env(t_list *env, char *envname);
 
