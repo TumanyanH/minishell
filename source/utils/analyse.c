@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyse.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ster-min <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 21:09:07 by ster-min          #+#    #+#             */
-/*   Updated: 2022/02/20 07:46:48 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/02/27 21:52:46 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,31 @@ void	checking_commands(char *cmd)
 		check_exit(cmd);
 	else
 		printf("minishell: %s: command not found\n", command);
+}
+
+void	check_structure(char **pipes)
+{
+	int i;
+
+	i = 0;
+	while (pipes[i])
+	{
+		check_redirect(pipes[i]);
+		++i;
+	}
+}
+
+void	analyse_cmd2(char *cmd, char **argv)
+{
+	char	**parts;
+	int		i;
+
+	if (cmd && ft_strlen(cmd) > 0)
+	{
+		add_history(cmd);
+		parts = ft_split(cmd, ' ');
+		check_structure(parts);
+	}
 }
 
 void	analyse_cmd(char *cmd, char **argv)
