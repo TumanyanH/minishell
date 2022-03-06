@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 20:40:33 by htumanya          #+#    #+#             */
-/*   Updated: 2022/02/28 22:19:29 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/03/06 21:18:24 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,24 +23,30 @@
 # include <signal.h>
 # include <limits.h>
 
+typedef struct s_pipes
+{
+	int		has_pipe;
+	char	*cmd;
+}	t_pipes;
+
 typedef struct s_redirect
 {
 	int		level;
 	char	*path;
-} t_redirect;
+}	t_redirect;
 
 typedef struct s_redirects
 {
-	t_redirect in;
-	t_redirect out;
-} s_redirects;
+	t_redirect	in;
+	t_redirect	out;
+}	t_redirects;
 
 struct	s_val
 {
-	char	*path;
-	t_list	*env;
-	int		last_returned;
-	s_redirects redirects;
+	t_list		*env;
+	int			last_returned;
+	t_redirects	redirects;
+	t_pipes		*cmd_table;
 }	g_val;
 
 void		analyse_cmd(char *cmd, char **argv);
@@ -64,15 +70,19 @@ char		**ft_split_by_eq(char const *s);
 void		export_error(char *cmd);
 t_list		*fill_env_list(char **envp);
 t_env_item	*find_env(t_list *env, char *envname);
+void		clear_globs( void );
+int			check_quotes(char *cmd);
 
 /**
  * @brief parsing
  */
-int	check_redirect(char *cmd, int *count);
+int			check_redirect(char *cmd, int *count);
 
-void	complete_redirects(char **parts);
-int start_parse(char *cmd_line);
-void parse_redirects(char *cmd, int *i);
+void		complete_redirects(char **parts);
+int			start_parse(char *cmd_line);
+void		parse_redirects(char *cmd, int *i);
+char		*cpy_till_pipe(char *cmd, int *i);
+int			count_pipes(char *cmd, int i);
 
 
 #endif
