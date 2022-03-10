@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 20:40:33 by htumanya          #+#    #+#             */
-/*   Updated: 2022/03/06 21:18:24 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/03/10 19:02:01 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,6 @@
 # include <signal.h>
 # include <limits.h>
 
-typedef struct s_pipes
-{
-	int		has_pipe;
-	char	*cmd;
-}	t_pipes;
-
 typedef struct s_redirect
 {
 	int		level;
@@ -37,15 +31,22 @@ typedef struct s_redirect
 
 typedef struct s_redirects
 {
-	t_redirect	in;
-	t_redirect	out;
+	t_redirect	*in;
+	t_redirect	*out;
 }	t_redirects;
+
+typedef struct s_pipes
+{
+	int			has_pipe;
+	char		*cmd;
+	t_redirects redirects;
+}	t_pipes;
 
 struct	s_val
 {
 	t_list		*env;
 	int			last_returned;
-	t_redirects	redirects;
+	// t_redirects	redirects;
 	t_pipes		*cmd_table;
 }	g_val;
 
@@ -80,7 +81,7 @@ int			check_redirect(char *cmd, int *count);
 
 void		complete_redirects(char **parts);
 int			start_parse(char *cmd_line);
-void		parse_redirects(char *cmd, int *i);
+void		parse_redirects(char *cmd, int cmd_n);
 char		*cpy_till_pipe(char *cmd, int *i);
 int			count_pipes(char *cmd, int i);
 

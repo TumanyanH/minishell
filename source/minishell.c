@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 20:30:26 by htumanya          #+#    #+#             */
-/*   Updated: 2022/03/06 17:58:17 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/03/10 20:14:04 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,21 @@
 void	initial(char **envp)
 {
 	g_val.env = fill_env_list(envp);
-	g_val.redirects.in.path = NULL;
-	g_val.redirects.out.path = NULL;
+	// g_val.redirects.in.path = NULL;
+	// g_val.redirects.out.path = NULL;
 }
 
 int	main(int ac, char **av, char **envp)
 {
 	char	*cmd;
 	char	**argv;
-
 	write(1, "\033[2J", 4);
 	write(1, "\033[H", 3);
 	initial(envp);
 	while (1)
 	{
 		cmd = readline("minishell> ");
+		add_history(cmd);
 		if (cmd == NULL)
 			successful_exit(0);
 		if (check_quotes(cmd) == 0)

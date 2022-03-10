@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 19:32:15 by htumanya          #+#    #+#             */
-/*   Updated: 2022/03/06 21:32:32 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/03/10 19:53:32 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,25 @@ int	count_pipes(char *cmd, int i)
 char	*cpy_till_pipe(char *cmd, int *i)
 {
 	char	*tmp;
+	char	*tmp2;
 	int		j;
-	
+	int		in_qutoes;
+
 	j = *i;
-	while (cmd[j] && cmd[j] != '<' && cmd[j] != '>' && cmd[j] != '|')
+	in_qutoes = 0;
+	while (cmd[j])
+	{
+		if (cmd[j] == '\'' || cmd[j] == '\"')
+			in_qutoes = !in_qutoes;
+		if (cmd[j] == '|' && in_qutoes == 0)
+			break;
 		j++;
+	}
 	tmp = ft_substr(cmd, *i, j - *i);
-	*i += j;
-	return (tmp);
+	tmp2 = ft_strtrim(tmp, " ");
+	free(tmp);
+	*i = j + 1;
+	// printf("===%s=\n", tmp2);
+	// echo a   |     pwd ddsad  |  zxccxz < rrere | ls -la
+	return (tmp2);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ster-min <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 19:48:58 by htumanya          #+#    #+#             */
-/*   Updated: 2022/02/20 04:59:23 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/03/08 14:11:47 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_env_item
 {
 	char	*envname;
 	char	*envval;
+	int		is_export;
 }	t_env_item;
 typedef struct s_list
 {
