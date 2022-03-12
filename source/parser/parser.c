@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 21:01:42 by htumanya          #+#    #+#             */
-/*   Updated: 2022/03/10 19:51:31 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/03/11 20:38:17 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,10 @@ int	start_parse(char *cmd_line)
 		// }
 		// ++i;
 	}
+	for (int j = 0; j < pipes_count; ++j)
+		printf("%d - cmd=%s, pipe=%d\n", j, g_val.cmd_table[j].cmd, g_val.cmd_table[j].has_pipe);
 	return (0);
 }
+
+
+// <<asdf echo lalala |  ls -la  | pwd >sd echo alalal

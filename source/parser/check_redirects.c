@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_redirects.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 21:52:55 by htumanya          #+#    #+#             */
-/*   Updated: 2022/03/10 19:50:56 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/03/11 20:38:11 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*find_file(char *cmd, int *i)
 	fp = (char *)malloc(sizeof(char) * (count + 1));
 	ft_strlcpy(fp, (cmd + *i), count + 1);
 	*i += ft_strlen(fp);
-	// printf("cmd=%s, count=%d, fp=%s\n", cmd + *i, count, fp);
+	printf("cmd=%s, count=%d, fp=%s\n", cmd + *i, count, fp);
 	return (fp);
 }
 
@@ -108,28 +108,30 @@ void	parse_redirects(char *cmd, int cmd_n)
 	while (cmd[i])
 	{
 		if (cmd[i] == '>' || cmd[i] == '<')
+		{
 			red = check_redirect(cmd + i, &i);
-		if (red == -1)
-			return ;
-		if (red == 1)
-		{
-			g_val.cmd_table[cmd_n].redirects.in[reds_in].level = 1;
-			g_val.cmd_table[cmd_n].redirects.in[reds_in++].path = find_file(cmd, &i);
-		}
-		else if (red == 2)
-		{
-			g_val.cmd_table[cmd_n].redirects.in[reds_in].level = 2;
-			g_val.cmd_table[cmd_n].redirects.in[reds_in++].path = find_file(cmd, &i);
-		}
-		else if (red == 3)
-		{
-			g_val.cmd_table[cmd_n].redirects.out[reds_out].level = 1;
-			g_val.cmd_table[cmd_n].redirects.out[reds_out++].path = find_file(cmd, &i);
-		}
-		else if (red == 4)
-		{
-			g_val.cmd_table[cmd_n].redirects.out[reds_out].level = 2;
-			g_val.cmd_table[cmd_n].redirects.out[reds_out++].path = find_file(cmd, &i);
+			if (red == -1)
+				return ;
+			else if (red == 1)
+			{
+				g_val.cmd_table[cmd_n].redirects.in[reds_in].level = 1;
+				g_val.cmd_table[cmd_n].redirects.in[reds_in++].path = find_file(cmd, &i);
+			}
+			else if (red == 2)
+			{
+				g_val.cmd_table[cmd_n].redirects.in[reds_in].level = 2;
+				g_val.cmd_table[cmd_n].redirects.in[reds_in++].path = find_file(cmd, &i);
+			}
+			else if (red == 3)
+			{
+				g_val.cmd_table[cmd_n].redirects.out[reds_out].level = 1;
+				g_val.cmd_table[cmd_n].redirects.out[reds_out++].path = find_file(cmd, &i);
+			}
+			else if (red == 4)
+			{
+				g_val.cmd_table[cmd_n].redirects.out[reds_out].level = 2;
+				g_val.cmd_table[cmd_n].redirects.out[reds_out++].path = find_file(cmd, &i);
+			}
 		}
 		else 
 			++i;
@@ -138,14 +140,14 @@ void	parse_redirects(char *cmd, int cmd_n)
 	// printf("ins\n");
 	// while (i < count_redirects(cmd, '<'))
 	// {
-	// 	printf("%d, %s\n", g_val.cmd_table[cmd_n].redirects.in[i].level, g_val.cmd_table[cmd_n].redirects.in[i].path);
+	// 	printf("%d --- %d, %s\n", cmd_n, g_val.cmd_table[cmd_n].redirects.in[i].level, g_val.cmd_table[cmd_n].redirects.in[i].path);
 	// 	++i;
 	// }
 	// i = 0;
 	// printf("outss\n");
 	// while (i < count_redirects(cmd, '>'))
 	// {
-	// 	printf("%d, %s\n", g_val.cmd_table[cmd_n].redirects.out[i].level, g_val.cmd_table[cmd_n].redirects.out[i].path);
+	// 	printf("%d --- %d, %s\n", cmd_n, g_val.cmd_table[cmd_n].redirects.out[i].level, g_val.cmd_table[cmd_n].redirects.out[i].path);
 	// 	++i;
 	// }
 	return ;
