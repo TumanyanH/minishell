@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_redirects.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
+/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 21:52:55 by htumanya          #+#    #+#             */
-/*   Updated: 2022/03/11 20:38:11 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/03/13 20:04:53 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ char	*find_file(char *cmd, int *i)
 	fp = (char *)malloc(sizeof(char) * (count + 1));
 	ft_strlcpy(fp, (cmd + *i), count + 1);
 	*i += ft_strlen(fp);
-	printf("cmd=%s, count=%d, fp=%s\n", cmd + *i, count, fp);
 	return (fp);
 }
 

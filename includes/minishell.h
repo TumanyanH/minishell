@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 20:40:33 by htumanya          #+#    #+#             */
-/*   Updated: 2022/03/10 19:02:01 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/03/13 20:13:21 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char		**arg_split(char *str);
 char		**ft_split_by_eq(char const *s);
 void		export_error(char *cmd);
 t_list		*fill_env_list(char **envp);
-t_env_item	*find_env(t_list *env, char *envname);
+char		*find_env(char *envname);
 void		clear_globs( void );
 int			check_quotes(char *cmd);
 
@@ -84,6 +84,7 @@ int			start_parse(char *cmd_line);
 void		parse_redirects(char *cmd, int cmd_n);
 char		*cpy_till_pipe(char *cmd, int *i);
 int			count_pipes(char *cmd, int i);
-
+char		*simplifier(char *cmd);
+char    	*filter_cmd(char *cmd);
 
 #endif
