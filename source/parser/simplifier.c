@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simplifier.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 19:20:44 by htumanya          #+#    #+#             */
-/*   Updated: 2022/03/13 20:02:32 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/03/14 18:41:50 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,20 @@ char	*find_var_name(char *cmd, int i)
 		++j;
 	temp = ft_substr(cmd, i + 1, j - i);
 	temp2 = ft_strtrim(temp, "{}");
-	free(temp);
+	if (temp)
+		free(temp);
 	return (temp2);
 }
 
-char	*find_var(char *name)
+int	minichek(char *cmd, int i)
 {
-	t_list *temp;
-
-	temp = g_val.env;
-	while (ft_strncmp(temp->content->envname, name, ft_strlen(temp->content->envname)))
-	{
-		printf("lala\n");
-		temp = g_val.env->next;
-	}
-	return (temp->content->envval);
+	printf("FUCK\n");
+	if (i == 0)
+		return (1);
+	else if (cmd[i - 1] == '\'' || cmd[i - 1] == '\"' || is_space(cmd[i - 1]))
+		return (1);
+	else
+		return (0);
 }
 
 char	*simplifier(char *cmd)
@@ -60,23 +59,28 @@ char	*simplifier(char *cmd)
 	char	*tmp;
 	char	*tmp2;
 	char	*name;
-	
+	int		doub_quote_det;
+
 	i = 0;
 	quote_det = 0;
+	doub_quote_det = 0;
 	while (cmd[i] != '\0')
 	{
-		if (cmd[i] == '\'')
+		if (cmd[i] == '\"' && !quote_det)
+			doub_quote_det = !doub_quote_det;
+		if (cmd[i] == '\'' && !doub_quote_det)
 			quote_det = !quote_det;
-		if (cmd[i] == '$' && !quote_det && !is_space(cmd[i + 1]))
+		if (cmd[i] == '$' && !quote_det && !is_space(cmd[i + 1]))// && minichek(cmd, i))
 		{
 			tmp = ft_substr(cmd, 0, i);
 			name = find_var_name(cmd, i);
 			tmp = ft_strjoin(tmp, find_env(name));
-			free(name);
+			if (name)
+				free(name);
 			tmp2 = ft_substr(cmd, i + count_var_len(cmd, i),
 				ft_strlen(cmd) - i - count_var_len(cmd, i));
-			tmp = ft_strjoin(tmp, tmp2);
-			cmd = tmp;
+			cmd = ft_strjoin(tmp, tmp2);
+			printf("asd\n");
 			i = -1;
 		}
 		++i;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 21:01:42 by htumanya          #+#    #+#             */
-/*   Updated: 2022/03/13 21:33:41 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/03/14 17:51:28 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,17 @@ int	start_parse(char *cmd_line)
 	for (int j = 0; j < pipes_count; ++j)
 	{
 		temp = filter_cmd(g_val.cmd_table[j].cmd);
-		free(g_val.cmd_table[j].cmd);
+		if (g_val.cmd_table[j].cmd)
+			free(g_val.cmd_table[j].cmd);
 		g_val.cmd_table[j].cmd = ft_strdup(temp);
-		free(temp);
+		if (temp)
+			free(temp);
 		temp = simplifier(g_val.cmd_table[j].cmd);
-		free(g_val.cmd_table[j].cmd);
+		if (g_val.cmd_table[j].cmd)
+			free(g_val.cmd_table[j].cmd);
 		g_val.cmd_table[j].cmd = ft_strdup(temp);
-		free(temp);
+		if (temp)
+			free(temp);
 		printf("%d - cmd=%s, pipe=%d\n", j, g_val.cmd_table[j].cmd, g_val.cmd_table[j].has_pipe);
 	}
 	// seg fault when nothing after pipe (echo a |)
