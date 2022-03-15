@@ -6,7 +6,7 @@
 /*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 20:30:26 by htumanya          #+#    #+#             */
-/*   Updated: 2022/03/14 18:07:06 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/03/15 21:35:09 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,11 @@ int	main(int ac, char **av, char **envp)
 			add_history(cmd);
 		if (cmd == NULL)
 			successful_exit(0);
+		if (!check_structure(cmd))
+		{
+			printf("minishell: invalid syntax\n");
+			continue ;
+		}
 		if (check_quotes(cmd) == 0)
 		{
 			ft_putstr_fd("Invalid quotes\n", 1);

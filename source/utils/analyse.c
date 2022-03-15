@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyse.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 21:09:07 by ster-min          #+#    #+#             */
-/*   Updated: 2022/03/08 15:32:34 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/03/15 21:36:54 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*general_check(char *cmd)
 	i = 0;
 	index = 0;
 	count = 0;
-	while (!is_space(cmd[i]) && cmd[i])
+	while (cmd[i] && !is_space(cmd[i]))
 	{
 		if (cmd[i] != 39 && cmd[i] != 34)
 		{
@@ -94,16 +94,29 @@ void	checking_commands(char *cmd)
 		printf("minishell: %s: command not found\n", command);
 }
 
-void	check_structure(char **pipes)
+int	check_structure(char *cmd)
 {
 	int	i;
 
 	i = 0;
-	while (pipes[i])
+	cmd = ft_strtrim(cmd, " ");
+	if (cmd[i] == '|')
+		return (0);
+	while (cmd[i])
 	{
-		// check_redirect(pipes[i]);
+		
+		if (cmd[i] == '|')
+		{
+			while (is_space(cmd[++i]));
+			if ((cmd[i] == '\0' || cmd[i] == '|'))
+			{
+				printf("aaa\n");
+				return (0);
+			}
+		}
 		++i;
 	}
+	return (1);
 }
 
 void	analyse_cmd(char *cmd, char **argv)

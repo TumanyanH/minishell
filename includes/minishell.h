@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 20:40:33 by htumanya          #+#    #+#             */
-/*   Updated: 2022/03/13 20:13:21 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/03/15 21:33:00 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,6 @@ char		*cpy_till_pipe(char *cmd, int *i);
 int			count_pipes(char *cmd, int i);
 char		*simplifier(char *cmd);
 char    	*filter_cmd(char *cmd);
+int 		check_structure(char *cmd);
 
 #endif
