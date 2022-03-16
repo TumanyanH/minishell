@@ -6,7 +6,7 @@
 /*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 19:20:44 by htumanya          #+#    #+#             */
-/*   Updated: 2022/03/15 20:05:29 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/03/16 16:45:10 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,11 @@ int	count_var_len(char *s, int i)
 
 char	*find_var_name(char *cmd, int i)
 {
-	int	j;
-	char *temp;
-	char *temp2;
+	int		j;
+	char	*temp;
+	char	*temp2;
 
 	j = i + 1;
-	printf("var=%s\n", cmd + i);
 	if (!cmd[j])
 		return (NULL);
 	while (cmd[j] && !is_space(cmd[j]))
@@ -70,7 +69,7 @@ char	*simplifier(char *cmd)
 			if (name)
 				free(name);
 			tmp2 = ft_substr(cmd, i + count_var_len(cmd, i),
-				ft_strlen(cmd) - i - count_var_len(cmd, i));
+					ft_strlen(cmd) - i - count_var_len(cmd, i));
 			cmd = ft_strjoin(tmp, tmp2);
 			i = -1;
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_cmd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ster-min <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 05:33:31 by ster-min          #+#    #+#             */
-/*   Updated: 2022/02/20 19:16:40 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/03/16 18:03:58 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	check_cd(char *cmd)
 		printf("minishell: cd%s: command not found\n", cmd);
 	else
 	{
+		printf("access=%d\n", access(cmd, F_OK));
 		cmd = cmd_corrector(cmd);
 		prev_dir = getcwd(cwd, PATH_MAX + 1);
 		next_dir = ft_strjoin(cwd, "/");

@@ -6,7 +6,7 @@
 /*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 20:40:33 by htumanya          #+#    #+#             */
-/*   Updated: 2022/03/15 21:33:00 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/03/16 17:16:59 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ typedef struct s_pipes
 {
 	int			has_pipe;
 	char		*cmd;
-	t_redirects redirects;
+	t_redirects	redirects;
 }	t_pipes;
 
 struct	s_val
 {
-	t_list		*env;
 	int			last_returned;
-	// t_redirects	redirects;
+	int			pipes_count;
+	t_list		*env;
 	t_pipes		*cmd_table;
 }	g_val;
 
@@ -85,7 +85,10 @@ void		parse_redirects(char *cmd, int cmd_n);
 char		*cpy_till_pipe(char *cmd, int *i);
 int			count_pipes(char *cmd, int i);
 char		*simplifier(char *cmd);
-char    	*filter_cmd(char *cmd);
-int 		check_structure(char *cmd);
+char		*filter_cmd(char *cmd);
+int			check_structure(char *cmd);
+void		checking_commands(int i);
+char		**list_to_arr(void);
+int			count_env(void);
 
 #endif

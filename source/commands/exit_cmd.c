@@ -6,7 +6,7 @@
 /*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 21:09:27 by ster-min          #+#    #+#             */
-/*   Updated: 2022/03/15 20:15:37 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/03/16 16:08:04 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +80,19 @@ void	check_exit(char *cmd)
 			{
 				while (ret < 0)
 					ret += 256;
-				exit (ret);
+				exit(ret);
 			}
 			else if (ret > 255)
-				exit (ret % 256);
+			{
+				// if (ret > 9223372036854775807)
+				// {
+				// 	printf("minishell: exit: %s: numeric argument required", ft_itoa(ret));
+				// 	exit(255);
+				// }
+				exit(ret % 256);
+			}
 		}
 	}
 	else
 		printf("minishell: exit%s: command not found\n", cmd);
 }
-
-// not a numeric number 9223372036854775807 + 1

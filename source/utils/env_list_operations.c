@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fill_env_list.c                                    :+:      :+:    :+:   */
+/*   env_list_operations.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 16:28:26 by htumanya          #+#    #+#             */
-/*   Updated: 2022/02/24 18:07:03 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/03/16 17:19:24 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,41 @@ t_list	*fill_env_list(char **envp)
 		i++;
 	}
 	return (env);
+}
+
+int	count_env(void)
+{
+	int		len;
+	t_list	*temp;
+
+	len = 0;
+	temp = g_val.env;
+	while (temp)
+	{
+		temp = temp->next;
+		++len;
+	}
+	return (len);
+}
+
+char	**list_to_arr(void)
+{
+	char	**res;
+	int		count;
+	int		i;
+	t_list	*temp;
+
+	i = 0;
+	temp = g_val.env;
+	count = count_env();
+	res = malloc(sizeof(char *) * count + 1);
+	while (i < count)
+	{
+		res[i] = ft_strjoin(temp->content->envname, "=");
+		res[i] = ft_strjoin(res[i], temp->content->envval);
+		temp = temp->next;
+		++i;
+	}
+	res[i] = NULL;
+	return (res);
 }

@@ -6,7 +6,7 @@
 /*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 21:09:07 by ster-min          #+#    #+#             */
-/*   Updated: 2022/03/15 21:36:54 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/03/16 17:39:59 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,15 @@ char	*general_check(char *cmd)
 	return (res);
 }
 
-void	checking_commands(char *cmd)
+void	checking_commands(int i)
 {
 	char	*command;
+	char	*cmd;
+	char	**temp;
 
-	while (is_space(*cmd))
-		cmd++;
+	cmd = ft_strtrim(g_val.cmd_table[i].cmd, " ");
 	command = general_check(cmd);
+	temp = ft_split(cmd, ' ');
 	while (!is_space(*cmd) && *cmd)
 		cmd++;
 	if (cmd && ft_strncmp(command, "echo\0", 5) == 0)
@@ -90,8 +92,8 @@ void	checking_commands(char *cmd)
 		check_env(cmd);
 	else if (cmd && ft_strncmp(command, "exit\0", 5) == 0)
 		check_exit(cmd);
-	else
-		printf("minishell: %s: command not found\n", command);
+	else		
+		printf("minishell: %s: command not found\n", temp[0]);
 }
 
 int	check_structure(char *cmd)
@@ -104,15 +106,12 @@ int	check_structure(char *cmd)
 		return (0);
 	while (cmd[i])
 	{
-		
 		if (cmd[i] == '|')
 		{
-			while (is_space(cmd[++i]));
+			while (is_space(cmd[++i]))
+				;
 			if ((cmd[i] == '\0' || cmd[i] == '|'))
-			{
-				printf("aaa\n");
 				return (0);
-			}
 		}
 		++i;
 	}
@@ -121,24 +120,15 @@ int	check_structure(char *cmd)
 
 void	analyse_cmd(char *cmd, char **argv)
 {
+	int	i;
+
 	if (cmd && ft_strlen(cmd) > 0)
 	{
+		g_val.pipes_count = count_pipes(cmd, 0) + 1;
 		start_parse(cmd);
+		i = -1;
+		while (++i < g_val.pipes_count)
+			checking_commands(i);
 		clear_globs();
-	}
-}
-
-void	analyse_cmd2(char *cmd, char **argv)
-{
-	char	**pipes;
-	int		i;
-
-	if (cmd && ft_strlen(cmd) > 0)
-	{
-		add_history(cmd);
-		pipes = ft_split(cmd, '|');
-		checking_commands(pipes[0]);
-		// if (ft_strncmp(cmd, "whereis", 7) == 0)
-		// 	exec_echo(cmd);
 	}
 }
