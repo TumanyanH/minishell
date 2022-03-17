@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
+/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 05:34:09 by ster-min          #+#    #+#             */
-/*   Updated: 2022/03/16 17:44:35 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/03/17 18:05:09 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,24 +45,19 @@ void	check_export(char *cmd)
 	char	**splited;
 
 	i = 0;
-	if (is_space(*cmd) == 0 && *cmd != '\0')
-		printf("minishell: export%s: command not found\n", cmd);
+	printf("lll\n");
+	while (is_space(cmd[i]))
+		++i;
+	if (cmd[i] == '\0')
+		export_print();
 	else
 	{
-		printf("lll\n");
-		while (is_space(cmd[i]))
-			++i;
-		if (cmd[i] == '\0')
-			export_print();
-		else
+		splited = arg_split(cmd);
+		int i = 0;
+		while (splited[i])
 		{
-			splited = arg_split(cmd);
-			int i = 0;
-			while (splited[i])
-			{
-				printf("%s\n", splited[i]);
-				++i;
-			}
+			printf("%s\n", splited[i]);
+			++i;
 		}
 	}
 }

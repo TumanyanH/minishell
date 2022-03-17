@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
+/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 20:30:26 by htumanya          #+#    #+#             */
-/*   Updated: 2022/03/16 17:20:19 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/03/17 21:11:53 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	initial(char **envp)
 {
 	g_val.env = fill_env_list(envp);
 	g_val.pipes_count = 0;
+	pipe(g_val.pipes);
 	// g_val.redirects.in.path = NULL;
 	// g_val.redirects.out.path = NULL;
 }

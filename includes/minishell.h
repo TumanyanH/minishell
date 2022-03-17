@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
+/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 20:40:33 by htumanya          #+#    #+#             */
-/*   Updated: 2022/03/16 17:16:59 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/03/17 21:11:30 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ struct	s_val
 {
 	int			last_returned;
 	int			pipes_count;
+	int			pipes[2];
 	t_list		*env;
 	t_pipes		*cmd_table;
 }	g_val;
@@ -90,5 +91,7 @@ int			check_structure(char *cmd);
 void		checking_commands(int i);
 char		**list_to_arr(void);
 int			count_env(void);
+char		*ft_access(char *command);
+void		ft_exec(int i, char *acc_check);
 
 #endif

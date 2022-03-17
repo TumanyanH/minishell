@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_cmd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
+/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 05:33:31 by ster-min          #+#    #+#             */
-/*   Updated: 2022/03/17 16:30:43 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/03/17 19:43:00 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,16 @@ int	env_change(char *new_val, char *env)
 	return (0);
 }
 
+int	count_till_space(char *cmd)
+{
+	int i;
+
+	i = 0;
+	while (cmd[i] != ' ' && i < ft_strlen(cmd))
+		++i;
+	return (i);	
+}
+
 char	*cmd_corrector(char *cmd)
 {
 	char	*res;
@@ -45,15 +55,18 @@ char	*cmd_corrector(char *cmd)
 	i = 0;
 	index = 0;
 	res = (char *)malloc(ft_strlen(cmd) * sizeof(char) + 1);
-	while (is_space(cmd[i]))
-		++i;
-	if (cmd[i] == '.' && cmd[i + 1] == '/')
+	cmd = ft_strtrim(cmd, " ");
+	if (cmd[i] == '.' && cmd[i + 1] == '/' && cmd[i + 2] == '\0')
+		return (".");
+	else if (cmd[i] == '.' && cmd[i + 1] == '/' && ft_isalpha(cmd[i + 1]))
 		i += 2;
 	else if (cmd[i] == '~' && cmd[i + 1] == '/')
 		i += 2;
 	else if (cmd[i] == '~' && cmd[i + 1] == '\0')
 		++i;
-	while (cmd[i] && !is_space(cmd[i]))
+	// else if (cmd[i] == '~' && ))
+	// 	i += count_till_space(&(cmd[i]));
+	while (cmd[i])
 	{
 		res[index] = cmd[i];
 		++index;
@@ -63,33 +76,29 @@ char	*cmd_corrector(char *cmd)
 	return (res);
 }
 
-void	check_cd(char *cmd)   // ./ 
+void	check_cd(char *cmd)
 {
 	int		a;
 	char	cwd[PATH_MAX + 1];
 	char	*next_dir;
 	char	*prev_dir;
 
-	if (is_space(*cmd) == 0 && *cmd != '\0')
-		printf("minishell: cd%s: command not found\n", cmd);
-	else
+	// chdir("/var/root");
+	cmd = cmd_corrector(cmd);
+	if (*cmd == '\0')
+		chdir(find_env("HOME"));
+	else if (chdir(cmd) == -1)
 	{
-		printf("access=%d\n", access(cmd, F_OK));
-		cmd = cmd_corrector(cmd);
-		if (*cmd == '\0')
-			chdir(find_env("HOME"));
-		else if (chdir(cmd) == -1)
+		prev_dir = getcwd(cwd, PATH_MAX + 1);
+		next_dir = ft_strjoin(cwd, "/");
+		next_dir = ft_strjoin(next_dir, cmd);
+		printf("dir=%s\n", next_dir);
+		if (!chdir(next_dir))
 		{
-			prev_dir = getcwd(cwd, PATH_MAX + 1);
-			next_dir = ft_strjoin(cwd, "/");
-			next_dir = ft_strjoin(next_dir, cmd);
-			if (!chdir(next_dir))
-			{
-				env_change("lalal", "PWD");
-				env_change(prev_dir, "OLDPWD");
-			}
-			else
-				printf("minishell: cd: %s: No such file or directory\n", cmd);
+			env_change("lalal", "PWD");
+			env_change(prev_dir, "OLDPWD");
 		}
+		else
+			printf("minishell: cd: %s: No such file or directory\n", cmd);
 	}
 }

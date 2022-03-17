@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ster-min <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 15:05:37 by htumanya          #+#    #+#             */
-/*   Updated: 2022/02/20 05:39:16 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/03/17 18:05:36 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,26 +51,21 @@ void	check_echo(char *cmd)
 	int	k;
 
 	k = 0;
-	if (is_space(*cmd) == 0 && *cmd != '\0')
-		printf("minishell: echo%s: command not found\n", cmd);
-	else
+	while (is_space(*cmd))
+		cmd++;
+	k = option(cmd);
+	if (k)
+		cmd += 3;
+	while (*cmd)
 	{
-		while (is_space(*cmd))
-			cmd++;
-		k = option(cmd);
-		if (k)
-			cmd += 3;
-		while (*cmd)
-		{
-			if (*cmd == '"')
-				cmd += string_printer(cmd);
-			if (is_space(*cmd))
-				cmd += print_space(cmd);
-			else
-				printf("%c", *cmd);
-			cmd++;
-		}
-		if (k == 0)
-			printf("\n");
+		if (*cmd == '"')
+			cmd += string_printer(cmd);
+		if (is_space(*cmd))
+			cmd += print_space(cmd);
+		else
+			printf("%c", *cmd);
+		cmd++;
 	}
+	if (k == 0)
+		printf("\n");
 }

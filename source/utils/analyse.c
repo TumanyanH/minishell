@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyse.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
+/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 21:09:07 by ster-min          #+#    #+#             */
-/*   Updated: 2022/03/16 17:39:59 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/03/17 20:15:55 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	checking_commands(int i)
 	char	*command;
 	char	*cmd;
 	char	**temp;
+	char	*acc_check;
 
 	cmd = ft_strtrim(g_val.cmd_table[i].cmd, " ");
 	command = general_check(cmd);
@@ -92,8 +93,14 @@ void	checking_commands(int i)
 		check_env(cmd);
 	else if (cmd && ft_strncmp(command, "exit\0", 5) == 0)
 		check_exit(cmd);
-	else		
-		printf("minishell: %s: command not found\n", temp[0]);
+	else
+	{
+		acc_check = ft_access(command);
+		if(cmd && acc_check)
+			ft_exec(i, acc_check);
+		else
+			printf("minishell: %s: command not found\n", temp[0]);
+	}
 }
 
 int	check_structure(char *cmd)
