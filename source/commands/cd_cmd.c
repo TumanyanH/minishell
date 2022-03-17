@@ -6,7 +6,7 @@
 /*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 05:33:31 by ster-min          #+#    #+#             */
-/*   Updated: 2022/03/16 18:03:58 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/03/17 16:30:43 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,21 +44,26 @@ char	*cmd_corrector(char *cmd)
 
 	i = 0;
 	index = 0;
-	res = (char *)malloc(ft_strlen(cmd) * sizeof(char));
+	res = (char *)malloc(ft_strlen(cmd) * sizeof(char) + 1);
 	while (is_space(cmd[i]))
 		++i;
 	if (cmd[i] == '.' && cmd[i + 1] == '/')
 		i += 2;
+	else if (cmd[i] == '~' && cmd[i + 1] == '/')
+		i += 2;
+	else if (cmd[i] == '~' && cmd[i + 1] == '\0')
+		++i;
 	while (cmd[i] && !is_space(cmd[i]))
 	{
 		res[index] = cmd[i];
 		++index;
 		++i;
 	}
+	res[index] = '\0';
 	return (res);
 }
 
-void	check_cd(char *cmd)
+void	check_cd(char *cmd)   // ./ 
 {
 	int		a;
 	char	cwd[PATH_MAX + 1];
@@ -71,16 +76,20 @@ void	check_cd(char *cmd)
 	{
 		printf("access=%d\n", access(cmd, F_OK));
 		cmd = cmd_corrector(cmd);
-		prev_dir = getcwd(cwd, PATH_MAX + 1);
-		next_dir = ft_strjoin(cwd, "/");
-		next_dir = ft_strjoin(next_dir, cmd);
-		a = chdir(next_dir);
-		if (a == 0)
+		if (*cmd == '\0')
+			chdir(find_env("HOME"));
+		else if (chdir(cmd) == -1)
 		{
-			env_change("lalal", "PWD");
-			env_change(prev_dir, "OLDPWD");
+			prev_dir = getcwd(cwd, PATH_MAX + 1);
+			next_dir = ft_strjoin(cwd, "/");
+			next_dir = ft_strjoin(next_dir, cmd);
+			if (!chdir(next_dir))
+			{
+				env_change("lalal", "PWD");
+				env_change(prev_dir, "OLDPWD");
+			}
+			else
+				printf("minishell: cd: %s: No such file or directory\n", cmd);
 		}
-		else
-			printf("minishell: cd: %s: No such file or directory\n", cmd);
 	}
 }
