@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 21:09:17 by ster-min          #+#    #+#             */
-/*   Updated: 2022/03/17 20:51:52 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/03/18 16:38:24 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	ft_exec(int i, char *acc_check)
 	if (pid < 0)
 		printf("Error: fork not forked\n");
 	else if (!pid)
-		execve(acc_check, ft_split(g_val.cmd_table[i].cmd, ' '),envars);
+		execve(acc_check, ft_split(g_val.cmd_table[i].cmd, ' '), envars);
 	else
 		waitpid(pid, NULL, 0);
 }
