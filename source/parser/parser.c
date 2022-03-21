@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
+/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 21:01:42 by htumanya          #+#    #+#             */
-/*   Updated: 2022/03/16 16:50:11 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/03/21 20:04:18 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	start_parse(char *cmd_line)
 	i = -1;
 	while (++i < g_val.pipes_count)
 	{
+		pipe(g_val.cmd_table[i].pipes);
 		temp = filter_cmd(g_val.cmd_table[i].cmd);
 		if (g_val.cmd_table[i].cmd)
 			free(g_val.cmd_table[i].cmd);
@@ -44,12 +45,11 @@ int	start_parse(char *cmd_line)
 		if (temp)
 			free(temp);
 		temp = simplifier(g_val.cmd_table[i].cmd);
-		if (g_val.cmd_table[i].cmd)
-			free(g_val.cmd_table[i].cmd);
+		// if (g_val.cmd_table[i].cmd)
+		// 	free(g_val.cmd_table[i].cmd);
 		g_val.cmd_table[i].cmd = ft_strdup(temp);
 		if (temp)
 			free(temp);
 	}
 	return (0);
 }
-// printf("%d - cmd=%s, pipe=%d\n", j, g_val.cmd_table[j].cmd, g_val.cmd_table[j].has_pipe);

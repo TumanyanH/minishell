@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simplifier.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
+/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 19:20:44 by htumanya          #+#    #+#             */
-/*   Updated: 2022/03/16 16:45:10 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/03/21 20:42:41 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ char	*simplifier(char *cmd)
 	char	*tmp2;
 	char	*name;
 	int		doub_quote_det;
+	t_list	*temp;
 
 	i = 0;
 	quote_det = 0;
@@ -65,7 +66,8 @@ char	*simplifier(char *cmd)
 		{
 			tmp = ft_substr(cmd, 0, i);
 			name = find_var_name(cmd, i);
-			tmp = ft_strjoin(tmp, find_env(name));
+			temp = find_env(name);
+			tmp = ft_strjoin(tmp, temp->content->envval);
 			if (name)
 				free(name);
 			tmp2 = ft_substr(cmd, i + count_var_len(cmd, i),

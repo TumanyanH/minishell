@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 20:40:33 by htumanya          #+#    #+#             */
-/*   Updated: 2022/03/17 21:11:30 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/03/21 20:19:03 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <readline/history.h>
 # include <signal.h>
 # include <limits.h>
+# include <fcntl.h>
 
 typedef struct s_redirect
 {
@@ -39,6 +40,7 @@ typedef struct s_pipes
 {
 	int			has_pipe;
 	char		*cmd;
+	int			pipes[2];
 	t_redirects	redirects;
 }	t_pipes;
 
@@ -46,7 +48,6 @@ struct	s_val
 {
 	int			last_returned;
 	int			pipes_count;
-	int			pipes[2];
 	t_list		*env;
 	t_pipes		*cmd_table;
 }	g_val;
@@ -71,7 +72,7 @@ char		**arg_split(char *str);
 char		**ft_split_by_eq(char const *s);
 void		export_error(char *cmd);
 t_list		*fill_env_list(char **envp);
-char		*find_env(char *envname);
+t_list		*find_env(char *envname);
 void		clear_globs( void );
 int			check_quotes(char *cmd);
 

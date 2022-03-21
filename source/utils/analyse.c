@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 21:09:07 by ster-min          #+#    #+#             */
-/*   Updated: 2022/03/17 20:15:55 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/03/21 18:22:09 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,17 @@ int	check_structure(char *cmd)
 		++i;
 	}
 	return (1);
+}
+
+void start_executor()
+{
+	int i;
+	// char	**envars;
+	pid_t	pid;
+
+	// envars = list_to_arr();
+	
+	
 }
 
 void	analyse_cmd(char *cmd, char **argv)

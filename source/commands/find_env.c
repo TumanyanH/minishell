@@ -6,13 +6,13 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 21:09:17 by ster-min          #+#    #+#             */
-/*   Updated: 2022/03/19 21:56:47 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/03/21 20:23:31 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*find_env(char *envname)
+t_list	*find_env(char *envname)
 {
 	t_list	*tmp;
 	int		flag;
@@ -28,7 +28,7 @@ char	*find_env(char *envname)
 		if (tmp == NULL)
 			return (NULL);
 	}
-	return (tmp->content->envval);
+	return (tmp);
 }
 
 char	*ft_access(char *command)
@@ -36,9 +36,11 @@ char	*ft_access(char *command)
 	char	**path;
 	char	*abs_path;
 	int		i;
+	t_list	*temp;
 
 	i = 0;
-	path = ft_split(find_env("PATH"), ':');
+	temp = find_env("PATH");
+	path = ft_split(temp->content->envval, ':');
 	while (path[i])
 	{
 		abs_path = ft_strjoin(ft_strjoin(path[i], "/"), command);
@@ -53,8 +55,7 @@ void	ft_exec(int i, char *acc_check)
 {
 	char	**envars;
 	pid_t	pid;
-	int		status;
-
+	
 	envars = list_to_arr();
 	pid = fork();
 	if (pid < 0)
@@ -62,17 +63,18 @@ void	ft_exec(int i, char *acc_check)
 	else if (!pid)
 	{
 		if (g_val.cmd_table[i].has_pipe)
-			dup2(0, g_val.pipes[1]);
-		dup2(1, g_val.pipes[0]);
-		if (i == g_val.pipes_count - 1)
-		{
-			// dup2(g_val.pipes[0], 0);
-			dup2(g_val.pipes[1], 1);
-		}
-		execve(acc_check, ft_split(g_val.cmd_table[i].cmd, ' '), envars);
-		// dup2(g_val.pipes[1], 1);
+			dup2(g_val.cmd_table[i].pipes[0], STDIN_FILENO);
+		dup2(STDOUT_FILENO, g_val.cmd_table[i].pipes[1]);
+		close(g_val.cmd_table[i].pipes[1]);
+		if (i != g_val.pipes_count - 1)
+			dup2(g_val.cmd_table[i + 1].pipes[1], STDOUT_FILENO);
 		
+		execve(acc_check, ft_split(g_val.cmd_table[i].cmd, ' '), envars);
 	}
 	else
+	{
+		if (i < g_val.pipes_count)
+			close (g_val.cmd_table[i].pipes[1]);
 		waitpid(pid, NULL, 0);
+	}
 }
