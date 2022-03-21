@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 05:33:31 by ster-min          #+#    #+#             */
-/*   Updated: 2022/03/21 21:49:19 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/03/21 21:54:14 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 int	count_till_space(char *cmd)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (cmd[i] != ' ' && i < ft_strlen(cmd))
 		++i;
-	return (i);	
+	return (i);
 }
 
 char	*cmd_corrector(char *cmd)
@@ -30,25 +30,11 @@ char	*cmd_corrector(char *cmd)
 
 	i = 0;
 	index = 0;
-	res = (char *)malloc(ft_strlen(cmd) * sizeof(char) + 1);
 	cmd = ft_strtrim(cmd, " ");
-	if (cmd[i] == '.' && cmd[i + 1] == '/' && cmd[i + 2] == '\0')
-		return (".");
-	else if (cmd[i] == '.' && cmd[i + 1] == '/' && ft_isalpha(cmd[i + 1]))
-		i += 2;
-	else if (cmd[i] == '~' && cmd[i + 1] == '/')
-		i += 2;
-	else if (cmd[i] == '~' && cmd[i + 1] == '\0')
-		++i;
-	// else if (cmd[i] == '~' && ))
-	// 	i += count_till_space(&(cmd[i]));
-	while (cmd[i])
-	{
-		res[index] = cmd[i];
-		++index;
-		++i;
-	}
-	res[index] = '\0';
+	if (cmd[0] == '~')
+		res = ft_strjoin(find_env("HOME"), cmd + 1);
+	else
+		return (cmd);
 	return (res);
 }
 
