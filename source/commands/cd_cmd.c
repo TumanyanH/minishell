@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_cmd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 05:33:31 by ster-min          #+#    #+#             */
-/*   Updated: 2022/03/21 21:54:14 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/03/22 17:46:17 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,14 @@ char	*cmd_corrector(char *cmd)
 	char	*res;
 	int		i;
 	int		index;
+	t_list	*temp;
 
 	i = 0;
 	index = 0;
+	temp = find_env("HOME");
 	cmd = ft_strtrim(cmd, " ");
 	if (cmd[0] == '~')
-		res = ft_strjoin(find_env("HOME"), cmd + 1);
+		res = ft_strjoin(temp->content->envval, cmd + 1);
 	else
 		return (cmd);
 	return (res);
@@ -52,6 +54,8 @@ void	check_cd(char *cmd)
 	{
 		chdir(temp->content->envval);
 		next_dir = temp->content->envval;
+		// temp = find_env("OLDPWD");
+		// temp->content->envval = prev_dir;
 	}
 	else if (chdir(cmd) == -1)
 	{
@@ -60,16 +64,19 @@ void	check_cd(char *cmd)
 		if (!chdir(next_dir))
 		{
 			temp = find_env("PWD");
-			temp->content->envval = next_dir;
+			// temp->content->envval = next_dir;
 		}
 		else
-			printf("minishell: cd: %s: No such file or directory\n", cmd); // heto exit
+		{
+			printf("minishell: cd: %s: No such file or directory\n", cmd);
+			return ;
+		}
 	}
 	else
 		next_dir = cmd;
 	temp = find_env("PWD");
 	temp->content->envval = next_dir;
 	temp = find_env("OLDPWD");
-	// printf("hey=%s\n", );
 	temp->content->envval = prev_dir;
+	printf("hey=%s\n", prev_dir);
 }
