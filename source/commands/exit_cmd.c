@@ -68,18 +68,25 @@ void	check_exit(char *cmd)
 	int	quote;
 
 	if (*cmd == '\0')
+	{
+		kill (getppid(), 9);
 		exit(0);
+	}
 	else if (is_space(*cmd))
 	{
 		ret = ft_atoi(atoi_helper(cmd, &quote), &checker, quote);
 		if (checker == 0)
 		{
 			if (ret >= 0 && ret <= 255)
+			{
+				kill (getppid(), 9);
 				exit(ret);
+			}
 			else if (ret < 0)
 			{
 				while (ret < 0)
 					ret += 256;
+				kill (getppid(), 9);
 				exit(ret);
 			}
 			else if (ret > 255)
@@ -89,6 +96,7 @@ void	check_exit(char *cmd)
 				// 	printf("minishell: exit: %s: numeric argument required", ft_itoa(ret));
 				// 	exit(255);
 				// }
+				kill (getppid(), 9);
 				exit(ret % 256);
 			}
 		}

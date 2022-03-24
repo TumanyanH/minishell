@@ -33,6 +33,7 @@ int	main(int ac, char **av, char **envp)
 	initial(envp);
 	while (1)
 	{
+		printf("fuck%d\n", getpid());
 		cmd = readline("minishell> ");
 		if (cmd[0] != '\0')
 			add_history(cmd);
