@@ -68,4 +68,5 @@ void	check_echo(char *cmd)
 	}
 	if (k == 0)
 		printf("\n");
+	exit(0);
 }

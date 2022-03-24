@@ -57,18 +57,19 @@ void	check_cd(char *cmd)
 {
 	int		a;
 	char	prev_dir[PATH_MAX + 1];
-	char	*next_dir;
+	char	next_dir[PATH_MAX + 1];
 	t_list	*temp;
 	t_list	*old;
+	char	*lala;
+	char	*lala2;
 
 	temp = find_env("HOME");
 	cmd = cmd_corrector(cmd);
-	getcwd(prev_dir, PATH_MAX + 1);
+	old = find_env("OLDPWD");
+	old->content->envval = getcwd(prev_dir, PATH_MAX + 1);
+	// lala2 = prev_dir;
 	if (*cmd == '\0')
-	{
 		chdir(temp->content->envval);
-		next_dir = temp->content->envval;
-	}
 	else if (*cmd == '-')
 	{
 		old = find_env("OLDPWD");
@@ -77,18 +78,18 @@ void	check_cd(char *cmd)
 			if (chdir(old->content->envval) == -1)
 			{
 				printf("minishell: cd: %s: No such file or directory\n", cmd);
+				exit(1);
 			}
 		}
 	}
 	else if (chdir(cmd) == -1)
 	{
 		printf("minishell: cd: %s: No such file or directory\n", cmd);
-		return ;
+		exit(1);
 	}
-	else
-		next_dir = cmd;
+	// lala = next_dir;
+	// printf("%s\n", prev_dir);
 	temp = find_env("PWD");
-	temp->content->envval = next_dir;
-	temp = find_env("OLDPWD");
-	temp->content->envval = prev_dir;
+	temp->content->envval = getcwd(next_dir, PATH_MAX + 1);
+	// exit(0);
 }

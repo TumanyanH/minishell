@@ -25,6 +25,8 @@ int	main(int ac, char **av, char **envp)
 {
 	char	*cmd;
 	char	**argv;
+	t_list	*list;
+	char	path[PATH_MAX + 1];
 
 	write(1, "\033[2J", 4);
 	write(1, "\033[H", 3);

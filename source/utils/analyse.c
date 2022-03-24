@@ -139,6 +139,7 @@ void start_executor()
 void	analyse_cmd(char *cmd, char **argv)
 {
 	int	i;
+	pid_t pid;
 
 	if (cmd && ft_strlen(cmd) > 0)
 	{
@@ -146,7 +147,27 @@ void	analyse_cmd(char *cmd, char **argv)
 		start_parse(cmd);
 		i = -1;
 		while (++i < g_val.pipes_count)
-			checking_commands(i);
+		{
+			pid = fork();
+			if (pid < 0)
+				printf("Error: fork not forked\n");
+			else if (!pid)
+			{
+				if (g_val.cmd_table[i].has_pipe)
+					dup2(g_val.cmd_table[i].pipes[0], STDIN_FILENO);
+				dup2(STDOUT_FILENO, g_val.cmd_table[i].pipes[1]);
+				close(g_val.cmd_table[i].pipes[1]);
+				if (i != g_val.pipes_count - 1)
+					dup2(g_val.cmd_table[i + 1].pipes[1], STDOUT_FILENO);
+				checking_commands(i);
+			}
+			else
+			{
+				if (i < g_val.pipes_count)
+					close (g_val.cmd_table[i].pipes[1]);
+				waitpid(pid, NULL, 0);
+			}
+		}
 		clear_globs();
 	}
 }

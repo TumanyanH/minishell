@@ -94,5 +94,5 @@ void	check_exit(char *cmd)
 		}
 	}
 	else
-		printf("minishell: exit%s: command not found\n", cmd);
+		printf("minishell: exit%s: command not found\n", cmd); 
 }

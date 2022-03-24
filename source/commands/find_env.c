@@ -32,6 +32,17 @@ t_list	*find_env(char *envname)
 	return (tmp);
 }
 
+int		find_slash(char *cmd)
+{
+	while (*cmd)
+	{
+		if (*cmd == '/')
+			return (1);
+		cmd++;
+	}
+	return (0);
+}
+
 char	*ft_access(char *command)
 {
 	char	**path;
@@ -42,6 +53,11 @@ char	*ft_access(char *command)
 	i = 0;
 	temp = find_env("PATH");
 	path = ft_split(temp->content->envval, ':');
+	if (find_slash(command))
+	{
+		if (!access(command, F_OK))
+			return (command);
+	}
 	while (path[i])
 	{
 		abs_path = ft_strjoin(ft_strjoin(path[i], "/"), command);
@@ -55,27 +71,12 @@ char	*ft_access(char *command)
 void	ft_exec(int i, char *acc_check)
 {
 	char	**envars;
-	pid_t	pid;
-	
+	int 	j;
+
+	j = -1;
 	envars = list_to_arr();
-	pid = fork();
-	if (pid < 0)
-		printf("Error: fork not forked\n");
-	else if (!pid)
-	{
-		if (g_val.cmd_table[i].has_pipe)
-			dup2(g_val.cmd_table[i].pipes[0], STDIN_FILENO);
-		dup2(STDOUT_FILENO, g_val.cmd_table[i].pipes[1]);
-		close(g_val.cmd_table[i].pipes[1]);
-		if (i != g_val.pipes_count - 1)
-			dup2(g_val.cmd_table[i + 1].pipes[1], STDOUT_FILENO);
-		
-		execve(acc_check, ft_split(g_val.cmd_table[i].cmd, ' '), envars);
-	}
-	else
-	{
-		if (i < g_val.pipes_count)
-			close (g_val.cmd_table[i].pipes[1]);
-		waitpid(pid, NULL, 0);
-	}
+	execve(acc_check, ft_split(g_val.cmd_table[i].cmd, ' '), envars);
+	while (envars[++j])
+		free(envars[j]);
+	free(envars);
 }

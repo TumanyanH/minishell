@@ -17,4 +17,5 @@ void	check_pwd(char *cmd)
 	char	cwd[PATH_MAX + 1];
 
 	printf("%s\n", getcwd(cwd, PATH_MAX + 1));
+	exit(0);
 }

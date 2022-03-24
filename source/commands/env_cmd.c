@@ -26,7 +26,9 @@ void	check_env(char *cmd)
 			printf("%s=%s\n", temp->content->envname, temp->content->envval);
 			temp = temp->next;
 		}
+		exit(0);
 	}
 	else
 		printf("env: %s: No such file or directory\n", cmd);
+	exit(127);
 }
