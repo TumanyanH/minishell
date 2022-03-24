@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_cmd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 05:33:31 by ster-min          #+#    #+#             */
-/*   Updated: 2022/03/22 18:49:06 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/03/23 21:26:41 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,19 @@ char	*cmd_corrector(char *cmd)
 	return (res);
 }
 
+char	*make_abs_path(char *arg)
+{
+	int	count_back;
+
+	count_back = 0;
+	while (ft_strncmp(arg, "../", 3))
+	{
+		arg += 3;
+		// arg = 
+	}
+	return (arg);
+}
+
 void	check_cd(char *cmd)
 {
 	int		a;
@@ -70,7 +83,7 @@ void	check_cd(char *cmd)
 	else if (chdir(cmd) == -1)
 	{
 		printf("minishell: cd: %s: No such file or directory\n", cmd);
-		return ;        
+		return ;
 	}
 	else
 		next_dir = cmd;
