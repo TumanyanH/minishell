@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 20:40:33 by htumanya          #+#    #+#             */
-/*   Updated: 2022/03/21 20:19:03 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/03/26 17:29:58 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ struct	s_val
 	t_pipes		*cmd_table;
 }	g_val;
 
+
 void		analyse_cmd(char *cmd, char **argv);
 void		successful_exit(int a);
 void		check_exit(char *cmd);
@@ -89,7 +90,7 @@ int			count_pipes(char *cmd, int i);
 char		*simplifier(char *cmd);
 char		*filter_cmd(char *cmd);
 int			check_structure(char *cmd);
-void		checking_commands(int i);
+void		checking_commands(int i, char *command, char *cmd);
 char		**list_to_arr(void);
 int			count_env(void);
 char		*ft_access(char *command);

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htumanya <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 20:03:35 by htumanya          #+#    #+#             */
-/*   Updated: 2021/10/24 19:12:18 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/03/26 17:42:54 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	nbrlen(int nbr)
+static int	nbrlen(unsigned long long nbr)
 {
 	int	i;
 
@@ -30,10 +30,10 @@ static int	nbrlen(int nbr)
 	return (i);
 }
 
-char	*ft_itoa(int n)
+char	*ft_itoa(unsigned long long n)
 {
 	char	*str;
-	long	nbr;
+	unsigned long long	nbr;
 	int		len;
 
 	nbr = n;

@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 16:41:10 by htumanya          #+#    #+#             */
-/*   Updated: 2022/03/08 16:19:25 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/03/28 20:18:24 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,21 @@ void	clear_memory()
 
 void	clear_globs( void )
 {
-	// if (g_val.redirects.in.path)
-	// {
-	// 	free(g_val.redirects.in.path);
-	// 	g_val.redirects.in.path = NULL;
-	// }
-	// if (g_val.redirects.out.path)
-	// {
-	// 	free(g_val.redirects.out.path);
-	// 	g_val.redirects.out.path = NULL;
-	// }
-	// g_val.redirects.in.level = 0;
-	// g_val.redirects.out.level = 0;
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < g_val.cmd_table)
+	{
+		if (g_val.cmd_table[i].cmd)
+			free(g_val.cmd_table[i].cmd);
+		j = 0;
+		while (g_val.cmd_table[i].redirects.in[j].path)
+		{
+			if (g_val.cmd_table[i].redirects.in[j].path)
+				free(g_val.cmd_table[i].redirects.in[j].path);
+			++j;
+		}
+		free(g_val.cmd_table[i].redirects.in[j]);
+	}
 }

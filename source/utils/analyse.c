@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 21:09:07 by ster-min          #+#    #+#             */
-/*   Updated: 2022/03/21 18:22:09 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/03/28 20:03:42 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,50 +32,59 @@ int	check_dub_quote(char *str)
 	return (0);
 }
 
-char	*general_check(char *cmd)
+char	*to_lower(char *cmd)
 {
 	int		i;
-	int		count;
-	int		index;
 	char	*res;
 
-	res = (char *)malloc(sizeof(char) * ft_strlen(cmd));
+	res = (char *)malloc(sizeof(char) * ft_strlen(cmd) + 1);
 	i = 0;
-	index = 0;
-	count = 0;
 	while (cmd[i] && !is_space(cmd[i]))
 	{
-		if (cmd[i] != 39 && cmd[i] != 34)
-		{
-			res[index] = ft_tolower(cmd[i]);
-			++index;
-		}
-		else
-			++count;
+		res[i] = ft_tolower(cmd[i]);
 		++i;
-		if (count % 2 == 1 && is_space(cmd[i]) && cmd[i] != '\0')
-		{
-			while (is_space(cmd[i]) && cmd[i] != '\0')
-			{
-				res[index] = ft_tolower(cmd[i]);
-				++index;
-				++i;
-			}
-		}
 	}
-	res[index] = '\0';
+	res[i] = '\0';
 	return (res);
 }
 
-void	checking_commands(int i)
+char	*quote_skip(char *str)
 {
-	char	*command;
-	char	*cmd;
+	char	*res;
+	int		i;
+	int		j;
+	int		len;
+
+	i = 0;
+	j = 0;
+	len = 0;
+	while (str[i] && !is_space(str[i]))
+	{
+		if (str[i] != '\'' && str[i] != '\"')
+			len++;
+		++i;
+	}
+	res = malloc(sizeof(char) * len + 1);
+	i = 0;
+	while (str[i] && !is_space(str[i]))
+	{
+		if (str[i] != '\'' && str[i] != '\"')
+		{
+			res[j] = str[i];
+			++j;
+		}
+		++i;
+	}
+	res[j] = '\0';
+	return (res);
+}
+
+void	checking_commands(int i, char *command, char *cmd)
+{
 	char	**temp;
 	char	*acc_check;
 
-	cmd = ft_strtrim(g_val.cmd_table[i].cmd, " ");
-	command = general_check(cmd);
+	command = to_lower(command);
 	temp = ft_split(cmd, ' ');
 	while (!is_space(*cmd) && *cmd)
 		cmd++;
@@ -91,15 +100,16 @@ void	checking_commands(int i)
 		check_unset(cmd);
 	else if (cmd && ft_strncmp(command, "env\0", 4) == 0)
 		check_env(cmd);
-	else if (cmd && ft_strncmp(command, "exit\0", 5) == 0)
-		check_exit(cmd);
 	else
 	{
 		acc_check = ft_access(command);
 		if(cmd && acc_check)
 			ft_exec(i, acc_check);
 		else
+		{
 			printf("minishell: %s: command not found\n", temp[0]);
+			exit(127);
+		}
 	}
 }
 
@@ -136,10 +146,66 @@ void start_executor()
 	
 }
 
+int	prompt_heredoc(char *delim)
+{
+	char *read;
+	int fd;
+
+	fd = open("./.tmp", O_CREAT | O_RDWR | O_APPEND, 0766);
+	while (1)
+	{
+		read = readline(">");
+		if (!ft_strncmp(read, delim, ft_strlen(read)))
+			break ;
+		else
+		{
+			write(fd, read, ft_strlen(read));
+			write(fd, "\n", 1);
+		}
+	}
+	return (fd);
+}
+
+int find_aprop_in(int i)
+{
+	int j;
+	int fd;
+
+	fd = g_val.cmd_table[i].pipes[0];
+	j = 0;
+	while (g_val.cmd_table[i].redirects.in[j].path)
+	{
+		if (fd != g_val.cmd_table[i].pipes[0])
+			close(fd);
+		if (g_val.cmd_table[i].redirects.in[j].level == 2)
+		{
+			if (!access("./.tmp", O_RDWR))
+				unlink("./.tmp");
+			fd = prompt_heredoc(g_val.cmd_table[i].redirects.in[j].path);
+			printf("+++++%d\n", fd);
+		}
+		else
+		{
+			if (!access(g_val.cmd_table[i].redirects.in[j].path, O_RDONLY))
+				fd = open(g_val.cmd_table[i].redirects.in[j].path, O_RDONLY);
+			else 
+			{
+				printf("--minishell: %s: No such file or directory\n", g_val.cmd_table[i].redirects.in[j].path);
+				exit(1);
+			}
+			printf("-----%d\n", fd);
+		}
+		j++;
+	}
+	return (fd);
+}
+
 void	analyse_cmd(char *cmd, char **argv)
 {
-	int	i;
-	pid_t pid;
+	int		i;
+	char	*command;
+	pid_t	pid;
+	int		fd;
 
 	if (cmd && ft_strlen(cmd) > 0)
 	{
@@ -148,18 +214,31 @@ void	analyse_cmd(char *cmd, char **argv)
 		i = -1;
 		while (++i < g_val.pipes_count)
 		{
+			cmd = ft_strtrim(g_val.cmd_table[i].cmd, " ");
+			command = quote_skip(cmd);
+			if (cmd && ft_strncmp(command, "exit\0", 5) == 0)
+			{
+				while (*cmd && !is_space(*cmd))
+					cmd++;
+				check_exit(cmd);
+			}
 			pid = fork();
 			if (pid < 0)
 				printf("Error: fork not forked\n");
 			else if (!pid)
 			{
-				if (g_val.cmd_table[i].has_pipe)
-					dup2(g_val.cmd_table[i].pipes[0], STDIN_FILENO);
+				if (g_val.cmd_table[i].has_pipe || g_val.cmd_table[i].redirects.in[0].path)
+				{
+					// fd = g_val.cmd_table[i].pipes[0];
+					fd = find_aprop_in(i);
+					printf("+_+_+_%d\n", fd);
+					dup2(fd, STDIN_FILENO);
+				}
 				dup2(STDOUT_FILENO, g_val.cmd_table[i].pipes[1]);
 				close(g_val.cmd_table[i].pipes[1]);
 				if (i != g_val.pipes_count - 1)
 					dup2(g_val.cmd_table[i + 1].pipes[1], STDOUT_FILENO);
-				checking_commands(i);
+				checking_commands(i, command, cmd);
 			}
 			else
 			{

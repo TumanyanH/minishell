@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 21:09:17 by ster-min          #+#    #+#             */
-/*   Updated: 2022/03/21 21:52:37 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/03/27 16:09:57 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,10 @@ void	ft_exec(int i, char *acc_check)
 {
 	char	**envars;
 	int 	j;
+	// char	buff[1024];
 
+	// read(STDIN_FILENO, buff, 1024);
+	// printf("%s\n", buff);
 	j = -1;
 	envars = list_to_arr();
 	execve(acc_check, ft_split(g_val.cmd_table[i].cmd, ' '), envars);

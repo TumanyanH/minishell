@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ster-min <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 05:09:17 by ster-min          #+#    #+#             */
-/*   Updated: 2022/02/20 05:38:32 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/03/26 17:33:50 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	error_writer(char *str, int quote)
 int	ft_atoi(char *str, int *check, int quote)
 {
 	int		i;
-	int		res;
+	unsigned long long		res;
 	int		sign;
 
 	i = 0;
