@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 21:09:07 by ster-min          #+#    #+#             */
-/*   Updated: 2022/03/28 20:03:42 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/03/29 21:30:18 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,8 @@ int find_aprop_in(int i)
 			if (!access("./.tmp", O_RDWR))
 				unlink("./.tmp");
 			fd = prompt_heredoc(g_val.cmd_table[i].redirects.in[j].path);
-			printf("+++++%d\n", fd);
+			close(fd);
+			fd = open("./.tmp", O_RDONLY);
 		}
 		else
 		{
@@ -193,7 +194,36 @@ int find_aprop_in(int i)
 				printf("--minishell: %s: No such file or directory\n", g_val.cmd_table[i].redirects.in[j].path);
 				exit(1);
 			}
-			printf("-----%d\n", fd);
+		}
+		j++;
+	}
+	return (fd);
+}
+
+int	find_aprop_out(int i)
+{
+	int fd;
+	int	j;
+	int perms;
+
+	perms = 0;
+	j = 0;
+	fd = 1;
+	if (i != g_val.pipes_count - 1)
+		fd = g_val.cmd_table[i + 1].pipes[1];
+	while (g_val.cmd_table[i].redirects.out[j].path)
+	{
+		printf("mta\n");
+		if (fd != g_val.cmd_table[i + 1].pipes[1] && fd != 1)
+			close(fd);
+		if (g_val.cmd_table[i].redirects.out[j].level == 2)
+			fd = open(g_val.cmd_table[i].redirects.out[j].path, O_CREAT | O_RDWR | O_APPEND, 0766);
+ 		else if (g_val.cmd_table[i].redirects.out[j].level == 1)
+			fd = open(g_val.cmd_table[i].redirects.out[j].path, O_CREAT | O_RDWR, 0766);
+		if (fd < 0)
+		{
+			printf("minishell: %s: file can not be created!\n", g_val.cmd_table[i].redirects.out[j].path);
+			exit(1);
 		}
 		j++;
 	}
@@ -205,8 +235,9 @@ void	analyse_cmd(char *cmd, char **argv)
 	int		i;
 	char	*command;
 	pid_t	pid;
-	int		fd;
-
+	int		fd_in;
+	int		fd_out;
+	
 	if (cmd && ft_strlen(cmd) > 0)
 	{
 		g_val.pipes_count = count_pipes(cmd, 0) + 1;
@@ -229,15 +260,15 @@ void	analyse_cmd(char *cmd, char **argv)
 			{
 				if (g_val.cmd_table[i].has_pipe || g_val.cmd_table[i].redirects.in[0].path)
 				{
-					// fd = g_val.cmd_table[i].pipes[0];
-					fd = find_aprop_in(i);
-					printf("+_+_+_%d\n", fd);
-					dup2(fd, STDIN_FILENO);
+					fd_in = find_aprop_in(i);
+					dup2(fd_in, STDIN_FILENO);
 				}
 				dup2(STDOUT_FILENO, g_val.cmd_table[i].pipes[1]);
 				close(g_val.cmd_table[i].pipes[1]);
-				if (i != g_val.pipes_count - 1)
-					dup2(g_val.cmd_table[i + 1].pipes[1], STDOUT_FILENO);
+				fd_out = find_aprop_out(i);
+				printf("out fd = %d\n", fd_out);
+				if (fd_out != 1)
+					dup2(fd_out, STDOUT_FILENO);
 				checking_commands(i, command, cmd);
 			}
 			else
@@ -247,6 +278,6 @@ void	analyse_cmd(char *cmd, char **argv)
 				waitpid(pid, NULL, 0);
 			}
 		}
-		clear_globs();
+		// clear_globs();
 	}
 }

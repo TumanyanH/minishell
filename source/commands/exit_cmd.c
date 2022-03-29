@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 21:09:27 by ster-min          #+#    #+#             */
-/*   Updated: 2022/03/28 19:27:01 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/03/29 20:08:11 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	exit_keypass(void)
 	sa.sa_handler = successful_exit;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
-	signal(SIGINT, SIG_IGN);
+	// signal(SIGINT, SIG_IGN);
 }
 
 char	*atoi_helper(char *str, int *quote)
