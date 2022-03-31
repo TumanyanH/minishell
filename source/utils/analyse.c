@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 21:09:07 by ster-min          #+#    #+#             */
-/*   Updated: 2022/03/29 21:30:18 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/03/31 17:17:47 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,9 +265,9 @@ void	analyse_cmd(char *cmd, char **argv)
 				}
 				dup2(STDOUT_FILENO, g_val.cmd_table[i].pipes[1]);
 				close(g_val.cmd_table[i].pipes[1]);
-				fd_out = find_aprop_out(i);
-				printf("out fd = %d\n", fd_out);
-				if (fd_out != 1)
+				// fd_out = find_aprop_out(i);
+				// printf("out fd = %d\n", fd_out);
+				// if (fd_out != 1)
 					dup2(fd_out, STDOUT_FILENO);
 				checking_commands(i, command, cmd);
 			}

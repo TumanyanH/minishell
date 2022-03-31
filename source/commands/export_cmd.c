@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 05:34:09 by ster-min          #+#    #+#             */
-/*   Updated: 2022/03/17 18:05:09 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/03/31 17:24:38 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,24 @@ void	check_export(char *cmd)
 	char	**splited;
 
 	i = 0;
-	printf("lll\n");
-	while (is_space(cmd[i]))
-		++i;
-	if (cmd[i] == '\0')
-		export_print();
-	else
+	splited = my_split(cmd);
+	while (cmd[i])
 	{
-		splited = arg_split(cmd);
-		int i = 0;
-		while (splited[i])
-		{
-			printf("%s\n", splited[i]);
-			++i;
-		}
+		/* code */
 	}
+	
+	// while (is_space(cmd[i]))
+	// 	++i;
+	// if (cmd[i] == '\0')
+	// 	export_print();
+	// else
+	// {
+	// 	splited = arg_split(cmd);
+	// 	int i = 0;
+	// 	while (splited[i])
+	// 	{
+	// 		printf("%s\n", splited[i]);
+	// 		++i;
+	// 	}
+	// }
 }
