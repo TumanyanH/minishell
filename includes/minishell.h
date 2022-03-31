@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 20:40:33 by htumanya          #+#    #+#             */
-/*   Updated: 2022/03/26 17:29:58 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/03/30 20:21:47 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,6 @@ char		**list_to_arr(void);
 int			count_env(void);
 char		*ft_access(char *command);
 void		ft_exec(int i, char *acc_check);
+char		**my_split(char *str);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 20:30:26 by htumanya          #+#    #+#             */
-/*   Updated: 2022/03/28 19:28:35 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/03/31 15:26:26 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	initial(char **envp)
 	// g_val.redirects.in.path = NULL;
 	// g_val.redirects.out.path = NULL;
 }
+int count_objs(char *str);
 
 int	main(int ac, char **av, char **envp)
 {
