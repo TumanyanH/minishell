@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 20:40:33 by htumanya          #+#    #+#             */
-/*   Updated: 2022/03/30 20:21:47 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/04/02 20:54:10 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,21 @@ typedef struct s_redirects
 	t_redirect	*out;
 }	t_redirects;
 
-typedef struct s_pipes
+typedef struct s_commands
 {
 	int			has_pipe;
 	char		*cmd;
-	int			pipes[2];
 	t_redirects	redirects;
-}	t_pipes;
+}	t_commands;
 
 struct	s_val
 {
 	int			last_returned;
 	int			pipes_count;
 	t_list		*env;
-	t_pipes		*cmd_table;
+	t_commands	*cmd_table;
+	int			**pipes;
 }	g_val;
-
 
 void		analyse_cmd(char *cmd, char **argv);
 void		successful_exit(int a);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyse.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 21:09:07 by ster-min          #+#    #+#             */
-/*   Updated: 2022/03/31 17:17:47 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/04/02 21:23:32 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	checking_commands(int i, char *command, char *cmd)
 
 	command = to_lower(command);
 	temp = ft_split(cmd, ' ');
+	i = 0;
 	while (!is_space(*cmd) && *cmd)
 		cmd++;
 	if (cmd && ft_strncmp(command, "echo\0", 5) == 0)
@@ -103,7 +104,7 @@ void	checking_commands(int i, char *command, char *cmd)
 	else
 	{
 		acc_check = ft_access(command);
-		if(cmd && acc_check)
+		if (cmd && acc_check)
 			ft_exec(i, acc_check);
 		else
 		{
@@ -135,7 +136,7 @@ int	check_structure(char *cmd)
 	return (1);
 }
 
-void start_executor()
+void	start_executor()
 {
 	int i;
 	// char	**envars;
@@ -148,8 +149,8 @@ void start_executor()
 
 int	prompt_heredoc(char *delim)
 {
-	char *read;
-	int fd;
+	char	*read;
+	int		fd;
 
 	fd = open("./.tmp", O_CREAT | O_RDWR | O_APPEND, 0766);
 	while (1)
@@ -166,69 +167,72 @@ int	prompt_heredoc(char *delim)
 	return (fd);
 }
 
-int find_aprop_in(int i)
-{
-	int j;
-	int fd;
+// int find_aprop_in(int i)
+// {
+// 	int j;
+// 	int fd;
 
-	fd = g_val.cmd_table[i].pipes[0];
-	j = 0;
-	while (g_val.cmd_table[i].redirects.in[j].path)
-	{
-		if (fd != g_val.cmd_table[i].pipes[0])
-			close(fd);
-		if (g_val.cmd_table[i].redirects.in[j].level == 2)
-		{
-			if (!access("./.tmp", O_RDWR))
-				unlink("./.tmp");
-			fd = prompt_heredoc(g_val.cmd_table[i].redirects.in[j].path);
-			close(fd);
-			fd = open("./.tmp", O_RDONLY);
-		}
-		else
-		{
-			if (!access(g_val.cmd_table[i].redirects.in[j].path, O_RDONLY))
-				fd = open(g_val.cmd_table[i].redirects.in[j].path, O_RDONLY);
-			else 
-			{
-				printf("--minishell: %s: No such file or directory\n", g_val.cmd_table[i].redirects.in[j].path);
-				exit(1);
-			}
-		}
-		j++;
-	}
-	return (fd);
-}
+// 	fd = g_val.cmd_table[i].pipes[0];
+// 	j = 0;
+// 	while (g_val.cmd_table[i].redirects.in[j].path)
+// 	{
+// 		if (fd != g_val.cmd_table[i].pipes[0])
+// 			close(fd);
+// 		if (g_val.cmd_table[i].redirects.in[j].level == 2)
+// 		{
+// 			if (!access("./.tmp", O_RDWR))
+// 				unlink("./.tmp");
+// 			fd = prompt_heredoc(g_val.cmd_table[i].redirects.in[j].path);
+// 			close(fd);
+// 			fd = open("./.tmp", O_RDONLY);
+// 		}
+// 		else if (g_val.cmd_table[i].redirects.in[j].level == 1)
+// 		{
+// 			if (!access(g_val.cmd_table[i].redirects.in[j].path, O_RDONLY))
+// 				fd = open(g_val.cmd_table[i].redirects.in[j].path, O_RDONLY);
+// 			else 
+// 			{
+// 				printf("minishell: %s: No such file or directory\n", g_val.cmd_table[i].redirects.in[j].path);
+// 				exit(1);
+// 			}
+// 		}
+// 		j++;
+// 	}
+// 	return (fd);
+// }
 
-int	find_aprop_out(int i)
-{
-	int fd;
-	int	j;
-	int perms;
+// int	find_aprop_out(int i)
+// {
+// 	int fd;
+// 	int	j;
+// 	int perms;
 
-	perms = 0;
-	j = 0;
-	fd = 1;
-	if (i != g_val.pipes_count - 1)
-		fd = g_val.cmd_table[i + 1].pipes[1];
-	while (g_val.cmd_table[i].redirects.out[j].path)
-	{
-		printf("mta\n");
-		if (fd != g_val.cmd_table[i + 1].pipes[1] && fd != 1)
-			close(fd);
-		if (g_val.cmd_table[i].redirects.out[j].level == 2)
-			fd = open(g_val.cmd_table[i].redirects.out[j].path, O_CREAT | O_RDWR | O_APPEND, 0766);
- 		else if (g_val.cmd_table[i].redirects.out[j].level == 1)
-			fd = open(g_val.cmd_table[i].redirects.out[j].path, O_CREAT | O_RDWR, 0766);
-		if (fd < 0)
-		{
-			printf("minishell: %s: file can not be created!\n", g_val.cmd_table[i].redirects.out[j].path);
-			exit(1);
-		}
-		j++;
-	}
-	return (fd);
-}
+// 	perms = 0;
+// 	j = 0;
+// 	fd = 1;
+// 	if (i != g_val.pipes_count - 1)
+// 	{
+// 		fd = g_val.cmd_table[i + 1].pipes[1];
+// 		close(g_val.cmd_table[i + 1].pipes[0]);
+// 	}
+// 	while (g_val.cmd_table[i].redirects.out[j].path)
+// 	{
+// 		if (fd != g_val.cmd_table[i + 1].pipes[1] && fd != 1)
+// 			close(fd);
+// 		if (g_val.cmd_table[i].redirects.out[j].level == 2)
+// 			fd = open(g_val.cmd_table[i].redirects.out[j].path, O_CREAT | O_RDWR | O_APPEND, 0766);
+//  		else if (g_val.cmd_table[i].redirects.out[j].level == 1)
+// 			fd = open(g_val.cmd_table[i].redirects.out[j].path, O_CREAT | O_RDWR | O_TRUNC, 664);
+// 		if (fd < 0)
+// 		{
+// 			printf("minishell: %s: file can not be created!\n", g_val.cmd_table[i].redirects.out[j].path);
+// 			exit(1);
+// 		}
+// 		j++;
+// 	}
+// 	printf("barev %d\n", fd);
+// 	return (fd);
+// }
 
 void	analyse_cmd(char *cmd, char **argv)
 {
@@ -253,30 +257,34 @@ void	analyse_cmd(char *cmd, char **argv)
 					cmd++;
 				check_exit(cmd);
 			}
+
 			pid = fork();
 			if (pid < 0)
 				printf("Error: fork not forked\n");
 			else if (!pid)
 			{
-				if (g_val.cmd_table[i].has_pipe || g_val.cmd_table[i].redirects.in[0].path)
+				printf("ANASUUUUUUUNNNNNN\n");
+				if (i > 0 && i < g_val.pipes_count)
 				{
-					fd_in = find_aprop_in(i);
-					dup2(fd_in, STDIN_FILENO);
+					dup2(g_val.pipes[i][1], STDOUT_FILENO);
+					dup2(g_val.pipes[i - 1][0], STDIN_FILENO);
 				}
-				dup2(STDOUT_FILENO, g_val.cmd_table[i].pipes[1]);
-				close(g_val.cmd_table[i].pipes[1]);
-				// fd_out = find_aprop_out(i);
-				// printf("out fd = %d\n", fd_out);
-				// if (fd_out != 1)
-					dup2(fd_out, STDOUT_FILENO);
 				checking_commands(i, command, cmd);
 			}
 			else
 			{
-				if (i < g_val.pipes_count)
-					close (g_val.cmd_table[i].pipes[1]);
-				waitpid(pid, NULL, 0);
+				if (i > 0 && i < g_val.pipes_count)
+				{
+					close(g_val.pipes[i][0]);
+					close(g_val.pipes[i][1]);
+				}
 			}
+		}
+		i = 0;
+		while (i < g_val.pipes_count)
+		{
+			waitpid(-1, NULL, 0);
+			++i;
 		}
 		// clear_globs();
 	}
