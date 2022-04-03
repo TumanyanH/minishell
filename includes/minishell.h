@@ -6,7 +6,7 @@
 /*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 20:40:33 by htumanya          #+#    #+#             */
-/*   Updated: 2022/04/03 21:50:15 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/04/03 21:56:30 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,6 @@ int			check_dub_quote(char *str);
 char		*quote_skip(char *str);
 int			prompt_heredoc(char *delim);
 int			builtins(char *cmd, char *command);
+void		ft_fork(int i, char *cmd, char *command);
 
 #endif
