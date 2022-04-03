@@ -56,20 +56,53 @@ void	checking_commands(int i, char *command, char *cmd)
 	}
 }
 
+void	change_in(int i)
+{
+	if (i < g_val.cmd_count)
+		if (i > 0)
+			dup2(g_val.pipes[i - 1][0], 0);
+}
+
+void	change_out(int i)
+{
+	int fd;
+	int j;
+
+	j = 0;
+	while (g_val.cmd_table[i].redirects.out[j])
+		j++;
+	if (i < g_val.cmd_count - 1)
+		fd = g_val.pipes[i][1];
+	if (j > 0)
+	{
+		fd = g_val.cmd_table[i].redirects.out[j - 1];
+		// if (i > 0 && i < g_val.cmd_count - 1)
+		// 	write(g_val.pipes[i - 1][1], "\0", 1);
+		// else if (i == 0 && i < g_val.cmd_count - 1)
+		// 	write(g_val.pipes[0][1], "\0", 1);
+		// chem porcel bayc piti vor esel ashxati
+	}
+	dup2(fd, 1);
+}
+
 void	ft_fork(int i, char *cmd, char *command)
 {
 	pid_t	pid;
+	int		j;
 
+	j = 0;
 	pid = fork();
 	if (pid < 0)
 		printf("Error: fork not forked\n");
 	else if (!pid)
 	{
-		if (i < g_val.cmd_count - 1)
-			dup2(g_val.pipes[i][1], 1);
-		if (i < g_val.cmd_count)
-			if (i > 0)
-				dup2(g_val.pipes[i - 1][0], 0);
+		// if (i < g_val.cmd_count - 1)
+		// 	dup2(g_val.pipes[i][1], 1);
+		change_in(i);
+		// if (i < g_val.cmd_count)
+		// 	if (i > 0)
+		// 		dup2(g_val.pipes[i - 1][0], 0);
+		change_out(i);
 		checking_commands(i, command, cmd);
 	}
 	else
@@ -79,6 +112,11 @@ void	ft_fork(int i, char *cmd, char *command)
 		if (i < g_val.cmd_count)
 			if (i > 0)
 				close(g_val.pipes[i - 1][0]);
+		while (g_val.cmd_table[i].redirects.out[j])
+			close(g_val.cmd_table[i].redirects.out[j++]);
+		j = 0;
+		while (g_val.cmd_table[i].redirects.in[j])
+			close(g_val.cmd_table[i].redirects.in[j++]);
 	}
 }
 

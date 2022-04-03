@@ -118,12 +118,14 @@ void	parse_redirects(char *cmd, int cmd_n)
 				// g_val.cmd_table[cmd_n].redirects.in[reds_in++] = heredoc();
 			}
 			else if (red == 3) // level 1, red - out
-				g_val.cmd_table[cmd_n].redirects.out[reds_out++] = open(find_file(cmd, &i), O_CREAT | O_RDWR | O_TRUNC);
+				g_val.cmd_table[cmd_n].redirects.out[reds_out++] = open(find_file(cmd, &i), O_CREAT | O_RDWR | O_TRUNC, 0644);
 			else if (red == 4) // level 2, red - out
-				g_val.cmd_table[cmd_n].redirects.out[reds_out++] = open(find_file(cmd, &i), O_CREAT | O_RDWR | O_APPEND);
+				g_val.cmd_table[cmd_n].redirects.out[reds_out++] = open(find_file(cmd, &i), O_CREAT | O_RDWR | O_APPEND, 0644);
 		}
 		else
 			++i;
 	}
+	g_val.cmd_table[cmd_n].redirects.in[reds_in] = 0;
+	g_val.cmd_table[cmd_n].redirects.out[reds_out] = 0;
 	return ;
 }
