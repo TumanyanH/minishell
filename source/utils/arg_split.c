@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   arg_split.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 20:25:14 by ster-min          #+#    #+#             */
-/*   Updated: 2022/02/24 22:11:26 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/04/03 21:48:23 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	len_till_space(char *str)
 	return (i);
 }
 
-int count_till_quote(char *str)
+int	count_till_quote(char *str)
 {
 	int	i;
 
@@ -59,7 +59,6 @@ char	*quote_split(char *str, int *i)
 
 	res = NULL;
 	count = count_till_quote(&(str[*i + 1]));
-
 	if (!ft_isalpha(str[*i + 1]))
 	{
 		export_error(str);
@@ -100,5 +99,3 @@ char	**arg_split(char *str)
 	res[j] = NULL;
 	return (res);
 }
-
-

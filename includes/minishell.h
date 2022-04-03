@@ -6,7 +6,7 @@
 /*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 20:40:33 by htumanya          #+#    #+#             */
-/*   Updated: 2022/04/03 20:27:31 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/04/03 21:50:15 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,10 @@
 # include <limits.h>
 # include <fcntl.h>
 
-typedef struct s_redirect
-{
-	int		level;
-	char	*path;
-}	t_redirect;
-
 typedef struct s_redirects
 {
-	t_redirect	*in;
-	t_redirect	*out;
+	int	*in;
+	int	*out;
 }	t_redirects;
 
 typedef struct s_commands
@@ -46,7 +40,7 @@ typedef struct s_commands
 struct	s_val
 {
 	int			last_returned;
-	int			pipes_count;
+	int			cmd_count;
 	t_list		*env;
 	t_commands	*cmd_table;
 	int			**pipes;
@@ -66,7 +60,6 @@ void		exit_keypass(void);
 void		initial(char **envp);
 void		free_2d(char **arr);
 char		*find_cmd_path(char *cmd);
-void		cmd_not_found(char *cmdname);
 void		clear_memory( void );
 char		**arg_split(char *str);
 char		**ft_split_by_eq(char const *s);
@@ -80,7 +73,6 @@ int			check_quotes(char *cmd);
  * @brief parsing
  */
 int			check_redirect(char *cmd, int *count);
-
 void		complete_redirects(char **parts);
 int			start_parse(char *cmd_line);
 void		parse_redirects(char *cmd, int cmd_n);
@@ -95,5 +87,10 @@ int			count_env(void);
 char		*ft_access(char *command);
 void		ft_exec(int i, char *acc_check);
 char		**my_split(char *str);
+char		*to_lower(char *cmd);
+int			check_dub_quote(char *str);
+char		*quote_skip(char *str);
+int			prompt_heredoc(char *delim);
+int			builtins(char *cmd, char *command);
 
 #endif

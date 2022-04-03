@@ -6,7 +6,7 @@
 /*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 21:01:42 by htumanya          #+#    #+#             */
-/*   Updated: 2022/04/03 20:31:11 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/04/03 21:50:55 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,36 @@ void	init_pipes()
 	int i;
 
 	i = 0;
-	g_val.pipes = (int **)malloc((g_val.pipes_count - 1) * sizeof(int *));
-	while (i < g_val.pipes_count - 1)
+	g_val.pipes = (int **)malloc((g_val.cmd_count - 1) * sizeof(int *));
+	while (i < g_val.cmd_count - 1)
 	{
 		g_val.pipes[i] = (int *)malloc(8);
 		pipe(g_val.pipes[i]);
 		printf("%d %d\n", g_val.pipes[i][0], g_val.pipes[i][1]);
 		++i;
 	}
+}
+
+int	check_structure(char *cmd)
+{
+	int	i;
+
+	i = 0;
+	cmd = ft_strtrim(cmd, " ");
+	if (cmd[i] == '|')
+		return (0);
+	while (cmd[i])
+	{
+		if (cmd[i] == '|')
+		{
+			while (is_space(cmd[++i]))
+				;
+			if ((cmd[i] == '\0' || cmd[i] == '|'))
+				return (0);
+		}
+		++i;
+	}
+	return (1);
 }
 
 int	start_parse(char *cmd_line)
@@ -34,10 +56,10 @@ int	start_parse(char *cmd_line)
 	char	*temp;
 
 	each_cmd = 0;
-	g_val.pipes_count = count_pipes(cmd_line, 0) + 1;
+	g_val.cmd_count = count_pipes(cmd_line, 0) + 1;
 	init_pipes();
 	i = 0;
-	g_val.cmd_table = (t_commands *)malloc(sizeof(t_commands) * (g_val.pipes_count));
+	g_val.cmd_table = (t_commands *)malloc(sizeof(t_commands) * (g_val.cmd_count));
 	while (i < ft_strlen(cmd_line))
 	{
 		g_val.cmd_table[each_cmd].cmd = cpy_till_pipe(cmd_line, &i);
@@ -51,7 +73,7 @@ int	start_parse(char *cmd_line)
 		each_cmd++;
 	}
 	i = -1;
-	while (++i < g_val.pipes_count)
+	while (++i < g_val.cmd_count)
 	{
 		temp = filter_cmd(g_val.cmd_table[i].cmd);
 		if (g_val.cmd_table[i].cmd)

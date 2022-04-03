@@ -6,88 +6,17 @@
 /*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 21:09:07 by ster-min          #+#    #+#             */
-/*   Updated: 2022/04/03 20:34:22 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/04/03 21:52:49 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	check_dub_quote(char *str)
+int	builtins(char *cmd, char *command)
 {
-	int	i;
+	int	a;
 
-	i = 1;
-	if ((str[0] == 39 || str[0] == 34)
-		&& (str[ft_strlen(str) - 1] == 39 || str[ft_strlen(str) - 1] == 34)
-		&& (str[ft_strlen(str)] == 39 || str[ft_strlen(str)] == 34))
-	{
-		while (i < ft_strlen(str) - 1)
-		{
-			if (str[i] == 39 || str[i] == 34)
-				return (0);
-			++i;
-		}
-		return (1);
-	}
-	return (0);
-}
-
-char	*to_lower(char *cmd)
-{
-	int		i;
-	char	*res;
-
-	res = (char *)malloc(sizeof(char) * ft_strlen(cmd) + 1);
-	i = 0;
-	while (cmd[i] && !is_space(cmd[i]))
-	{
-		res[i] = ft_tolower(cmd[i]);
-		++i;
-	}
-	res[i] = '\0';
-	return (res);
-}
-
-char	*quote_skip(char *str)
-{
-	char	*res;
-	int		i;
-	int		j;
-	int		len;
-
-	i = 0;
-	j = 0;
-	len = 0;
-	while (str[i] && !is_space(str[i]))
-	{
-		if (str[i] != '\'' && str[i] != '\"')
-			len++;
-		++i;
-	}
-	res = malloc(sizeof(char) * len + 1);
-	i = 0;
-	while (str[i] && !is_space(str[i]))
-	{
-		if (str[i] != '\'' && str[i] != '\"')
-		{
-			res[j] = str[i];
-			++j;
-		}
-		++i;
-	}
-	res[j] = '\0';
-	return (res);
-}
-
-void	checking_commands(int i, char *command, char *cmd)
-{
-	char	**temp;
-	char	*acc_check;
-
-	command = to_lower(command);
-	temp = ft_split(cmd, ' ');
-	while (!is_space(*cmd) && *cmd)
-		cmd++;
+	a = 1;
 	if (cmd && ft_strncmp(command, "echo\0", 5) == 0)
 		check_echo(cmd);
 	else if (cmd && ft_strncmp(command, "cd\0", 3) == 0)
@@ -101,6 +30,20 @@ void	checking_commands(int i, char *command, char *cmd)
 	else if (cmd && ft_strncmp(command, "env\0", 4) == 0)
 		check_env(cmd);
 	else
+		a = 0;
+	return (a);
+}
+
+void	checking_commands(int i, char *command, char *cmd)
+{
+	char	**temp;
+	char	*acc_check;
+
+	command = to_lower(command);
+	temp = ft_split(cmd, ' ');
+	while (!is_space(*cmd) && *cmd)
+		cmd++;
+	if (!builtins(cmd, command))
 	{
 		acc_check = ft_access(command);
 		if (cmd && acc_check)
@@ -113,74 +56,18 @@ void	checking_commands(int i, char *command, char *cmd)
 	}
 }
 
-int	check_structure(char *cmd)
-{
-	int	i;
-
-	i = 0;
-	cmd = ft_strtrim(cmd, " ");
-	if (cmd[i] == '|')
-		return (0);
-	while (cmd[i])
-	{
-		if (cmd[i] == '|')
-		{
-			while (is_space(cmd[++i]))
-				;
-			if ((cmd[i] == '\0' || cmd[i] == '|'))
-				return (0);
-		}
-		++i;
-	}
-	return (1);
-}
-
-void	start_executor()
-{
-	int i;
-	// char	**envars;
-	pid_t	pid;
-
-	// envars = list_to_arr();
-	
-	
-}
-
-int	prompt_heredoc(char *delim)
-{
-	char	*read;
-	int		fd;
-
-	fd = open("./.tmp", O_CREAT | O_RDWR | O_APPEND, 0766);
-	while (1)
-	{
-		read = readline(">");
-		if (!ft_strncmp(read, delim, ft_strlen(read)))
-			break ;
-		else
-		{
-			write(fd, read, ft_strlen(read));
-			write(fd, "\n", 1);
-		}
-	}
-	return (fd);
-}
-
 void	analyse_cmd(char *cmd, char **argv)
 {
 	int		i;
 	char	*command;
 	pid_t	pid;
-	int		fd_in;
-	int		fd_out;
-	int stat;
-	
+	int		stat;
+
 	if (cmd && ft_strlen(cmd) > 0)
 	{
-		g_val.pipes_count = count_pipes(cmd, 0) + 1;
 		start_parse(cmd);
 		i = -1;
-		while (++i < g_val.pipes_count)
+		while (++i < g_val.cmd_count)
 		{
 			cmd = ft_strtrim(g_val.cmd_table[i].cmd, " ");
 			command = quote_skip(cmd);
@@ -195,40 +82,25 @@ void	analyse_cmd(char *cmd, char **argv)
 				printf("Error: fork not forked\n");
 			else if (!pid)
 			{
-				if (i < g_val.pipes_count - 1)
-				{
+				if (i < g_val.cmd_count - 1)
 					dup2(g_val.pipes[i][1], 1);
-				}
-				if (i < g_val.pipes_count)
-				{
+				if (i < g_val.cmd_count)
 					if (i > 0)
-					{
 						dup2(g_val.pipes[i - 1][0], 0);
-					}
-				}
 				checking_commands(i, command, cmd);
 			}
 			else
 			{
-				if (i < g_val.pipes_count - 1)
-				{
+				if (i < g_val.cmd_count - 1)
 					close(g_val.pipes[i][1]);
-				}
-				if (i < g_val.pipes_count)
-				{
+				if (i < g_val.cmd_count)
 					if (i > 0)
-					{
 						close(g_val.pipes[i - 1][0]);
-					}
-				}
 			}
 		}
-		i = 0;
-		while (i < g_val.pipes_count)
-		{
+		i = -1;
+		while (++i < g_val.cmd_count)
 			wait(&stat);
-			++i;
-		}
 		// clear_globs();
 	}
 }
