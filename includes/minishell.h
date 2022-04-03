@@ -90,7 +90,7 @@ char		**my_split(char *str);
 char		*to_lower(char *cmd);
 int			check_dub_quote(char *str);
 char		*quote_skip(char *str);
-int			prompt_heredoc(char *delim);
+int			prompt_heredoc(char *delim, int i);
 int			builtins(char *cmd, char *command);
 void		ft_fork(int i, char *cmd, char *command);
 

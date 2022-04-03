@@ -114,9 +114,7 @@ void	parse_redirects(char *cmd, int cmd_n)
 			else if (red == 1) // level 1, red - in
 				g_val.cmd_table[cmd_n].redirects.in[reds_in++] = open(find_file(cmd, &i), O_RDONLY);
 			else if (red == 2) // level 2, red - in
-			{
-				// g_val.cmd_table[cmd_n].redirects.in[reds_in++] = heredoc();
-			}
+				g_val.cmd_table[cmd_n].redirects.in[reds_in++] = prompt_heredoc(find_file(cmd, &i), i);
 			else if (red == 3) // level 1, red - out
 				g_val.cmd_table[cmd_n].redirects.out[reds_out++] = open(find_file(cmd, &i), O_CREAT | O_RDWR | O_TRUNC, 0644);
 			else if (red == 4) // level 2, red - out

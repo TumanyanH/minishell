@@ -12,12 +12,15 @@
 
 #include "../../includes/minishell.h"
 
-int	prompt_heredoc(char *delim)
+int	prompt_heredoc(char *delim, int i)
 {
 	char	*read;
 	int		fd;
+	char	*temp;
+	char	*temp2;
 
-	fd = open("./.tmp", O_CREAT | O_RDWR | O_APPEND, 0766);
+	temp = NULL;
+	fd = 0;
 	while (1)
 	{
 		read = readline(">");
@@ -25,8 +28,9 @@ int	prompt_heredoc(char *delim)
 			break ;
 		else
 		{
-			write(fd, read, ft_strlen(read));
-			write(fd, "\n", 1);
+			if (temp)
+				temp = ft_strjoin(temp, "\n");
+			temp = ft_strjoin(temp, read);
 		}
 	}
 	return (fd);

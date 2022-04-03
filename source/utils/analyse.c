@@ -69,6 +69,7 @@ void	change_out(int i)
 	int j;
 
 	j = 0;
+	fd = 0;
 	while (g_val.cmd_table[i].redirects.out[j])
 		j++;
 	if (i < g_val.cmd_count - 1)
@@ -82,7 +83,8 @@ void	change_out(int i)
 		// 	write(g_val.pipes[0][1], "\0", 1);
 		// chem porcel bayc piti vor esel ashxati
 	}
-	dup2(fd, 1);
+	if (fd > 0)
+		dup2(fd, 1);
 }
 
 void	ft_fork(int i, char *cmd, char *command)
@@ -96,12 +98,10 @@ void	ft_fork(int i, char *cmd, char *command)
 		printf("Error: fork not forked\n");
 	else if (!pid)
 	{
-		// if (i < g_val.cmd_count - 1)
-		// 	dup2(g_val.pipes[i][1], 1);
-		change_in(i);
 		// if (i < g_val.cmd_count)
 		// 	if (i > 0)
 		// 		dup2(g_val.pipes[i - 1][0], 0);
+		change_in(i);
 		change_out(i);
 		checking_commands(i, command, cmd);
 	}
