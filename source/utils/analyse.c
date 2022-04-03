@@ -263,11 +263,16 @@ void	analyse_cmd(char *cmd, char **argv)
 				printf("Error: fork not forked\n");
 			else if (!pid)
 			{
-				printf("ANASUUUUUUUNNNNNN\n");
-				if (i > 0 && i < g_val.pipes_count)
+				printf("i - %d\n", i);
+				if (i < g_val.pipes_count && g_val.pipes_count > 1)
 				{
 					dup2(g_val.pipes[i][1], STDOUT_FILENO);
+					printf("out - %d, i - %d\n", g_val.pipes[i][1], i);
+				}
+				if (i > 0 && i < g_val.pipes_count)
+				{
 					dup2(g_val.pipes[i - 1][0], STDIN_FILENO);
+					printf("in - %d, i - %d\n", g_val.pipes[i - 1][0], i);
 				}
 				checking_commands(i, command, cmd);
 			}
@@ -275,8 +280,8 @@ void	analyse_cmd(char *cmd, char **argv)
 			{
 				if (i > 0 && i < g_val.pipes_count)
 				{
-					close(g_val.pipes[i][0]);
-					close(g_val.pipes[i][1]);
+					close(g_val.pipes[i - 1][0]);
+					close(g_val.pipes[i - 1][1]);
 				}
 			}
 		}
