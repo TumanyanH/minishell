@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 20:13:32 by htumanya          #+#    #+#             */
-/*   Updated: 2022/03/31 15:26:38 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/04/04 13:30:02 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ char	*my_substr(char *str, int start, int len)
 	return (res);
 }
 
-char **my_split(char *str)
+char	**my_split(char *str)
 {
 	char	**res;
 	int		count;
@@ -116,5 +116,6 @@ char **my_split(char *str)
 		str = str + cur_len;
 		++i;
 	}
+	res[i] = NULL;
 	return (res);
 }

@@ -6,7 +6,7 @@
 /*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 21:09:07 by ster-min          #+#    #+#             */
-/*   Updated: 2022/04/03 21:56:16 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/04/04 21:15:19 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,23 @@
 
 int	builtins(char *cmd, char *command)
 {
-	int	a;
+	int		a;
+	char	**args;
 
 	a = 1;
-	if (cmd && ft_strncmp(command, "echo\0", 5) == 0)
-		check_echo(cmd);
-	else if (cmd && ft_strncmp(command, "cd\0", 3) == 0)
-		check_cd(cmd);
-	else if (cmd && ft_strncmp(command, "pwd\0", 4) == 0)
-		check_pwd(cmd);
-	else if (cmd && ft_strncmp(command, "export\0", 7) == 0)
-		check_export(cmd);
-	else if (cmd && ft_strncmp(command, "unset\0", 6) == 0)
-		check_unset(cmd);
-	else if (cmd && ft_strncmp(command, "env\0", 4) == 0)
-		check_env(cmd);
+	args = my_split(cmd);
+	if (!ft_strncmp(command, "echo\0", 5))
+		check_echo(args);
+	else if (!ft_strncmp(command, "cd\0", 3))
+		check_cd(args);
+	else if (!ft_strncmp(command, "pwd\0", 4))
+		check_pwd(args);
+	else if (!ft_strncmp(command, "export\0", 6))
+		check_export(args);
+	else if (!ft_strncmp(command, "unset\0", 6))
+		check_unset(args);
+	else if (!ft_strncmp(command, "env\0", 4))
+		check_env(args);
 	else
 		a = 0;
 	return (a);
@@ -46,7 +48,7 @@ void	checking_commands(int i, char *command, char *cmd)
 	if (!builtins(cmd, command))
 	{
 		acc_check = ft_access(command);
-		if (cmd && acc_check)
+		if (acc_check)
 			ft_exec(i, acc_check);
 		else
 		{
@@ -65,8 +67,8 @@ void	change_in(int i)
 
 void	change_out(int i)
 {
-	int fd;
-	int j;
+	int	fd;
+	int	j;
 
 	j = 0;
 	fd = 0;

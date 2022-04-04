@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pwd_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 05:32:19 by ster-min          #+#    #+#             */
-/*   Updated: 2022/03/17 18:05:49 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/04/04 13:33:27 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	check_pwd(char *cmd)
+void	check_pwd(char **args)
 {
 	char	cwd[PATH_MAX + 1];
 

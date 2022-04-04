@@ -6,10 +6,9 @@
 /*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 21:09:17 by ster-min          #+#    #+#             */
-/*   Updated: 2022/04/03 20:27:44 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/04/04 20:48:10 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../../includes/minishell.h"
 
@@ -32,7 +31,7 @@ t_list	*find_env(char *envname)
 	return (tmp);
 }
 
-int		find_slash(char *cmd)
+int	find_slash(char *cmd)
 {
 	while (*cmd)
 	{
@@ -71,7 +70,7 @@ char	*ft_access(char *command)
 void	ft_exec(int i, char *acc_check)
 {
 	char	**envars;
-	int 	j;
+	int		j;
 
 	j = -1;
 	envars = list_to_arr();

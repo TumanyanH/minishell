@@ -3,23 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   env_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 05:35:44 by ster-min          #+#    #+#             */
-/*   Updated: 2022/03/17 18:06:25 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/04/04 13:40:42 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	check_env(char *cmd)
+void	check_env(char **args)
 {
 	t_list	*temp;
 
 	temp = g_val.env;
-	while (is_space(*cmd))
-		cmd++;
-	if (*cmd == '\0')
+	if (*args[0] == '\0')
 	{
 		while (temp)
 		{
@@ -29,6 +27,6 @@ void	check_env(char *cmd)
 		exit(0);
 	}
 	else
-		printf("env: %s: No such file or directory\n", cmd);
+		printf("env: %s: No such file or directory\n", args[0]);
 	exit(127);
 }

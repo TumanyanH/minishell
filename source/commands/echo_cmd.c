@@ -3,70 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   echo_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 15:05:37 by htumanya          #+#    #+#             */
-/*   Updated: 2022/03/17 18:05:36 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/04/04 20:26:03 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	string_printer(char *str)
-{
-	int	i;
-
-	i = 1;
-	while (str[i] != '"')
-	{
-		printf("%c", str[i]);
-		++i;
-	}
-	return (i + 1);
-}
-
-int	print_space(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (is_space(str[i]))
-		++i;
-	printf(" ");
-	return (i - 1);
-}
-
-int	option(char *cmd)
-{
-	if (ft_strncmp(cmd, "-n", 2) == 0)
-	{
-		if (*(cmd + 2) == '\0' || is_space(*(cmd + 2)))
-			return (1);
-	}
-	return (0);
-}
-
-void	check_echo(char *cmd)
+void	check_echo(char **args)
 {
 	int	k;
+	int	option;
 
 	k = 0;
-	while (is_space(*cmd))
-		cmd++;
-	k = option(cmd);
-	if (k)
-		cmd += 3;
-	while (*cmd)
+	option = 0;
+	while (!ft_strncmp(args[k], "-n\0", 3))
 	{
-		if (*cmd == '"')
-			cmd += string_printer(cmd);
-		if (is_space(*cmd))
-			cmd += print_space(cmd);
-		else
-			printf("%c", *cmd);
-		cmd++;
+		option = 1;
+		++k;
 	}
-	if (k == 0)
+	while (args[k] != NULL)
+	{
+		printf("%s", args[k]);
+		++k;
+		if (args[k])
+			printf(" ");
+	}
+	if (!option)
 		printf("\n");
 	exit(0);
 }

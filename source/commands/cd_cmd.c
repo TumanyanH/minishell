@@ -6,7 +6,7 @@
 /*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 05:33:31 by ster-min          #+#    #+#             */
-/*   Updated: 2022/03/23 21:26:41 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/04/04 13:40:20 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*make_abs_path(char *arg)
 	return (arg);
 }
 
-void	check_cd(char *cmd)
+void	check_cd(char **args)
 {
 	int		a;
 	char	prev_dir[PATH_MAX + 1];
@@ -64,27 +64,27 @@ void	check_cd(char *cmd)
 	char	*lala2;
 
 	temp = find_env("HOME");
-	cmd = cmd_corrector(cmd);
+	args[0] = cmd_corrector(args[0]);
 	old = find_env("OLDPWD");
 	old->content->envval = getcwd(prev_dir, PATH_MAX + 1);
 	// lala2 = prev_dir;
-	if (*cmd == '\0')
+	if (*args[0] == '\0')
 		chdir(temp->content->envval);
-	else if (*cmd == '-')
+	else if (*args[0] == '-')
 	{
 		old = find_env("OLDPWD");
 		if (old->content->envval)
 		{
 			if (chdir(old->content->envval) == -1)
 			{
-				printf("minishell: cd: %s: No such file or directory\n", cmd);
+				printf("minishell: cd: %s: No such file or directory\n", args[0]);
 				exit(1);
 			}
 		}
 	}
-	else if (chdir(cmd) == -1)
+	else if (chdir(args[0]) == -1)
 	{
-		printf("minishell: cd: %s: No such file or directory\n", cmd);
+		printf("minishell: cd: %s: No such file or directory\n", args[0]);
 		exit(1);
 	}
 	// lala = next_dir;

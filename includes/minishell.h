@@ -6,7 +6,7 @@
 /*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 20:40:33 by htumanya          #+#    #+#             */
-/*   Updated: 2022/04/03 21:56:30 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/04/04 21:08:54 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,12 @@ struct	s_val
 void		analyse_cmd(char *cmd, char **argv);
 void		successful_exit(int a);
 void		check_exit(char *cmd);
-void		check_echo(char *cmd);
-void		check_pwd(char *cmd);
-void		check_cd(char *cmd);
-void		check_export(char *cmd);
-void		check_unset(char *cmd);
-void		check_env(char *cmd);
+void		check_echo(char **args);
+void		check_pwd(char **args);
+void		check_cd(char **args);
+void		check_export(char **args);
+void		check_unset(char **args);
+void		check_env(char **args);
 void		find_path(char **path, char **envp);
 void		exit_keypass(void);
 void		initial(char **envp);
