@@ -66,9 +66,14 @@ char	*simplifier(char *cmd)
 		{
 			tmp = ft_substr(cmd, 0, i);
 			name = find_var_name(cmd, i);
-			temp = find_env(name);
-			if (temp)
-				tmp = ft_strjoin(tmp, temp->content->envval);
+			if (!ft_strncmp(name, "?", ft_strlen(name)))
+				tmp = ft_strjoin(tmp, ft_itoa(g_val.last_returned));
+			else
+			{
+				temp = find_env(name);
+				if (temp)
+					tmp = ft_strjoin(tmp, temp->content->envval);
+			}
 			if (name)
 				free(name);
 			tmp2 = ft_substr(cmd, i + count_var_len(cmd, i),

@@ -19,11 +19,11 @@ void	successful_exit(int a)
 
 void	exit_keypass(void)
 {
-	struct sigaction	sa;
+	// struct sigaction	sa;
 
-	sa.sa_handler = successful_exit;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = SA_RESTART;
+	// sa.sa_handler = successful_exit;
+	// sigemptyset(&sa.sa_mask);
+	// sa.sa_flags = SA_RESTART;
 	// signal(SIGINT, SIG_IGN);
 }
 

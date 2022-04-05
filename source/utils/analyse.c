@@ -60,9 +60,23 @@ void	checking_commands(int i, char *command, char *cmd)
 
 void	change_in(int i)
 {
+	int	fd;
+	int	j;
+
+	j = 0;
+	fd = 0;
 	if (i < g_val.cmd_count)
 		if (i > 0)
-			dup2(g_val.pipes[i - 1][0], 0);
+			fd = g_val.pipes[i - 1][0];
+	while (g_val.cmd_table[i].redirects.in[j])
+		j++;
+	if (i > 0 && i < g_val.cmd_count - 1)
+		fd = g_val.pipes[i][0];
+	if (j > 0)
+		fd = g_val.cmd_table[i].redirects.in[j - 1];
+	printf("%d\n", fd);
+	if (fd > 0)
+		dup2(fd, 0);
 }
 
 void	change_out(int i)
@@ -146,7 +160,10 @@ void	analyse_cmd(char *cmd, char **argv)
 		}
 		i = -1;
 		while (++i < g_val.cmd_count)
+		{
 			wait(&stat);
+			g_val.last_returned = WEXITSTATUS(stat);
+		}
 		// clear_globs();
 	}
 }

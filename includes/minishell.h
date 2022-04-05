@@ -44,6 +44,7 @@ struct	s_val
 	t_list		*env;
 	t_commands	*cmd_table;
 	int			**pipes;
+	int a;
 }	g_val;
 
 void		analyse_cmd(char *cmd, char **argv);

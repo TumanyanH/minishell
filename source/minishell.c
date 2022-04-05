@@ -16,7 +16,7 @@ void	initial(char **envp)
 {
 	g_val.env = fill_env_list(envp);
 	g_val.cmd_count = 0;
-	exit_keypass();
+	// exit_keypass();
 	// pipe(g_val.pipes);
 	// g_val.redirects.in.path = NULL;
 	// g_val.redirects.out.path = NULL;
@@ -29,6 +29,7 @@ int	main(int ac, char **av, char **envp)
 	t_list	*list;
 	char	path[PATH_MAX + 1];
 
+	signal(SIGINT, SIG_IGN);
 	write(1, "\033[2J", 4);
 	write(1, "\033[H", 3);
 	initial(envp);
@@ -36,7 +37,12 @@ int	main(int ac, char **av, char **envp)
 	{
 		cmd = readline("minishell> ");
 		if (cmd == NULL)
+		{
+			printf("\033[1A");
+			printf("\033[10C");
+			printf("exit");
 			exit(0);
+		}
 		if (cmd[0] != '\0')
 			add_history(cmd);
 		if (!check_structure(cmd))
