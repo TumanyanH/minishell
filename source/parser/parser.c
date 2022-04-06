@@ -22,7 +22,6 @@ void	init_pipes()
 	{
 		g_val.pipes[i] = (int *)malloc(8);
 		pipe(g_val.pipes[i]);
-		printf("%d %d\n", g_val.pipes[i][0], g_val.pipes[i][1]);
 		++i;
 	}
 }

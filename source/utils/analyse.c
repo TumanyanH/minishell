@@ -70,11 +70,8 @@ void	change_in(int i)
 			fd = g_val.pipes[i - 1][0];
 	while (g_val.cmd_table[i].redirects.in[j])
 		j++;
-	if (i > 0 && i < g_val.cmd_count - 1)
-		fd = g_val.pipes[i][0];
 	if (j > 0)
 		fd = g_val.cmd_table[i].redirects.in[j - 1];
-	printf("%d\n", fd);
 	if (fd > 0)
 		dup2(fd, 0);
 }
