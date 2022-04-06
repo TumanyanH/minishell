@@ -38,9 +38,8 @@ int	main(int ac, char **av, char **envp)
 		cmd = readline("minishell> ");
 		if (cmd == NULL)
 		{
-			printf("\033[1A");
-			printf("\033[10C");
-			printf("exit");
+			printf("\033[2D");
+			printf("exit\n");
 			exit(0);
 		}
 		if (cmd[0] != '\0')
