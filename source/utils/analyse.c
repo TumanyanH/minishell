@@ -104,7 +104,7 @@ void	ft_fork(int i, char *cmd, char *command)
 {
 	pid_t	pid;
 	int		j;
-
+	char 	a[20];
 	j = 0;
 	pid = fork();
 	if (pid < 0)
@@ -116,10 +116,20 @@ void	ft_fork(int i, char *cmd, char *command)
 		// 		dup2(g_val.pipes[i - 1][0], 0);
 		change_in(i);
 		change_out(i);
+		// read(0, a, 20);
+		// printf("input %s\n", a);
+		// echo barev dzez inchpes eq a+++ | << a cat -e SEGA
+		// mi qani heredocov chisht chi shxatum
 		checking_commands(i, command, cmd);
 	}
 	else
 	{
+		
+		// if (g_val.cmd_count == 1)
+		// {
+		// 	// close(g_val.pipes[0][0]);
+		// 	close(g_val.pipes[0][1]);
+		// }
 		if (i < g_val.cmd_count - 1)
 			close(g_val.pipes[i][1]);
 		if (i < g_val.cmd_count)

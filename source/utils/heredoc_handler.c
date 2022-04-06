@@ -28,13 +28,12 @@ int	prompt_heredoc(char *delim, int i)
 			break ;
 		else
 		{
-			if (temp)
-				temp = ft_strjoin(temp, "\n");
 			temp = ft_strjoin(temp, read);
+			temp = ft_strjoin(temp, "\n");
 		}
 	}
-	// fd = dup(g_val.pipes[i][1]);
-	printf("%s---\n",temp);
-	write(fd, temp, ft_strlen(temp));
+	fd = g_val.pipes[i][0];
+	write(g_val.pipes[i][1], temp, ft_strlen(temp));
+	close(g_val.pipes[i][1]);
 	return (fd);
 }
