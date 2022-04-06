@@ -33,7 +33,8 @@ int	prompt_heredoc(char *delim, int i)
 			temp = ft_strjoin(temp, read);
 		}
 	}
-	fd = dup(0);
+	// fd = dup(g_val.pipes[i][1]);
+	printf("%s---\n",temp);
 	write(fd, temp, ft_strlen(temp));
 	return (fd);
 }

@@ -29,7 +29,7 @@ int	main(int ac, char **av, char **envp)
 	t_list	*list;
 	char	path[PATH_MAX + 1];
 
-	signal(SIGINT, SIG_IGN);
+	// signal(SIGINT, SIG_IGN);
 	write(1, "\033[2J", 4);
 	write(1, "\033[H", 3);
 	initial(envp);
