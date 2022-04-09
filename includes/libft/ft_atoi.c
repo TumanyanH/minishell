@@ -38,7 +38,7 @@ void	error_writer(char *str, int quote)
 	exit (255);
 }
 
-int	ft_atoi(char *str, int *check, int quote)
+unsigned long long	ft_atoi(char *str, int *check, int quote)
 {
 	int		i;
 	unsigned long long		res;

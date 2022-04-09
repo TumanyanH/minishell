@@ -27,26 +27,33 @@ int	builtins(int i, char *cmd, char *command)
 	int		a;
 	char	**args;
 	int j;
+	int	fd;
 
+	j = 0;
+	fd = 0;
+	while (g_val.cmd_table[i].redirects.out[j])
+		j++;
+	if (i < g_val.cmd_count - 1)
+		fd = g_val.pipes[i][1];
+	if (j > 0)
+		fd = g_val.cmd_table[i].redirects.out[j - 1];
 	j = 0;
 	args = my_split(cmd);
 	a = -1;
 	if (check_built(command))
 	{
-		change_in(i);
-		change_out(i);
 		if (!ft_strncmp(command, "echo\0", 5))
-			a = check_echo(args);
+			a = check_echo(fd, args);
 		else if (!ft_strncmp(command, "cd\0", 3))
-			a = check_cd(args);
+			a = check_cd(fd, args);
 		else if (!ft_strncmp(command, "pwd\0", 4))
-			a = check_pwd();
+			a = check_pwd(fd);
 		else if (!ft_strncmp(command, "export\0", 6))
-			a = check_export(args);
+			a = check_export(fd, args);
 		else if (!ft_strncmp(command, "unset\0", 6))
-			a = check_unset(args);
+			a = check_unset(fd, args);
 		else if (!ft_strncmp(command, "env\0", 4))
-			a = check_env(args);
+			a = check_env(fd, args);
 		if (i < g_val.cmd_count - 1)
 			close(g_val.pipes[i][1]);
 		if (i < g_val.cmd_count)
@@ -129,40 +136,49 @@ void	ft_fork(int i, char *cmd, char *command)
 	int		stat;
 	char 	a[20];
 	j = 0;
-	
-	command = to_lower(command);
-	while (!is_space(*cmd) && *cmd)
-		cmd++;
-	stat = builtins(i, cmd, command);
-	if (stat == -1)
+
+	if (ft_strncmp(command, "exit\0", 5) == 0)
 	{
-		pid = fork();
-		if (pid < 0)
-			printf("Error: fork not forked\n");
-		else if (!pid)
+		while (*cmd && !is_space(*cmd))
+			cmd++;
+		check_exit(cmd);
+	}
+	else
+	{
+		command = to_lower(command);
+		while (!is_space(*cmd) && *cmd)
+			cmd++;
+		stat = builtins(i, cmd, command);
+		if (stat == -1)
 		{
-			change_in(i);
-			change_out(i);
-			// read(0, a, 20);
-			// printf("input %s\n", a);
-			// echo barev dzez inchpes eq a+++ | << a cat -e SEGA
-			// mi qani heredocov chisht chi shxatum
-			checking_commands(i, command, cmd);
-		}
-		else
-		{
-			if (i < g_val.cmd_count - 1)
-				close(g_val.pipes[i][1]);
-			if (i < g_val.cmd_count)
-				if (i > 0)
-					close(g_val.pipes[i - 1][0]);
-			while (g_val.cmd_table[i].redirects.out[j])
-				close(g_val.cmd_table[i].redirects.out[j++]);
-			j = 0;
-			while (g_val.cmd_table[i].redirects.in[j])
-				close(g_val.cmd_table[i].redirects.in[j++]);
-			wait(&stat);
-			g_val.last_returned = WEXITSTATUS(stat);
+			pid = fork();
+			if (pid < 0)
+				printf("Error: fork not forked\n");
+			else if (!pid)
+			{
+				change_in(i);
+				change_out(i);
+				// read(0, a, 20);
+				// printf("input %s\n", a);
+				// echo barev dzez inchpes eq a+++ | << a cat -e SEGA
+				// mi qani heredocov chisht chi shxatum
+				checking_commands(i, command, cmd);
+			}
+			else
+			{
+				if (i < g_val.cmd_count - 1)
+					close(g_val.pipes[i][1]);
+				if (i < g_val.cmd_count)
+					if (i > 0)
+						close(g_val.pipes[i - 1][0]);
+				while (g_val.cmd_table[i].redirects.out[j])
+					close(g_val.cmd_table[i].redirects.out[j++]);
+				j = 0;
+				while (g_val.cmd_table[i].redirects.in[j])
+					close(g_val.cmd_table[i].redirects.in[j++]);
+				wait(&stat);
+				g_val.last_returned = WEXITSTATUS(stat);
+			}
 		}
 	}	
 }
@@ -181,20 +197,7 @@ void	analyse_cmd(char *cmd, char **argv)
 		{
 			cmd = ft_strtrim(g_val.cmd_table[i].cmd, " ");
 			command = quote_skip(cmd);
-			if (cmd && ft_strncmp(command, "exit\0", 5) == 0)
-			{
-				while (*cmd && !is_space(*cmd))
-					cmd++;
-				check_exit(cmd);
-			}
 			ft_fork(i, cmd, command);
 		}
-		// i = -1;
-		// while (++i < g_val.cmd_count)
-		// {
-		// 	wait(&stat);
-		// 	g_val.last_returned = WEXITSTATUS(stat);
-		// }
-		// clear_globs();
 	}
 }

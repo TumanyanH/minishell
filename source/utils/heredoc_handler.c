@@ -33,7 +33,8 @@ int	prompt_heredoc(char *delim, int i)
 		}
 	}
 	fd = g_val.pipes[i][0];
-	write(g_val.pipes[i][1], temp, ft_strlen(temp));
+	if (temp != NULL)
+		write(g_val.pipes[i][1], temp, ft_strlen(temp));
 	close(g_val.pipes[i][1]);
 	return (fd);
 }

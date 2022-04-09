@@ -73,7 +73,6 @@ void	ft_exec(int i, char *acc_check)
 
 	j = -1;
 	envars = list_to_arr();
-	printf("HEY\n");
 	execve(acc_check, ft_split(g_val.cmd_table[i].cmd, ' '), envars);
 	while (envars[++j])
 		free(envars[j]);

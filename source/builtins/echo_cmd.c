@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-int	check_echo(char **args)
+int	check_echo(int fd, char **args)
 {
 	int	k;
 	int	option;
@@ -26,12 +26,15 @@ int	check_echo(char **args)
 	}
 	while (args[k] != NULL)
 	{
-		printf("%s", args[k]);
+		ft_putstr_fd(args[k], fd);
+		// printf("%s", args[k]);
 		++k;
 		if (args[k])
-			printf(" ");
+			ft_putstr_fd(" ", fd);
+			// printf(" ");
 	}
 	if (!option)
-		printf("\n");
+		ft_putstr_fd("\n", fd);
+		// printf("\n");
 	return (0);
 }

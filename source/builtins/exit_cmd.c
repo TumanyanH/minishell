@@ -57,38 +57,42 @@ char	*atoi_helper(char *str, int *quote)
 	return (ret);
 }
 
+void	ft_exit(unsigned long long ret_val)
+{
+	printf("exit\n");
+	exit(ret_val);
+}
+
 void	check_exit(char *cmd)
 {
 	unsigned long long	ret;
-	int	checker;
-	int	quote;
+	int					checker;
+	int					quote;
 
 	if (*cmd == '\0')
-		exit(0);
+		ft_exit(0);
 	else if (is_space(*cmd))
 	{
 		ret = ft_atoi(atoi_helper(cmd, &quote), &checker, quote);
 		if (checker == 0)
 		{
 			if (ret >= 0 && ret <= 255)
-				exit(ret);
+				ft_exit(ret);
 			else if (ret < 0)
 			{
 				while (ret < 0)
 					ret += 256;
-				exit(ret);
+				ft_exit(ret);
 			}
 			else if (ret > 255)
 			{
 				if (ret > 9223372036854775807)
 				{
-					printf("minishell: exit: %s: numeric argument required", ft_itoa(ret)); //tiv@ mi qich urisha :D should be improved
-					exit(255);
+					printf("minishell: exit: %s: numeric argument required\n", ft_itoa(ret));
+					ft_exit(255);
 				}
-				exit(ret % 256);
+				ft_exit(ret % 256);
 			}
 		}
 	}
-	else
-		printf("minishell: exit%s: command not found\n", cmd); 
 }

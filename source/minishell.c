@@ -26,7 +26,6 @@ int	main(int ac, char **av, char **envp)
 {
 	char	*cmd;
 	char	**argv;
-	t_list	*list;
 	char	path[PATH_MAX + 1];
 
 	// signal(SIGINT, SIG_IGN);
@@ -45,16 +44,11 @@ int	main(int ac, char **av, char **envp)
 		if (cmd[0] != '\0')
 			add_history(cmd);
 		if (!check_structure(cmd))
-		{
 			printf("minishell: syntax error\n");
-			continue ;
-		}
-		if (check_quotes(cmd) == 0)
-		{
+		else if (check_quotes(cmd) == 0)
 			ft_putstr_fd("Invalid quotes\n", 1);
-			continue ;
-		}
-		analyse_cmd(cmd, argv);
+		else
+			analyse_cmd(cmd, argv);
 	}
 	return (0);
 }

@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-int	check_unset(char **args)
+int	check_unset(int fd, char **args)
 {
 	int		i;
 	t_list	*temp;

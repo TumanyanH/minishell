@@ -49,7 +49,7 @@ int	equal_finder(char *str)
 	return (0);
 }
 
-int	check_export(char **args)
+int	check_export(int fd, char **args)
 {
 	int			i;
 	char		**new;

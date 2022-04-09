@@ -29,7 +29,7 @@ int					ft_isalnum(int c);
 int					ft_isdigit(int c);
 int					ft_isalpha(int c);
 int					is_space(char c);
-int					ft_atoi(char *str, int *check, int quote);
+unsigned long long	ft_atoi(char *str, int *check, int quote);
 int					ft_strncmp(const char *s1, const char *s2, int n);
 char				*ft_strnstr(const char *haystack, const char *needle,
 						size_t len);

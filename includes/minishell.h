@@ -50,12 +50,12 @@ struct	s_val
 void		analyse_cmd(char *cmd, char **argv);
 void		successful_exit(int a);
 void		check_exit(char *cmd);
-int			check_echo(char **args);
-int			check_pwd(void);
-int			check_cd(char **args);
-int			check_export(char **args);
-int			check_unset(char **args);
-int			check_env(char **args);
+int			check_echo(int fd, char **args);
+int			check_pwd(int fd);
+int			check_cd(int fd, char **args);
+int			check_export(int fd, char **args);
+int			check_unset(int fd, char **args);
+int			check_env(int fd, char **args);
 void		find_path(char **path, char **envp);
 void		exit_keypass(void);
 void		initial(char **envp);

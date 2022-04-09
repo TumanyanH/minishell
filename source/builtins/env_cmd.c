@@ -12,7 +12,14 @@
 
 #include "../../includes/minishell.h"
 
-int	check_env(char **args)
+void	env_error(int fd, char *cmd)
+{
+	ft_putstr_fd("minishell: cd: ", fd);
+	ft_putstr_fd(cmd, fd);
+	ft_putstr_fd(": No such file or directory\n", fd);
+}
+
+int	check_env(int fd, char **args)
 {
 	t_list	*temp;
 
@@ -21,12 +28,15 @@ int	check_env(char **args)
 	{
 		while (temp)
 		{
-			printf("%s=%s\n", temp->content->envname, temp->content->envval);
+			ft_putstr_fd(temp->content->envname, fd);
+			ft_putstr_fd("=", fd);
+			ft_putstr_fd(temp->content->envval, fd);
+			ft_putstr_fd("\n", fd);
 			temp = temp->next;
 		}
 		return (0);
 	}
 	else
-		printf("env: %s: No such file or directory\n", args[0]);
+		env_error(fd, args[0]);
 	return (127);
 }

@@ -53,7 +53,14 @@ char	*make_abs_path(char *arg)
 	return (arg);
 }
 
-int	check_cd(char **args)
+void	cd_error(int fd, char *cmd)
+{
+	ft_putstr_fd("minishell: cd: ", fd);
+	ft_putstr_fd(cmd, fd);
+	ft_putstr_fd(": No such file or directory\n", fd);
+}
+
+int	check_cd(int fd, char **args)
 {
 	int		a;
 	char	prev_dir[PATH_MAX + 1];
@@ -77,14 +84,15 @@ int	check_cd(char **args)
 		{
 			if (chdir(old->content->envval) == -1)
 			{
-				printf("minishell: cd: %s: No such file or directory\n", args[0]);
+				cd_error(fd, args[0]);
+				// printf("minishell: cd: %s: No such file or directory\n", args[0]);
 				return (1);
 			}
 		}
 	}
 	else if (chdir(args[0]) == -1)
 	{
-		printf("minishell: cd: %s: No such file or directory\n", args[0]);
+		cd_error(fd, args[0]);
 		return (1);
 	}
 	// lala = next_dir;
