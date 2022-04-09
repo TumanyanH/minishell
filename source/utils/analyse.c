@@ -37,10 +37,12 @@ int	builtins(int i, char *cmd, char *command)
 		fd = g_val.pipes[i][1];
 	if (j > 0)
 		fd = g_val.cmd_table[i].redirects.out[j - 1];
-	j = 0;
+	j = change_in(i);
+	if (j < 0)
+		printf("minishell: no such file or directory\n");
 	args = my_split(cmd);
 	a = -1;
-	if (check_built(command))
+	if (check_built(command) && j > -1)
 	{
 		g_val.cmd_table[i].pid = 0;
 		if (!ft_strncmp(command, "echo\0", 5))
@@ -60,6 +62,7 @@ int	builtins(int i, char *cmd, char *command)
 		if (i < g_val.cmd_count)
 			if (i > 0)
 				close(g_val.pipes[i - 1][0]);
+		j = 0;
 		while (g_val.cmd_table[i].redirects.out[j])
 			close(g_val.cmd_table[i].redirects.out[j++]);
 		j = 0;
@@ -86,7 +89,7 @@ void	checking_commands(int i, char *command, char *cmd)
 	}
 }
 
-void	change_in(int i)
+int	change_in(int i)
 {
 	int	fd;
 	int	j;
@@ -97,11 +100,19 @@ void	change_in(int i)
 		if (i > 0)
 			fd = g_val.pipes[i - 1][0];
 	while (g_val.cmd_table[i].redirects.in[j])
+	{
+		if (g_val.cmd_table[i].redirects.in[j] == -1)
+			fd = -1;
 		j++;
-	if (j > 0)
-		fd = g_val.cmd_table[i].redirects.in[j - 1];
-	if (fd > 0)
-		dup2(fd, 0);
+	}
+	if (fd > -1)
+	{
+		if (j > 0)
+			fd = g_val.cmd_table[i].redirects.in[j - 1];
+		if (fd > 0)
+			dup2(fd, 0);
+	}
+	return (fd);
 }
 
 void	change_out(int i)
@@ -134,6 +145,7 @@ void	ft_fork(int i, char *cmd, char *command)
 	pid_t	pid;
 	int		j;
 	int		stat;
+	int		fd;
 	char 	a[20];
 	j = 0;
 
@@ -156,7 +168,11 @@ void	ft_fork(int i, char *cmd, char *command)
 				printf("Error: fork not forked\n");
 			else if (!pid)
 			{
-				change_in(i);
+				if (change_in(i) < 0)
+				{
+					printf("minishell: no such file or directory\n");
+					exit(1);
+				}
 				change_out(i);
 				// read(0, a, 20);
 				// printf("input %s\n", a);

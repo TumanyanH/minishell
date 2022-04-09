@@ -96,6 +96,7 @@ void	parse_redirects(char *cmd, int cmd_n)
 {
 	int	red;
 	int i;
+	int fd;
 	int reds_in;
 	int reds_out;
 

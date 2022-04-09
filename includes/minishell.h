@@ -94,7 +94,7 @@ char		*quote_skip(char *str);
 int			prompt_heredoc(char *delim, int i);
 int			builtins(int i, char *cmd, char *command);
 void		ft_fork(int i, char *cmd, char *command);
-void    	change_in(int i);
+int	    	change_in(int i);
 void    	change_out(int i);
 
 #endif
