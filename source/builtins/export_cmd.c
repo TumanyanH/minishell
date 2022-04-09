@@ -49,7 +49,7 @@ int	equal_finder(char *str)
 	return (0);
 }
 
-void	check_export(char **args)
+int	check_export(char **args)
 {
 	int			i;
 	char		**new;
@@ -70,9 +70,10 @@ void	check_export(char **args)
 				item->envname = new[0];
 				item->envval = new[1];
 				ft_lstadd_back(&g_val.env, ft_lstnew(item));
+
 			}
 			++i;
 		}
 	}
-	exit(0);
+	return (0);
 }

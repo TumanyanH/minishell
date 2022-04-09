@@ -12,10 +12,10 @@
 
 #include "../../includes/minishell.h"
 
-void	check_pwd(char **args)
+int	check_pwd(void)
 {
 	char	cwd[PATH_MAX + 1];
 
 	printf("%s\n", getcwd(cwd, PATH_MAX + 1));
-	exit(0);
+	return (0);
 }

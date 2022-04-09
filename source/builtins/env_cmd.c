@@ -12,21 +12,21 @@
 
 #include "../../includes/minishell.h"
 
-void	check_env(char **args)
+int	check_env(char **args)
 {
 	t_list	*temp;
 
 	temp = g_val.env;
-	if (*args[0] == '\0')
+	if (args[0][0] == '\0')
 	{
 		while (temp)
 		{
 			printf("%s=%s\n", temp->content->envname, temp->content->envval);
 			temp = temp->next;
 		}
-		exit(0);
+		return (0);
 	}
 	else
 		printf("env: %s: No such file or directory\n", args[0]);
-	exit(127);
+	return (127);
 }

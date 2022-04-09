@@ -12,27 +12,53 @@
 
 #include "../../includes/minishell.h"
 
-int	builtins(char *cmd, char *command)
+int	check_built(char *cmd)
+{
+	return (!ft_strncmp(cmd, "echo\0", 5)
+				|| !ft_strncmp(cmd, "cd\0", 3)
+				|| !ft_strncmp(cmd, "pwd\0", 4)
+				|| !ft_strncmp(cmd, "export\0", 6)
+				|| !ft_strncmp(cmd, "unset\0", 6)
+				|| !ft_strncmp(cmd, "env\0", 4));
+}
+
+int	builtins(int i, char *cmd, char *command)
 {
 	int		a;
 	char	**args;
+	int j;
 
-	a = 1;
+	j = 0;
 	args = my_split(cmd);
-	if (!ft_strncmp(command, "echo\0", 5))
-		check_echo(args);
-	else if (!ft_strncmp(command, "cd\0", 3))
-		check_cd(args);
-	else if (!ft_strncmp(command, "pwd\0", 4))
-		check_pwd(args);
-	else if (!ft_strncmp(command, "export\0", 6))
-		check_export(args);
-	else if (!ft_strncmp(command, "unset\0", 6))
-		check_unset(args);
-	else if (!ft_strncmp(command, "env\0", 4))
-		check_env(args);
-	else
-		a = 0;
+	a = -1;
+	if (check_built(command))
+	{
+		change_in(i);
+		change_out(i);
+		if (!ft_strncmp(command, "echo\0", 5))
+			a = check_echo(args);
+		else if (!ft_strncmp(command, "cd\0", 3))
+			a = check_cd(args);
+		else if (!ft_strncmp(command, "pwd\0", 4))
+			a = check_pwd();
+		else if (!ft_strncmp(command, "export\0", 6))
+			a = check_export(args);
+		else if (!ft_strncmp(command, "unset\0", 6))
+			a = check_unset(args);
+		else if (!ft_strncmp(command, "env\0", 4))
+			a = check_env(args);
+		if (i < g_val.cmd_count - 1)
+			close(g_val.pipes[i][1]);
+		if (i < g_val.cmd_count)
+			if (i > 0)
+				close(g_val.pipes[i - 1][0]);
+		while (g_val.cmd_table[i].redirects.out[j])
+			close(g_val.cmd_table[i].redirects.out[j++]);
+		j = 0;
+		while (g_val.cmd_table[i].redirects.in[j])
+			close(g_val.cmd_table[i].redirects.in[j++]);
+		g_val.last_returned = a;
+	}
 	return (a);
 }
 
@@ -41,20 +67,14 @@ void	checking_commands(int i, char *command, char *cmd)
 	char	**temp;
 	char	*acc_check;
 
-	command = to_lower(command);
-	temp = ft_split(cmd, ' ');
-	while (!is_space(*cmd) && *cmd)
-		cmd++;
-	if (!builtins(cmd, command))
+	temp = ft_split(g_val.cmd_table[i].cmd, ' ');
+	acc_check = ft_access(command);
+	if (acc_check)
+		ft_exec(i, acc_check);
+	else
 	{
-		acc_check = ft_access(command);
-		if (acc_check)
-			ft_exec(i, acc_check);
-		else
-		{
-			printf("minishell: %s: command not found\n", temp[0]);
-			exit(127);
-		}
+		printf("minishell: %s: command not found\n", temp[0]);
+		exit(127);
 	}
 }
 
@@ -72,6 +92,7 @@ void	change_in(int i)
 		j++;
 	if (j > 0)
 		fd = g_val.cmd_table[i].redirects.in[j - 1];
+	// printf("in i=%d, fd = %d\n", i, fd);
 	if (fd > 0)
 		dup2(fd, 0);
 }
@@ -96,6 +117,7 @@ void	change_out(int i)
 		// 	write(g_val.pipes[0][1], "\0", 1);
 		// chem porcel bayc piti vor esel ashxati
 	}
+	// printf("out i=%d, fd = %d\n", i, fd);
 	if (fd > 0)
 		dup2(fd, 1);
 }
@@ -104,43 +126,45 @@ void	ft_fork(int i, char *cmd, char *command)
 {
 	pid_t	pid;
 	int		j;
+	int		stat;
 	char 	a[20];
 	j = 0;
-	pid = fork();
-	if (pid < 0)
-		printf("Error: fork not forked\n");
-	else if (!pid)
+	
+	command = to_lower(command);
+	while (!is_space(*cmd) && *cmd)
+		cmd++;
+	stat = builtins(i, cmd, command);
+	if (stat == -1)
 	{
-		// if (i < g_val.cmd_count)
-		// 	if (i > 0)
-		// 		dup2(g_val.pipes[i - 1][0], 0);
-		change_in(i);
-		change_out(i);
-		// read(0, a, 20);
-		// printf("input %s\n", a);
-		// echo barev dzez inchpes eq a+++ | << a cat -e SEGA
-		// mi qani heredocov chisht chi shxatum
-		checking_commands(i, command, cmd);
-	}
-	else
-	{
-		
-		// if (g_val.cmd_count == 1)
-		// {
-		// 	// close(g_val.pipes[0][0]);
-		// 	close(g_val.pipes[0][1]);
-		// }
-		if (i < g_val.cmd_count - 1)
-			close(g_val.pipes[i][1]);
-		if (i < g_val.cmd_count)
-			if (i > 0)
-				close(g_val.pipes[i - 1][0]);
-		while (g_val.cmd_table[i].redirects.out[j])
-			close(g_val.cmd_table[i].redirects.out[j++]);
-		j = 0;
-		while (g_val.cmd_table[i].redirects.in[j])
-			close(g_val.cmd_table[i].redirects.in[j++]);
-	}
+		pid = fork();
+		if (pid < 0)
+			printf("Error: fork not forked\n");
+		else if (!pid)
+		{
+			change_in(i);
+			change_out(i);
+			// read(0, a, 20);
+			// printf("input %s\n", a);
+			// echo barev dzez inchpes eq a+++ | << a cat -e SEGA
+			// mi qani heredocov chisht chi shxatum
+			checking_commands(i, command, cmd);
+		}
+		else
+		{
+			if (i < g_val.cmd_count - 1)
+				close(g_val.pipes[i][1]);
+			if (i < g_val.cmd_count)
+				if (i > 0)
+					close(g_val.pipes[i - 1][0]);
+			while (g_val.cmd_table[i].redirects.out[j])
+				close(g_val.cmd_table[i].redirects.out[j++]);
+			j = 0;
+			while (g_val.cmd_table[i].redirects.in[j])
+				close(g_val.cmd_table[i].redirects.in[j++]);
+			wait(&stat);
+			g_val.last_returned = WEXITSTATUS(stat);
+		}
+	}	
 }
 
 void	analyse_cmd(char *cmd, char **argv)
@@ -165,12 +189,12 @@ void	analyse_cmd(char *cmd, char **argv)
 			}
 			ft_fork(i, cmd, command);
 		}
-		i = -1;
-		while (++i < g_val.cmd_count)
-		{
-			wait(&stat);
-			g_val.last_returned = WEXITSTATUS(stat);
-		}
+		// i = -1;
+		// while (++i < g_val.cmd_count)
+		// {
+		// 	wait(&stat);
+		// 	g_val.last_returned = WEXITSTATUS(stat);
+		// }
 		// clear_globs();
 	}
 }

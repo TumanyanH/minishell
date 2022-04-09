@@ -53,7 +53,7 @@ char	*make_abs_path(char *arg)
 	return (arg);
 }
 
-void	check_cd(char **args)
+int	check_cd(char **args)
 {
 	int		a;
 	char	prev_dir[PATH_MAX + 1];
@@ -78,18 +78,18 @@ void	check_cd(char **args)
 			if (chdir(old->content->envval) == -1)
 			{
 				printf("minishell: cd: %s: No such file or directory\n", args[0]);
-				exit(1);
+				return (1);
 			}
 		}
 	}
 	else if (chdir(args[0]) == -1)
 	{
 		printf("minishell: cd: %s: No such file or directory\n", args[0]);
-		exit(1);
+		return (1);
 	}
 	// lala = next_dir;
 	// printf("%s\n", prev_dir);
 	temp = find_env("PWD");
 	temp->content->envval = getcwd(next_dir, PATH_MAX + 1);
-	// exit(0);
+	return (0);
 }

@@ -50,12 +50,12 @@ struct	s_val
 void		analyse_cmd(char *cmd, char **argv);
 void		successful_exit(int a);
 void		check_exit(char *cmd);
-void		check_echo(char **args);
-void		check_pwd(char **args);
-void		check_cd(char **args);
-void		check_export(char **args);
-void		check_unset(char **args);
-void		check_env(char **args);
+int			check_echo(char **args);
+int			check_pwd(void);
+int			check_cd(char **args);
+int			check_export(char **args);
+int			check_unset(char **args);
+int			check_env(char **args);
 void		find_path(char **path, char **envp);
 void		exit_keypass(void);
 void		initial(char **envp);
@@ -92,7 +92,9 @@ char		*to_lower(char *cmd);
 int			check_dub_quote(char *str);
 char		*quote_skip(char *str);
 int			prompt_heredoc(char *delim, int i);
-int			builtins(char *cmd, char *command);
+int			builtins(int i, char *cmd, char *command);
 void		ft_fork(int i, char *cmd, char *command);
+void    	change_in(int i);
+void    	change_out(int i);
 
 #endif

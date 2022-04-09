@@ -20,7 +20,6 @@ t_list	*find_env(char *envname)
 	tmp = g_val.env;
 	if (envname == NULL)
 		return (NULL);
-	envname = ft_strtrim(envname, "\"\'");
 	while (ft_strncmp(tmp->content->envname, envname,
 			ft_strlen(envname)) != 0)
 	{
@@ -74,6 +73,7 @@ void	ft_exec(int i, char *acc_check)
 
 	j = -1;
 	envars = list_to_arr();
+	printf("HEY\n");
 	execve(acc_check, ft_split(g_val.cmd_table[i].cmd, ' '), envars);
 	while (envars[++j])
 		free(envars[j]);

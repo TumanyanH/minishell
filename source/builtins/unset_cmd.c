@@ -12,18 +12,18 @@
 
 #include "../../includes/minishell.h"
 
-void	check_unset(char **args)
+int	check_unset(char **args)
 {
 	int		i;
 	t_list	*temp;
 
 	i = 0;
-	while (*args[i] != '\0')
+	while (args[i] != NULL)
 	{
 		temp = find_env(args[i]);
 		if (temp)
 			ft_lstdelone(&g_val.env, temp);
 		++i;
 	}
-	exit(0);
+	return (0);
 }

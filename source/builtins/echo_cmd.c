@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-void	check_echo(char **args)
+int	check_echo(char **args)
 {
 	int	k;
 	int	option;
@@ -33,5 +33,5 @@ void	check_echo(char **args)
 	}
 	if (!option)
 		printf("\n");
-	exit(0);
+	return (0);
 }
