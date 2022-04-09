@@ -27,6 +27,14 @@ void	sigint_handler()
 	int i;
 
 	i = 0;
+	if (g_val.cmd_count == 0)
+	{
+		printf("\033[2D");
+		printf("\n");
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
 	while (i < g_val.cmd_count)
 	{
 		if (g_val.cmd_table[i].pid > 0)

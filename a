@@ -1,0 +1,28 @@
+total 192$
+drwxr-xr-x  13 jamestumanyan  staff    416  9 Apr 23:16 .$
+drwx------@ 19 jamestumanyan  staff    608  2 Apr 23:31 ..$
+-rw-r--r--   1 jamestumanyan  staff   6148  3 Apr 23:47 .DS_Store$
+drwxr-xr-x  15 jamestumanyan  staff    480  9 Apr 23:12 .git$
+-rw-r--r--   1 jamestumanyan  staff      7  2 Apr 23:31 .gitignore$
+drwxr-xr-x   3 jamestumanyan  staff     96  2 Apr 23:31 .vscode$
+-rw-r--r--   1 jamestumanyan  staff    618  2 Apr 23:31 Makefile$
+-rw-r--r--   1 jamestumanyan  staff      0  9 Apr 23:16 a$
+-rw-r--r--   1 jamestumanyan  staff      9  6 Apr 23:42 aaa$
+drwxr-xr-x   5 jamestumanyan  staff    160  9 Apr 23:12 includes$
+-rwxr-xr-x   1 jamestumanyan  staff  71344  9 Apr 23:13 minishell$
+drwxr-xr-x   7 jamestumanyan  staff    224  9 Apr 23:13 source$
+-rw-r--r--   1 jamestumanyan  staff     10  9 Apr 23:12 test$
+total 200$
+drwxr-xr-x  13 jamestumanyan  staff    416  9 Apr 23:16 .$
+drwx------@ 19 jamestumanyan  staff    608  2 Apr 23:31 ..$
+-rw-r--r--   1 jamestumanyan  staff   6148  3 Apr 23:47 .DS_Store$
+drwxr-xr-x  15 jamestumanyan  staff    480  9 Apr 23:12 .git$
+-rw-r--r--   1 jamestumanyan  staff      7  2 Apr 23:31 .gitignore$
+drwxr-xr-x   3 jamestumanyan  staff     96  2 Apr 23:31 .vscode$
+-rw-r--r--   1 jamestumanyan  staff    618  2 Apr 23:31 Makefile$
+-rw-r--r--   1 jamestumanyan  staff    837  9 Apr 23:16 a$
+-rw-r--r--   1 jamestumanyan  staff      9  6 Apr 23:42 aaa$
+drwxr-xr-x   5 jamestumanyan  staff    160  9 Apr 23:12 includes$
+-rwxr-xr-x   1 jamestumanyan  staff  71344  9 Apr 23:13 minishell$
+drwxr-xr-x   7 jamestumanyan  staff    224  9 Apr 23:13 source$
+-rw-r--r--   1 jamestumanyan  staff     10  9 Apr 23:12 test$

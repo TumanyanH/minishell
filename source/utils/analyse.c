@@ -26,8 +26,8 @@ int	builtins(int i, char *cmd, char *command)
 {
 	int		a;
 	char	**args;
-	int j;
-	int	fd;
+	int 	j;
+	int		fd;
 
 	j = 0;
 	fd = 0;
