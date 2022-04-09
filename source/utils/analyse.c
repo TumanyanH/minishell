@@ -42,6 +42,7 @@ int	builtins(int i, char *cmd, char *command)
 	a = -1;
 	if (check_built(command))
 	{
+		g_val.cmd_table[i].pid = 0;
 		if (!ft_strncmp(command, "echo\0", 5))
 			a = check_echo(fd, args);
 		else if (!ft_strncmp(command, "cd\0", 3))
@@ -99,7 +100,6 @@ void	change_in(int i)
 		j++;
 	if (j > 0)
 		fd = g_val.cmd_table[i].redirects.in[j - 1];
-	// printf("in i=%d, fd = %d\n", i, fd);
 	if (fd > 0)
 		dup2(fd, 0);
 }
@@ -166,6 +166,7 @@ void	ft_fork(int i, char *cmd, char *command)
 			}
 			else
 			{
+				g_val.cmd_table[i].pid = pid;
 				if (i < g_val.cmd_count - 1)
 					close(g_val.pipes[i][1]);
 				if (i < g_val.cmd_count)

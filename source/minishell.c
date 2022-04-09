@@ -22,13 +22,29 @@ void	initial(char **envp)
 	// g_val.redirects.out.path = NULL;
 }
 
+void	sigint_handler()
+{
+	int i;
+
+	i = 0;
+	while (i < g_val.cmd_count)
+	{
+		if (g_val.cmd_table[i].pid > 0)
+		{
+			printf("\033[2D");
+			kill(g_val.cmd_table[i].pid, SIGTERM);
+		}
+		++i;
+	}
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	char	*cmd;
 	char	**argv;
 	char	path[PATH_MAX + 1];
 
-	// signal(SIGINT, SIG_IGN);
+	signal(SIGINT, sigint_handler);
 	write(1, "\033[2J", 4);
 	write(1, "\033[H", 3);
 	initial(envp);

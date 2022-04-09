@@ -35,6 +35,7 @@ typedef struct s_commands
 	int			has_pipe;
 	char		*cmd;
 	t_redirects	redirects;
+	pid_t		pid;
 }	t_commands;
 
 struct	s_val
@@ -44,7 +45,6 @@ struct	s_val
 	t_list		*env;
 	t_commands	*cmd_table;
 	int			**pipes;
-	int a;
 }	g_val;
 
 void		analyse_cmd(char *cmd, char **argv);
