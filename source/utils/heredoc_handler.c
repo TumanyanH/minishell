@@ -24,7 +24,7 @@ int	prompt_heredoc(char *delim, int i)
 	while (1)
 	{
 		read = readline(">");
-		if (!ft_strncmp(read, delim, ft_strlen(read)))
+		if (!ft_strncmp(read, delim, ft_strlen(delim)))
 			break ;
 		else
 		{

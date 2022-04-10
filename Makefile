@@ -6,7 +6,8 @@ INCS = -Iincludes -I$(LFT_PATH)
 LFT_FLAGS = -L$(LFT_PATH) -lft
 
 CC = gcc
-FLAGS = -Wall -Wextra -Werror $(INCS) -lreadline
+FLAGS = -Wall -Wextra -Werror $(INCS) -L /Users/htumanya/lib -lreadline
+#FLAGS = -Wall -Wextra -Werror $(INCS) -lreadline
 RM = rm -rf
 
 FILES = ${shell find "./source/" -name "*.c"}
@@ -14,7 +15,7 @@ OBJS = ${FILES:.c=.o}
 
 
 $(NAME) : $(OBJS)
-	@$(CC) $(FLAGS) $(LFT_FLAGS) $(OBJS) -o $(NAME)
+	@$(CC) $(FLAGS) $(LFT_FLAGS) $(OBJS) -I /Users/letumany/include -o $(NAME)
 	@echo "Built MINISHELL"
 
 all : $(LFT_NAME) $(NAME)

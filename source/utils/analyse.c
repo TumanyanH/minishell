@@ -37,9 +37,9 @@ int	builtins(int i, char *cmd, char *command)
 		fd = g_val.pipes[i][1];
 	if (j > 0)
 		fd = g_val.cmd_table[i].redirects.out[j - 1];
-	j = change_in(i);
-	if (j < 0)
-		printf("minishell: no such file or directory\n");
+	// j = change_in(i);
+	// if (j < 0)
+	// 	printf("minishell: no such file or directory\n");
 	args = my_split(cmd);
 	a = -1;
 	if (check_built(command) && j > -1)
