@@ -17,14 +17,7 @@ void	init_pipes()
 	int i;
 
 	i = 0;
-	if (g_val.cmd_count == 1)
-	{
-		g_val.pipes = (int **)malloc(sizeof(int *));
-		g_val.pipes[0] = (int *)malloc(8);
-		
-		pipe(g_val.pipes[0]);
-	}
-	else
+	if (g_val.cmd_count > 1)
 	{
 		g_val.pipes = (int **)malloc((g_val.cmd_count - 1) * sizeof(int *));
 		while (i < g_val.cmd_count - 1)
@@ -32,7 +25,7 @@ void	init_pipes()
 			g_val.pipes[i] = (int *)malloc(8);
 			pipe(g_val.pipes[i]);
 			++i;
-		}	
+		}
 	}
 }
 

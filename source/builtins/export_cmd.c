@@ -6,7 +6,7 @@
 /*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 05:34:09 by ster-min          #+#    #+#             */
-/*   Updated: 2022/04/04 19:47:02 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/04/10 21:45:37 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	check_export(int fd, char **args)
 	int			i;
 	char		**new;
 	t_env_item	*item;
+	t_list		*temp;
 
 	i = 0;
 	if (args[0][0] == '\0')
@@ -65,12 +66,29 @@ int	check_export(int fd, char **args)
 			if (equal_finder(args[i]))
 			{
 				new = ft_split_by_eq(args[i]);
-				printf("s0=%s- && s1=%s-\n", new[0], new[1]);
-				item = (t_env_item *)malloc(sizeof(t_env_item));
-				item->envname = new[0];
-				item->envval = new[1];
-				ft_lstadd_back(&g_val.env, ft_lstnew(item));
-
+				temp = find_env(new[0]);
+				if (!temp)
+				{
+					item = (t_env_item *)malloc(sizeof(t_env_item));
+					item->envname = new[0];
+					item->envval = new[1];
+					item->env_print = 1;
+					ft_lstadd_back(&g_val.env, ft_lstnew(item));
+				}
+				else
+					temp->content->envval = new[1];
+			}
+			else
+			{
+				temp = find_env(args[i]);
+				if (!temp)
+				{
+					item = (t_env_item *)malloc(sizeof(t_env_item));
+					item->envname = args[i];
+					item->envval = NULL;
+					item->env_print = 0;
+					ft_lstadd_back(&g_val.env, ft_lstnew(item));
+				}
 			}
 			++i;
 		}

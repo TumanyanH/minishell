@@ -6,7 +6,7 @@
 /*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 16:28:26 by htumanya          #+#    #+#             */
-/*   Updated: 2022/03/16 17:19:24 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/04/10 21:43:08 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_list	*fill_env_list(char **envp)
 		item = (t_env_item *)malloc(sizeof(t_env_item));
 		item->envname = env_dets[0];
 		item->envval = env_dets[1];
+		item->env_print = 1;
 		ft_lstadd_back(&env, ft_lstnew(item));
 		i++;
 	}

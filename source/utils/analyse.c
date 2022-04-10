@@ -89,30 +89,21 @@ void	checking_commands(int i, char *command, char *cmd)
 	}
 }
 
-int	change_in(int i)
+void	change_in(int i)
 {
 	int	fd;
 	int	j;
 
 	j = 0;
 	fd = 0;
-	if (i < g_val.cmd_count)
-		if (i > 0)
-			fd = g_val.pipes[i - 1][0];
+	if (i > 0 && i < g_val.cmd_count)
+		fd = g_val.pipes[i - 1][0];
 	while (g_val.cmd_table[i].redirects.in[j])
-	{
-		if (g_val.cmd_table[i].redirects.in[j] == -1)
-			fd = -1;
 		j++;
-	}
-	if (fd > -1)
-	{
-		if (j > 0)
-			fd = g_val.cmd_table[i].redirects.in[j - 1];
-		if (fd > 0)
-			dup2(fd, 0);
-	}
-	return (fd);
+	if (j > 0)
+		fd = g_val.cmd_table[i].redirects.in[j - 1];
+	if (fd > 0)
+		dup2(fd, 0);
 }
 
 void	change_out(int i)
@@ -168,11 +159,7 @@ void	ft_fork(int i, char *cmd, char *command)
 				printf("Error: fork not forked\n");
 			else if (!pid)
 			{
-				if (change_in(i) < 0)
-				{
-					printf("minishell: no such file or directory\n");
-					exit(1);
-				}
+				change_in(i);
 				change_out(i);
 				// read(0, a, 20);
 				// printf("input %s\n", a);

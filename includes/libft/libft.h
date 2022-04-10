@@ -57,7 +57,7 @@ typedef struct s_env_item
 {
 	char	*envname;
 	char	*envval;
-	int		is_export;
+	int		env_print;
 }	t_env_item;
 typedef struct s_list
 {
