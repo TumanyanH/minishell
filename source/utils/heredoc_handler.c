@@ -72,6 +72,5 @@ int	prompt_heredoc_v2(char *delim, int i)
 		free(temp);
 	}
 	close(fd[1]);
-
 	return (fd[0]);
 }

@@ -55,6 +55,7 @@ char	*simplifier(char *cmd)
 	i = 0;
 	quote_det = 0;
 	doub_quote_det = 0;
+	printf("start=%s---\n", cmd);
 	while (cmd[i] != '\0')
 	{
 		name = NULL;
@@ -83,5 +84,6 @@ char	*simplifier(char *cmd)
 		}
 		++i;
 	}
+	printf("simp=%s---\n", cmd);
 	return (cmd);
 }

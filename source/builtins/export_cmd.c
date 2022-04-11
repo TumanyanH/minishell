@@ -21,8 +21,12 @@ void	export_print(void)
 	temp = g_val.env;
 	while (temp != NULL)
 	{
-		printf("declare -x %s=\"%s\"\n",
-			temp->content->envname, temp->content->envval);
+		if (temp->content->env_print == 1)
+			printf("declare -x %s=\"%s\"\n",
+				temp->content->envname, temp->content->envval);
+		else
+			printf("declare -x %s\n",
+				temp->content->envname);
 		temp = temp->next;
 	}
 }
@@ -49,48 +53,48 @@ int	equal_finder(char *str)
 	return (0);
 }
 
+void	export_add(char *name, char *value, int print)
+{
+	t_env_item	*item;
+
+	item = (t_env_item *)malloc(sizeof(t_env_item));
+	item->envname = name;
+	item->envval = value;
+	item->env_print = print;
+	ft_lstadd_back(&g_val.env, ft_lstnew(item));
+}
+
 int	check_export(int fd, char **args)
 {
 	int			i;
 	char		**new;
-	t_env_item	*item;
 	t_list		*temp;
 
-	i = 0;
+	i = -1;
 	if (args[0][0] == '\0')
 		export_print();
 	else
 	{
-		while (args[i])
+		while (args[++i])
 		{
 			if (equal_finder(args[i]))
 			{
 				new = ft_split_by_eq(args[i]);
 				temp = find_env(new[0]);
 				if (!temp)
-				{
-					item = (t_env_item *)malloc(sizeof(t_env_item));
-					item->envname = new[0];
-					item->envval = new[1];
-					item->env_print = 1;
-					ft_lstadd_back(&g_val.env, ft_lstnew(item));
-				}
+					export_add(new[0], new[1], 1);
 				else
-					temp->content->envval = new[1];
+				{
+					temp->content->envval = ft_strjoin(NULL, new[1]);
+					temp->content->env_print = 1;
+				}
 			}
 			else
 			{
 				temp = find_env(args[i]);
 				if (!temp)
-				{
-					item = (t_env_item *)malloc(sizeof(t_env_item));
-					item->envname = args[i];
-					item->envval = NULL;
-					item->env_print = 0;
-					ft_lstadd_back(&g_val.env, ft_lstnew(item));
-				}
+					export_add(args[i], NULL, 0);
 			}
-			++i;
 		}
 	}
 	return (0);

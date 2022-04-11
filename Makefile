@@ -15,7 +15,7 @@ OBJS = ${FILES:.c=.o}
 
 
 $(NAME) : $(OBJS)
-	@$(CC) $(FLAGS) $(LFT_FLAGS) $(OBJS) -I /Users/letumany/include -o $(NAME)
+	@$(CC) $(FLAGS) $(LFT_FLAGS) $(OBJS) -I /Users/htumanya/include -o $(NAME)
 	@echo "Built MINISHELL"
 
 all : $(LFT_NAME) $(NAME)

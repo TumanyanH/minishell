@@ -15,7 +15,16 @@
 int	check_pwd(int fd)
 {
 	char	cwd[PATH_MAX + 1];
+	char	*ret;
+	t_list	*old;
 
-	printf("%s\n", getcwd(cwd, PATH_MAX + 1));
+	ret = getcwd(cwd, PATH_MAX + 1);
+	if (ret)
+		printf("%s\n", ret);
+	else
+	{
+		old = find_env("PWD");
+		printf("%s\n", old->content->envval);
+	}
 	return (0);
 }

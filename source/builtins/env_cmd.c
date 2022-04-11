@@ -29,12 +29,15 @@ int	check_env(int fd, char **args)
 	{
 		under_line = find_env("_");
 		under_line->content->envval = ft_strjoin("/usr/bin/env", NULL);
-		while (temp && temp->content->env_print == 1)
+		while (temp)
 		{
-			ft_putstr_fd(temp->content->envname, fd);
-			ft_putstr_fd("=", fd);
-			ft_putstr_fd(temp->content->envval, fd);
-			ft_putstr_fd("\n", fd);
+			if (temp->content->env_print == 1)
+			{
+				ft_putstr_fd(temp->content->envname, fd);
+				ft_putstr_fd("=", fd);
+				ft_putstr_fd(temp->content->envval, fd);
+				ft_putstr_fd("\n", fd);
+			}
 			temp = temp->next;
 		}
 		return (0);

@@ -19,7 +19,7 @@ char	*to_lower(char *cmd)
 
 	res = (char *)malloc(sizeof(char) * ft_strlen(cmd) + 1);
 	i = 0;
-	while (cmd[i] && !is_space(cmd[i]))
+	while (cmd[i])
 	{
 		res[i] = ft_tolower(cmd[i]);
 		++i;
@@ -50,33 +50,33 @@ int	check_dub_quote(char *str)
 	return (0);
 }
 
-char	*quote_skip(char *str)
-{
-	char	*res;
-	int		i;
-	int		j;
-	int		len;
+// char	*quote_skip(char *str)
+// {
+// 	char	*res;
+// 	int		i;
+// 	int		j;
+// 	int		len;
 
-	i = 0;
-	j = 0;
-	len = 0;
-	while (str[i] && !is_space(str[i]))
-	{
-		if (str[i] != '\'' && str[i] != '\"')
-			len++;
-		++i;
-	}
-	res = malloc(sizeof(char) * len + 1);
-	i = 0;
-	while (str[i] && !is_space(str[i]))
-	{
-		if (str[i] != '\'' && str[i] != '\"')
-		{
-			res[j] = str[i];
-			++j;
-		}
-		++i;
-	}
-	res[j] = '\0';
-	return (res);
-}
+// 	i = 0;
+// 	j = 0;
+// 	len = 0;
+// 	while (str[i] && !is_space(str[i]))
+// 	{
+// 		if (str[i] != '\'' && str[i] != '\"')
+// 			len++;
+// 		++i;
+// 	}
+// 	res = malloc(sizeof(char) * len + 1);
+// 	i = 0;
+// 	while (str[i] && !is_space(str[i]))
+// 	{
+// 		if (str[i] != '\'' && str[i] != '\"')
+// 		{
+// 			res[j] = str[i];
+// 			++j;
+// 		}
+// 		++i;
+// 	}
+// 	res[j] = '\0';
+// 	return (res);
+// }

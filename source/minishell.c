@@ -22,18 +22,18 @@ void	initial(char **envp)
 	// g_val.redirects.out.path = NULL;
 }
 
-void	sigint_handler()
+void	sigint_handler(void)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (g_val.cmd_count == 0)
 	{
 		printf("\033[2D");
 		printf("\n");
-		// rl_replace_line("", 0);
-		// rl_on_new_line();
-		// rl_redisplay();
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
 	}
 	while (i < g_val.cmd_count)
 	{
