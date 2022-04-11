@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
+/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 20:30:26 by htumanya          #+#    #+#             */
-/*   Updated: 2022/04/11 13:25:10 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/04/11 20:11:00 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,13 @@ void	initial(char **envp)
 {
 	g_val.env = fill_env_list(envp);
 	g_val.cmd_count = 0;
-	// exit_keypass();
-	// pipe(g_val.pipes);
-	// g_val.redirects.in.path = NULL;
-	// g_val.redirects.out.path = NULL;
 }
 
-void	sigint_handler(void)
+void	sigint_handler(int i)
 {
-	int	i;
-
 	i = 0;
 	if (g_val.cmd_count == 0)
 	{
-		printf("\033[2D");
 		printf("\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();
@@ -53,6 +46,7 @@ int	main(int ac, char **av, char **envp)
 	char	path[PATH_MAX + 1];
 
 	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
 	write(1, "\033[2J", 4);
 	write(1, "\033[H", 3);
 	initial(envp);

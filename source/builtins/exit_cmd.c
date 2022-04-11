@@ -6,26 +6,11 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 21:09:27 by ster-min          #+#    #+#             */
-/*   Updated: 2022/03/29 20:08:11 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/04/11 20:40:38 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	successful_exit(int a)
-{
-	exit(0);
-}
-
-void	exit_keypass(void)
-{
-	// struct sigaction	sa;
-
-	// sa.sa_handler = successful_exit;
-	// sigemptyset(&sa.sa_mask);
-	// sa.sa_flags = SA_RESTART;
-	// signal(SIGINT, SIG_IGN);
-}
 
 char	*atoi_helper(char *str, int *quote)
 {
@@ -88,7 +73,8 @@ void	check_exit(char *cmd)
 			{
 				if (ret > 9223372036854775807)
 				{
-					printf("minishell: exit: %s: numeric argument required\n", ft_itoa(ret));
+					printf("minishell: exit: %s: numeric argument required\n",
+						ft_itoa(ret));
 					ft_exit(255);
 				}
 				ft_exit(ret % 256);

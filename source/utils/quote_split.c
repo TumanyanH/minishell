@@ -12,12 +12,12 @@
 
 #include "../../includes/minishell.h"
 
-int count_objs(char *str)
+int	count_objs(char *str)
 {
-	int i;
-	int count;
-	int sing_quote;
-	int doub_quote;
+	int	i;
+	int	count;
+	int	sing_quote;
+	int	doub_quote;
 
 	i = 0;
 	count = 1;
@@ -43,9 +43,9 @@ int count_objs(char *str)
 
 int	count_str_len(char *str)
 {
-	int i;
-	int sing_quote;
-	int doub_quote;
+	int	i;
+	int	sing_quote;
+	int	doub_quote;
 
 	i = 0;
 	sing_quote = 0;
@@ -77,21 +77,15 @@ char	*my_substr(char *str, int start, int len)
 	while (str[start] && start < len)
 	{
 		if (str[start] == '\'' && !doub_quote)
-		{
 			sing_quote = !sing_quote;
-			++start;
-		}
 		else if (str[start] == '\"' && !sing_quote)
-		{
 			doub_quote = !doub_quote;
-			++start;
-		}
 		else
 		{
 			res[i] = str[start];
 			++i;
-			++start;
 		}
+		++start;
 	}
 	res[i] = '\0';
 	return (res);

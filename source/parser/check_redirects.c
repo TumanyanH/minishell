@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_redirects.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
+/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 21:52:55 by htumanya          #+#    #+#             */
-/*   Updated: 2022/04/03 21:21:44 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/04/11 20:38:41 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	*find_file(char *cmd, int *i)
 	return (fp);
 }
 
-int count_redirects(char *cmd, char red_type)
+int	count_redirects(char *cmd, char red_type)
 {
 	int	i;
 	int	count;
@@ -95,10 +95,10 @@ int count_redirects(char *cmd, char red_type)
 void	parse_redirects(char *cmd, int cmd_n)
 {
 	int	red;
-	int i;
-	int fd;
-	int reds_in;
-	int reds_out;
+	int	i;
+	int	fd;
+	int	reds_in;
+	int	reds_out;
 
 	i = 0;
 	reds_in = 0;

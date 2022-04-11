@@ -34,9 +34,12 @@ char	*find_var_name(char *cmd, int i)
 	j = i + 1;
 	if (!cmd[j])
 		return (NULL);
-	while (cmd[j] && !is_space(cmd[j]))
+	while (cmd[j] && !is_space(cmd[j]) && cmd[j] != '\"')
+	{
+		printf("c %c\n", cmd[j]);
 		++j;
-	temp = ft_substr(cmd, i + 1, j - i);
+	}
+	temp = ft_substr(cmd, i + 1, j - i - 1);
 	temp2 = ft_strtrim(temp, "{}");
 	free(temp);
 	return (temp2);
@@ -55,7 +58,6 @@ char	*simplifier(char *cmd)
 	i = 0;
 	quote_det = 0;
 	doub_quote_det = 0;
-	printf("start=%s---\n", cmd);
 	while (cmd[i] != '\0')
 	{
 		name = NULL;
@@ -84,6 +86,5 @@ char	*simplifier(char *cmd)
 		}
 		++i;
 	}
-	printf("simp=%s---\n", cmd);
 	return (cmd);
 }

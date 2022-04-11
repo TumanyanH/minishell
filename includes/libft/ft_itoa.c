@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 20:03:35 by htumanya          #+#    #+#             */
-/*   Updated: 2022/03/26 17:42:54 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/04/11 20:41:19 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ static int	nbrlen(unsigned long long nbr)
 
 char	*ft_itoa(unsigned long long n)
 {
-	char	*str;
+	char				*str;
 	unsigned long long	nbr;
-	int		len;
+	int					len;
 
 	nbr = n;
 	len = nbrlen(nbr);

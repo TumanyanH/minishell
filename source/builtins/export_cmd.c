@@ -77,6 +77,8 @@ int	check_export(int fd, char **args)
 	{
 		while (args[++i])
 		{
+			if (ft_isdigit(args[i][0]))
+				export_error(args[i]);
 			if (equal_finder(args[i]))
 			{
 				new = ft_split_by_eq(args[i]);

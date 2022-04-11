@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
+/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 21:01:42 by htumanya          #+#    #+#             */
-/*   Updated: 2022/04/03 21:50:55 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/04/11 20:21:15 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	init_pipes()
+void	init_pipes(void)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (g_val.cmd_count > 1)
@@ -51,6 +51,27 @@ int	check_structure(char *cmd)
 	return (1);
 }
 
+void	str_simple(void)
+{
+	char	*temp;
+	int		i;
+
+	i = -1;
+	while (++i < g_val.cmd_count)
+	{
+		temp = filter_cmd(g_val.cmd_table[i].cmd);
+		if (g_val.cmd_table[i].cmd)
+			free(g_val.cmd_table[i].cmd);
+		g_val.cmd_table[i].cmd = ft_strdup(temp);
+		if (temp)
+			free(temp);
+		temp = simplifier(g_val.cmd_table[i].cmd);
+		g_val.cmd_table[i].cmd = ft_strdup(temp);
+		if (temp)
+			free(temp);
+	}		
+}
+
 int	start_parse(char *cmd_line)
 {
 	int		i;
@@ -61,7 +82,8 @@ int	start_parse(char *cmd_line)
 	g_val.cmd_count = count_pipes(cmd_line, 0) + 1;
 	init_pipes();
 	i = 0;
-	g_val.cmd_table = (t_commands *)malloc(sizeof(t_commands) * (g_val.cmd_count));
+	g_val.cmd_table = (t_commands *)malloc(sizeof(t_commands)
+			* (g_val.cmd_count));
 	while (i < ft_strlen(cmd_line))
 	{
 		g_val.cmd_table[each_cmd].cmd = cpy_till_pipe(cmd_line, &i);
@@ -74,21 +96,6 @@ int	start_parse(char *cmd_line)
 				i++;
 		each_cmd++;
 	}
-	i = -1;
-	while (++i < g_val.cmd_count)
-	{
-		temp = filter_cmd(g_val.cmd_table[i].cmd);
-		if (g_val.cmd_table[i].cmd)
-			free(g_val.cmd_table[i].cmd);
-		g_val.cmd_table[i].cmd = ft_strdup(temp);
-		if (temp)
-			free(temp);
-		temp = simplifier(g_val.cmd_table[i].cmd);
-		// if (g_val.cmd_table[i].cmd)
-		// 	free(g_val.cmd_table[i].cmd);
-		g_val.cmd_table[i].cmd = ft_strdup(temp);
-		if (temp)
-			free(temp);
-	}
+	str_simple();
 	return (0);
 }

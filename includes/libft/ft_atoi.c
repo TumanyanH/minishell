@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 05:09:17 by ster-min          #+#    #+#             */
-/*   Updated: 2022/03/26 17:33:50 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/04/11 20:41:57 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ void	error_writer(char *str, int quote)
 
 unsigned long long	ft_atoi(char *str, int *check, int quote)
 {
-	int		i;
+	int						i;
 	unsigned long long		res;
-	int		sign;
+	int						sign;
 
 	i = 0;
 	res = 0;

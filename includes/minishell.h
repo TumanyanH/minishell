@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
+/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 20:40:33 by htumanya          #+#    #+#             */
-/*   Updated: 2022/04/04 21:08:54 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/04/11 20:39:32 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,11 @@ void		ft_exec(int i, char *acc_check);
 char		**my_split(char *str);
 char		*to_lower(char *cmd);
 int			check_dub_quote(char *str);
-char		*quote_skip(char *str);
-int			prompt_heredoc(char *delim, int i);
 int			prompt_heredoc_v2(char *delim, int i);
 int			builtins(int i, char *cmd, char *command);
 void		ft_fork(int i, char *cmd, char *command);
-void	    change_in(int i);
-void    	change_out(int i);
+void		change_in(int i);
+void		change_out(int i);
+void		parental_things(int i);
 
 #endif

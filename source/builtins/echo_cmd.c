@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
+/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 15:05:37 by htumanya          #+#    #+#             */
-/*   Updated: 2022/04/04 20:26:03 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/04/11 20:40:57 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,11 @@ int	check_echo(int fd, char **args)
 	while (args[k] != NULL)
 	{
 		ft_putstr_fd(args[k], fd);
-		// printf("%s", args[k]);
 		++k;
 		if (args[k])
 			ft_putstr_fd(" ", fd);
-			// printf(" ");
 	}
 	if (!option)
 		ft_putstr_fd("\n", fd);
-		// printf("\n");
 	return (0);
 }
