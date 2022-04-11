@@ -6,7 +6,7 @@
 /*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 05:35:44 by ster-min          #+#    #+#             */
-/*   Updated: 2022/04/10 21:42:27 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/04/11 13:27:10 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	check_env(int fd, char **args)
 	temp = g_val.env;
 	if (args[0][0] == '\0')
 	{
+		under_line = find_env("_");
+		under_line->content->envval = ft_strjoin("/usr/bin/env", NULL);
 		while (temp && temp->content->env_print == 1)
 		{
 			ft_putstr_fd(temp->content->envname, fd);
@@ -35,8 +37,6 @@ int	check_env(int fd, char **args)
 			ft_putstr_fd("\n", fd);
 			temp = temp->next;
 		}
-		under_line = find_env("_");
-		under_line->content->envval = ft_strjoin("/usr/bin/env", NULL);
 		return (0);
 	}
 	else

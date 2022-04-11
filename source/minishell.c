@@ -6,7 +6,7 @@
 /*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 20:30:26 by htumanya          #+#    #+#             */
-/*   Updated: 2022/04/04 16:33:39 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/04/11 13:25:10 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ void	sigint_handler()
 	{
 		printf("\033[2D");
 		printf("\n");
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
+		// rl_replace_line("", 0);
+		// rl_on_new_line();
+		// rl_redisplay();
 	}
 	while (i < g_val.cmd_count)
 	{
