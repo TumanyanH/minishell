@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 21:09:07 by ster-min          #+#    #+#             */
-/*   Updated: 2022/04/11 20:39:07 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/04/14 21:13:04 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,17 @@ int	builtins(int i, char *cmd, char *command)
 	return (a);
 }
 
+void	quithandler(int a)
+{
+	printf("\033[2D");
+}
+
 void	checking_commands(int i, char *command, char *cmd)
 {
 	char	**temp;
 	char	*acc_check;
 
+	// signal(SIGQUIT, quithandler);
 	temp = my_split(g_val.cmd_table[i].cmd);
 	acc_check = ft_access(command);
 	if (acc_check)

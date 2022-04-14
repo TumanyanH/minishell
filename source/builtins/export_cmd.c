@@ -6,13 +6,13 @@
 /*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 05:34:09 by ster-min          #+#    #+#             */
-/*   Updated: 2022/04/10 21:45:37 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/04/11 20:53:19 by ster-min         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	export_print(void)
+int	export_print(void)
 {
 	int		i;
 	t_list	*temp;
@@ -29,14 +29,7 @@ void	export_print(void)
 				temp->content->envname);
 		temp = temp->next;
 	}
-}
-
-void	export_error(char *cmd)
-{
-	int	i;
-
-	i = 0;
-	printf("minishell: export: '%s': not a valid identifier\n", cmd);
+	return (0);
 }
 
 int	equal_finder(char *str)
@@ -64,39 +57,42 @@ void	export_add(char *name, char *value, int print)
 	ft_lstadd_back(&g_val.env, ft_lstnew(item));
 }
 
+void	eq_export(char *str)
+{
+	char		**new;
+	t_list		*temp;
+
+	new = ft_split_by_eq(str);
+	temp = find_env(new[0]);
+	if (!temp)
+		export_add(new[0], new[1], 1);
+	else
+	{
+		temp->content->envval = ft_strjoin(NULL, new[1]);
+		temp->content->env_print = 1;
+	}
+}
+
 int	check_export(int fd, char **args)
 {
 	int			i;
-	char		**new;
 	t_list		*temp;
 
 	i = -1;
 	if (args[0][0] == '\0')
-		export_print();
-	else
+		return (export_print());
+	while (args[++i])
 	{
-		while (args[++i])
+		if (ft_isdigit(args[i][0]))
+			printf("minishell: export: '%s': not a valid identifier\n",
+				args[i]);
+		if (equal_finder(args[i]))
+			eq_export(args[i]);
+		else
 		{
-			if (ft_isdigit(args[i][0]))
-				export_error(args[i]);
-			if (equal_finder(args[i]))
-			{
-				new = ft_split_by_eq(args[i]);
-				temp = find_env(new[0]);
-				if (!temp)
-					export_add(new[0], new[1], 1);
-				else
-				{
-					temp->content->envval = ft_strjoin(NULL, new[1]);
-					temp->content->env_print = 1;
-				}
-			}
-			else
-			{
-				temp = find_env(args[i]);
-				if (!temp)
-					export_add(args[i], NULL, 0);
-			}
+			temp = find_env(args[i]);
+			if (!temp)
+				export_add(args[i], NULL, 0);
 		}
 	}
 	return (0);

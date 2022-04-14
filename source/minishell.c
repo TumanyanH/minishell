@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 20:30:26 by htumanya          #+#    #+#             */
-/*   Updated: 2022/04/11 20:11:00 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/04/14 21:13:38 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,35 @@ void	sigint_handler(int i)
 	}
 }
 
+void	sigquit_handler(int i)
+{
+	i = 0;
+	while (i < g_val.cmd_count)
+	{
+		if (g_val.cmd_table[i].pid > 0)
+		{
+			printf("\033[2D");
+			kill(g_val.cmd_table[i].pid, SIGQUIT);
+		}
+		++i;
+	}
+}
+
+void	exiter(void)
+{
+	printf("\033[2D");
+	printf("exit\n");
+	exit(0);
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	char	*cmd;
 	char	**argv;
 	char	path[PATH_MAX + 1];
 
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
+	// signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, sigquit_handler);
 	write(1, "\033[2J", 4);
 	write(1, "\033[H", 3);
 	initial(envp);
@@ -54,11 +75,7 @@ int	main(int ac, char **av, char **envp)
 	{
 		cmd = readline("minishell> ");
 		if (cmd == NULL)
-		{
-			printf("\033[2D");
-			printf("exit\n");
-			exit(0);
-		}
+			exiter();
 		if (cmd[0] != '\0')
 			add_history(cmd);
 		if (!check_structure(cmd))

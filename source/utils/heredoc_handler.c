@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 21:33:13 by ster-min          #+#    #+#             */
-/*   Updated: 2022/04/11 20:17:14 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/04/14 21:28:59 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,35 @@ char	*read_heredoc(char *delim)
 			free(temp);
 			temp = ft_strjoin(temp2, "\n");
 		}
-	}
+	}	
 	return (temp);
 }
 
-int	prompt_heredoc_v2(char *delim, int i)
+void	sigkill(int a)
+{
+	printf("HEY\n");
+	exit(0);
+}
+
+int	prompt_heredoc(char *delim, int i)
 {
 	char	*read;
 	int		fd[2];
 	char	*temp;
 	char	*temp2;
+	pid_t	pid;
 
+	pid = fork();
 	pipe(fd);
-	temp = read_heredoc(delim);
+	if (pid < 0)
+		printf("something gone wrong\n");
+	else if (pid == 0)
+	{
+		signal(SIGINT, sigkill);
+		temp = read_heredoc(delim);
+	}
+	else
+		wait(NULL);
 	if (temp != NULL)
 	{
 		write(fd[1], temp, ft_strlen(temp));

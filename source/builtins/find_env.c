@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ster-min <ster-min@student.42.fr>          +#+  +:+       +#+        */
+/*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 21:09:17 by ster-min          #+#    #+#             */
-/*   Updated: 2022/04/04 20:48:10 by ster-min         ###   ########.fr       */
+/*   Updated: 2022/04/14 19:42:04 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ void	ft_exec(int i, char *acc_check)
 	int		j;
 
 	j = -1;
+	if (is_bash(g_val.cmd_table[i].cmd))
+		increment_shlvl();
 	envars = list_to_arr();
 	execve(acc_check, ft_split(g_val.cmd_table[i].cmd, ' '), envars);
 	while (envars[++j])

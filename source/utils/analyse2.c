@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 19:49:14 by htumanya          #+#    #+#             */
-/*   Updated: 2022/04/11 20:09:08 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/04/14 21:08:18 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,26 +30,53 @@ void	parental_things(int i)
 		close(g_val.cmd_table[i].redirects.in[j++]);
 }
 
+int	is_bash(char *cmd)
+{
+	int		i;
+	int		ret;
+	char	**split;
+
+	i = 0;
+	ret = 0;
+	split = ft_split(cmd, '/');
+	while (split[i])
+	{
+		if (!ft_strncmp(split[i], "minishell", ft_strlen(split[i])))
+		{
+			ret = 1;
+			free(split[i]);
+			break ;
+		}
+		free(split[i]);
+		++i;
+	}
+	return (ret);
+}
+
 void	start_forking(int i, char *command, char *cmd)
 {
 	pid_t	pid;
 	int		stat;
 
-	pid = fork();
-	if (pid < 0)
-		printf("Error: fork not forked\n");
-	else if (!pid)
+	if (g_val.cmd_table[i].cmd[0] != '\0')
 	{
-		change_in(i);
-		change_out(i);
-		checking_commands(i, command, cmd);
-	}
-	else
-	{
-		g_val.cmd_table[i].pid = pid;
-		parental_things(i);
-		wait(&stat);
-		g_val.last_returned = WEXITSTATUS(stat);
+		pid = fork();
+		if (pid < 0)
+			printf("Error: fork not forked\n");
+		else if (!pid)
+		{
+			if (change_in(i) < 0)
+				exit(0);
+			change_out(i);
+			checking_commands(i, command, cmd);
+		}
+		else
+		{
+			g_val.cmd_table[i].pid = pid;
+			parental_things(i);
+			wait(&stat);
+			g_val.last_returned = WEXITSTATUS(stat);
+		}
 	}
 }
 

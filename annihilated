@@ -1,0 +1,20 @@
+bash-3.2$ echo $"HOME"
+HOME
+bash-3.2$ echo $'HOME'
+HOME
+
+ls ><
+ls >'<'
+
+<>
+><
+
+hi |exit
+
+<< hi"and" cat
+<< 'hi'and cat
+<< 1 << and'then 'one cat
+<<
+<< <<
+
+Ctrl-\
