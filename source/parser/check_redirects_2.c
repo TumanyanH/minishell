@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 21:16:32 by htumanya          #+#    #+#             */
-/*   Updated: 2022/04/11 21:17:12 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/04/16 19:44:10 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ char	*find_file(char *cmd, int *i)
 	fp = (char *)malloc(sizeof(char) * (count + 1));
 	ft_strlcpy(fp, (cmd + *i), count + 1);
 	*i += ft_strlen(fp);
+	printf("fp=%s-\n", fp);
 	return (fp);
 }
 
