@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 21:09:27 by ster-min          #+#    #+#             */
-/*   Updated: 2022/04/11 22:36:28 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/04/16 20:09:50 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	check_exit(char *cmd)
 				ft_itoa(ret));
 			ft_exit(255);
 		}
-		else if ((int)ret > 255 && checker == 0)
+		else if ((int)ret >= 0 && checker == 0)
 			ft_exit(ret % 256);
 	}
 }

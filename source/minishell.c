@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 20:30:26 by htumanya          #+#    #+#             */
-/*   Updated: 2022/04/16 18:11:19 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/04/16 20:11:46 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,8 @@ void	sigint_handler(int i)
 	i = 0;
 	if (g_val.cmd_count == 0)
 	{
-		// printf("\n");
-		// printf("\033[2D");
-		rl_replace_line("", 0);
+		printf("\n");
+		printf("\033[2D");
 		rl_on_new_line();
 		rl_redisplay();
 	}

@@ -6,11 +6,11 @@
 #    By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/01 20:20:25 by htumanya          #+#    #+#              #
-#    Updated: 2022/02/12 16:41:47 by htumanya         ###   ########.fr        #
+#    Updated: 2022/04/16 20:23:11 by htumanya         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS		= $(shell find "." -name "*.c" ! -name "ft_lst*.c")
+SRCS		= $(shell find "." -name "*.c")
 BONUSES 	= $(shell find "." -name "ft_lst*.c")
 OBJS		= ${SRCS:.c=.o}
 BONUS_OBJS 	= ${BONUSES:.c=.o}

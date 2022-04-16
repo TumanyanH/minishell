@@ -14,20 +14,21 @@ FILES = ${shell find "./source/" -name "*.c"}
 OBJS = ${FILES:.c=.o}
 
 
+all : $(LFT_NAME) $(NAME)
+
 $(NAME) : $(OBJS)
 	@$(CC) -I /Users/htumanya/include/readline $(FLAGS) $(LFT_FLAGS) $(OBJS) -o $(NAME)
 	@echo "Built MINISHELL"
 
-all : $(LFT_NAME) $(NAME)
-
 $(LFT_NAME) :
-	@cd $(LFT_PATH) && $(MAKE) re
-	@echo "Built LIBFT"
+	@cd $(LFT_PATH) && $(MAKE) all
 
 clean : 
+	@cd $(LFT_PATH) && $(MAKE) clean
 	${RM} $(OBJS)
 
 fclean : $(MAKE) clean
+	@cd $(LFT_PATH) && $(MAKE) fclean
 	${RM} ./$(NAME)
 
 re : fclean all

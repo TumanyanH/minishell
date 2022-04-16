@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 05:09:17 by ster-min          #+#    #+#             */
-/*   Updated: 2022/04/11 20:41:57 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/04/16 20:04:46 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,30 +38,46 @@ void	error_writer(char *str, int quote)
 	exit (255);
 }
 
-unsigned long long	ft_atoi(char *str, int *check, int quote)
+int	ft_atoi_norme(char *str, int *sign)
 {
-	int						i;
-	unsigned long long		res;
-	int						sign;
+	int	i;
 
+	*sign = 0;
 	i = 0;
-	res = 0;
-	sign = 0;
-	*check = 0;
 	while (is_space(str[i]))
 		++i;
 	if (str[i] == '-')
 	{
-		sign = 1;
+		*sign = 1;
 		++i;
 	}
 	else if (str[i] == '+')
 		++i;
-	while (str[i] >= 48 && str[i] <= 57)
+	return (i);
+}
+
+unsigned long long	res_norme(char *str, int *i)
+{
+	unsigned long long	res;
+
+	while (str[*i] >= 48 && str[*i] <= 57)
 	{
-		res = res * 10 + (str[i] - 48);
-		i++;
+		res = res * 10 + (str[*i] - 48);
+		(*i)++;
 	}
+	return (res);
+}
+
+unsigned long long	ft_atoi(char *str, int *check, int quote)
+{
+	int						i;
+	int						sign;
+	unsigned long long		res;
+
+	res = 0;
+	*check = 0;
+	i = ft_atoi_norme(str, &sign);
+	res = res_norme(str, &i);
 	if (is_space(str[i]))
 	{
 		while (is_space(str[i]) && str[i])
