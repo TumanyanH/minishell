@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 19:20:44 by htumanya          #+#    #+#             */
-/*   Updated: 2022/04/11 20:54:50 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/04/16 17:41:07 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	count_var_len(char *s, int i)
 	int	len;
 
 	len = 0;
-	while (s[i] && !is_space(s[i]))
+	while (s[i] && !is_space(s[i]) && s[i] != '\'' && s[i] != '\"')
 	{
 		++i;
 		++len;
@@ -39,6 +39,8 @@ char	*find_var_name(char *cmd, int i)
 	temp = ft_substr(cmd, i + 1, j - i - 1);
 	temp2 = ft_strtrim(temp, "{}");
 	free(temp);
+	if (temp2[0] == '\0')
+		return (NULL);
 	return (temp2);
 }
 
@@ -52,9 +54,9 @@ void	simplifier_2(char **cmd, int i)
 	name = NULL;
 	tmp = ft_substr(*cmd, 0, i);
 	name = find_var_name(*cmd, i);
-	if (!ft_strncmp(name, "?", ft_strlen(name)))
+	if (name && !ft_strncmp(name, "?", ft_strlen(name)))
 		tmp = ft_strjoin(tmp, ft_itoa(g_val.last_returned));
-	else
+	else if (name)
 	{
 		temp = find_env(name);
 		if (temp)

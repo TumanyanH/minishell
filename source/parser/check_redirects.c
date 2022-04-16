@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 21:52:55 by htumanya          #+#    #+#             */
-/*   Updated: 2022/04/12 19:34:30 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/04/16 18:39:13 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ int	check_redirect(char *cmd, int *count)
 			is_red_out++;
 		++i;
 	}
-	if (is_red_in > 2 || is_red_out > 2)
+	if (is_red_in > 2 || is_red_out > 2 || (is_red_in == 1 && is_red_out == 1))
 	{
-		printf("wrong redirection\n");
+		printf("minishell: syntax error near unexpected token\n");
 		return (-1);
 	}
 	*count += i;
@@ -63,7 +63,7 @@ void	parse_norme2(char *cmd, int *i, int red, int *reds_out)
 				find_file(cmd, i), O_CREAT | O_RDWR | O_APPEND, 0644);
 }
 
-void	parse_norme(char *cmd, int cmd_n, int *reds_in, int *reds_out)
+int	parse_norme(char *cmd, int cmd_n, int *reds_in, int *reds_out)
 {
 	int	i;
 	int	red;
@@ -76,13 +76,12 @@ void	parse_norme(char *cmd, int cmd_n, int *reds_in, int *reds_out)
 		{
 			red = check_redirect(cmd + i, &i);
 			if (red == -1)
-				return ;
+				return (-1);
 			else if (red == 1)
 				g_val.cmd_table[cmd_n].redirects.in[(*reds_in)++] = open(
 						find_file(cmd, &i), O_RDONLY);
 			else if (red == 2)
-				g_val.cmd_table[cmd_n].redirects.in
-				[(*reds_in)++] = prompt_heredoc(
+				g_val.cmd_table[cmd_n].redirects.in[(*reds_in)++] = pr_heredoc(
 						find_file(cmd, &i), cmd_n);
 			else if (red == 3 || red == 4)
 				parse_norme2(cmd, &i, red * 100 + cmd_n, reds_out);
@@ -90,9 +89,10 @@ void	parse_norme(char *cmd, int cmd_n, int *reds_in, int *reds_out)
 		else
 			++i;
 	}
+	return (0);
 }
 
-void	parse_redirects(char *cmd, int cmd_n)
+int	parse_redirects(char *cmd, int cmd_n)
 {
 	int	i;
 	int	red;
@@ -105,8 +105,9 @@ void	parse_redirects(char *cmd, int cmd_n)
 			* (count_redirects(cmd, '<') + 1));
 	g_val.cmd_table[cmd_n].redirects.out = (int *)malloc(sizeof(int)
 			* (count_redirects(cmd, '>') + 1));
-	parse_norme(cmd, cmd_n, &reds_in, &reds_out);
+	if (parse_norme(cmd, cmd_n, &reds_in, &reds_out) == -1)
+		return (-1);
 	g_val.cmd_table[cmd_n].redirects.in[reds_in] = 0;
 	g_val.cmd_table[cmd_n].redirects.out[reds_out] = 0;
-	return ;
+	return (0);
 }

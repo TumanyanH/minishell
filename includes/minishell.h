@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 20:40:33 by htumanya          #+#    #+#             */
-/*   Updated: 2022/04/14 19:42:32 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/04/16 18:39:07 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <signal.h>
 # include <limits.h>
 # include <fcntl.h>
+# include <sys/stat.h>
 
 typedef struct s_redirects
 {
@@ -76,7 +77,7 @@ int			check_quotes(char *cmd);
 int			check_redirect(char *cmd, int *count);
 void		complete_redirects(char **parts);
 int			start_parse(char *cmd_line);
-void		parse_redirects(char *cmd, int cmd_n);
+int			parse_redirects(char *cmd, int cmd_n);
 char		*cpy_till_pipe(char *cmd, int *i);
 int			count_pipes(char *cmd, int i);
 char		*simplifier(char *cmd);
@@ -90,7 +91,7 @@ void		ft_exec(int i, char *acc_check);
 char		**my_split(char *str);
 char		*to_lower(char *cmd);
 int			check_dub_quote(char *str);
-int			prompt_heredoc(char *delim, int i);
+int			pr_heredoc(char *delim, int i);
 int			builtins(int i, char *cmd, char *command);
 void		ft_fork(int i, char *cmd, char *command);
 int			change_in(int i);

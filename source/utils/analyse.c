@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 21:09:07 by ster-min          #+#    #+#             */
-/*   Updated: 2022/04/14 21:13:04 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/04/16 18:47:48 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	check_built(char *cmd)
 	return (!ft_strncmp(cmd, "echo\0", 5)
 		|| !ft_strncmp(cmd, "cd\0", 3)
 		|| !ft_strncmp(cmd, "pwd\0", 4)
+		|| !ft_strncmp(cmd, "exit\0", 5)
 		|| !ft_strncmp(cmd, "export\0", 6)
 		|| !ft_strncmp(cmd, "unset\0", 6)
 		|| !ft_strncmp(cmd, "env\0", 4));
@@ -36,6 +37,8 @@ int	find_builtin(int a, char *command, int fd, char	**args)
 		a = check_unset(fd, args);
 	else if (!ft_strncmp(command, "env\0", 4))
 		a = check_env(fd, args);
+	else if (!ft_strncmp(command, "exit\0", 5))
+		a = 0;
 	return (a);
 }
 
@@ -67,17 +70,11 @@ int	builtins(int i, char *cmd, char *command)
 	return (a);
 }
 
-void	quithandler(int a)
-{
-	printf("\033[2D");
-}
-
 void	checking_commands(int i, char *command, char *cmd)
 {
 	char	**temp;
 	char	*acc_check;
 
-	// signal(SIGQUIT, quithandler);
 	temp = my_split(g_val.cmd_table[i].cmd);
 	acc_check = ft_access(command);
 	if (acc_check)
@@ -97,13 +94,15 @@ void	analyse_cmd(char *cmd, char **argv)
 
 	if (cmd && ft_strlen(cmd) > 0)
 	{
-		start_parse(cmd);
-		i = -1;
-		while (++i < g_val.cmd_count)
+		if (start_parse(cmd) > -1)
 		{
-			cmd = ft_strtrim(g_val.cmd_table[i].cmd, " ");
-			command = my_split(cmd);
-			ft_fork(i, cmd, command[0]);
+			i = -1;
+			while (++i < g_val.cmd_count)
+			{
+				cmd = ft_strtrim(g_val.cmd_table[i].cmd, " ");
+				command = my_split(cmd);
+				ft_fork(i, cmd, command[0]);
+			}
 		}
 	}
 }

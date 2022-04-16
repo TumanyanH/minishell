@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 21:01:42 by htumanya          #+#    #+#             */
-/*   Updated: 2022/04/11 20:21:15 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/04/16 18:34:13 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ int	start_parse(char *cmd_line)
 	while (i < ft_strlen(cmd_line))
 	{
 		g_val.cmd_table[each_cmd].cmd = cpy_till_pipe(cmd_line, &i);
-		parse_redirects(g_val.cmd_table[each_cmd].cmd, each_cmd);
+		if (parse_redirects(g_val.cmd_table[each_cmd].cmd, each_cmd) == -1)
+			return (-1);
 		if (each_cmd > 0)
 			g_val.cmd_table[each_cmd].has_pipe = 1;
 		else

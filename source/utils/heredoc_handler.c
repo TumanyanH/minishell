@@ -6,7 +6,7 @@
 /*   By: htumanya <htumanya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 21:33:13 by ster-min          #+#    #+#             */
-/*   Updated: 2022/04/14 21:28:59 by htumanya         ###   ########.fr       */
+/*   Updated: 2022/04/16 18:38:45 by htumanya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	sigkill(int a)
 	exit(0);
 }
 
-int	prompt_heredoc(char *delim, int i)
+int	pr_heredoc(char *delim, int i)
 {
 	char	*read;
 	int		fd[2];
